@@ -1,6 +1,6 @@
 ---
 title: 깃헙 블로그, 결국 "글쓰기 = 커밋"이라는 이야기
-date: 2026-08-07 21:30:00 +0900
+date: 2026-08-07 13:00:00 +0900
 categories: [개발, 블로그]
 tags: [github-pages, jekyll, chirpy, 글쓰기]
 ---
