@@ -3,6 +3,7 @@ import BaseHead from '../components/BaseHead.astro';
 import Sidebar from '../components/Sidebar.astro';
 import Topbar from '../components/Topbar.astro';
 import { LOCALE } from '../consts';
+import type { Crumb } from '../utils';
 
 interface Props {
   title?: string;
@@ -12,9 +13,11 @@ interface Props {
   pubDate?: Date;
   /** 상단 바에 표시할 현재 위치 */
   label?: string;
+  /** 글 페이지의 노션식 경로 표시. 주면 label 대신 이게 나간다 */
+  crumbs?: Crumb[];
 }
 
-const { label, ...head } = Astro.props;
+const { label, crumbs, ...head } = Astro.props;
 
 /*
  * 목차를 넘긴 페이지에서만 우측 레일을 만든다. 슬롯이 비었는데 레일이 있으면
@@ -47,7 +50,7 @@ const hasHeader = headerHtml.trim() !== '';
     <Sidebar />
 
     <div class="shell">
-      <Topbar label={label ?? head.title} />
+      <Topbar label={label ?? head.title} crumbs={crumbs} />
       <main id="main" class={hasToc ? 'with-toc' : undefined}>
         {hasHeader && <div class="post-header" set:html={headerHtml} />}
         <div class="column">

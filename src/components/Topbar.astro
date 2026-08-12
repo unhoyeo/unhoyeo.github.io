@@ -1,11 +1,14 @@
 ---
 import PanelIcon from './icons/PanelIcon.astro';
+import type { Crumb } from '../utils';
 
 interface Props {
   label?: string;
+  /** 글 페이지의 경로 표시. 마지막 항목(글 제목)만 href가 없다 */
+  crumbs?: Crumb[];
 }
 
-const { label } = Astro.props;
+const { label, crumbs } = Astro.props;
 ---
 
 <div class="topbar">
@@ -20,7 +23,32 @@ const { label } = Astro.props;
     <PanelIcon />
   </button>
 
-  {label && <p class="label">{label}</p>}
+  {
+    crumbs && crumbs.length > 0 ? (
+      <nav class="crumbs" aria-label="현재 위치">
+        {crumbs.map((crumb, i) => (
+          <>
+            {i > 0 && (
+              <span class="crumbs__sep" aria-hidden="true">
+                /
+              </span>
+            )}
+            {crumb.href ? (
+              <a class="crumbs__cat" href={crumb.href} title={crumb.label}>
+                {crumb.label}
+              </a>
+            ) : (
+              <span class="crumbs__title" title={crumb.label}>
+                {crumb.label}
+              </span>
+            )}
+          </>
+        ))}
+      </nav>
+    ) : (
+      label && <p class="label">{label}</p>
+    )
+  }
 
   <button type="button" class="icon-btn theme" id="theme-toggle" aria-label="테마 전환">
     <svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true">
@@ -55,6 +83,49 @@ const { label } = Astro.props;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+
+  /*
+   * 노션식 경로 표시. 폭이 모자라면 앞쪽 카테고리부터 줄어들고 글 제목이 남아야 한다 —
+   * flex-shrink를 카테고리 999 : 제목 1로 두어 카테고리가 먼저 줄어들게 했다.
+   */
+  .crumbs {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-width: 0;
+    overflow: hidden;
+    font-size: var(--text-sm);
+    line-height: var(--leading-ui);
+  }
+
+  .crumbs__cat,
+  .crumbs__title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .crumbs__cat {
+    flex: 0 999 auto;
+    color: var(--fg-muted);
+    text-decoration: none;
+  }
+
+  .crumbs__cat:hover {
+    color: var(--fg);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .crumbs__title {
+    flex: 0 1 auto;
+    color: var(--fg);
+  }
+
+  .crumbs__sep {
+    flex: none;
+    color: var(--fg-faint);
   }
 
   .theme {

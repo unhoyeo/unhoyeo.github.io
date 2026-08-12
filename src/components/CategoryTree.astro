@@ -1,0 +1,151 @@
+---
+/*
+ * 주제 트리의 노드 하나. children에 대해 Astro.self로 자기를 다시 부른다 —
+ * category 경로의 깊이가 고정되어 있지 않으므로 재귀가 아니면 안 된다.
+ *
+ * 들여쓰기는 depth를 CSS 변수로 넘겨 계산한다. 다만 사이드바가 16rem이라
+ * 무한정 밀 수 없어서 3단계(2.25rem)에서 멈춘다 — 그보다 깊어도 계층은
+ * 셰브론과 트리 구조로 읽히고, 글 제목이 먹히는 쪽이 더 손해다.
+ */
+import type { CategoryNode } from '../utils';
+
+interface Props {
+  node: CategoryNode;
+  depth?: number;
+  /** 현재 URL 경로. 활성 글 표시에 쓴다 */
+  path: string;
+  /** 지금 보고 있는 글의 카테고리와 그 조상들. 서버에서 미리 열어둔다 */
+  pinned: string[];
+}
+
+const { node, depth = 0, path, pinned } = Astro.props;
+const isPinned = pinned.includes(node.path);
+---
+
+<details
+  class="topic"
+  data-category={node.path}
+  open={isPinned}
+  data-pinned={isPinned ? 'true' : undefined}
+  style={`--depth:${depth}`}
+>
+  <summary title={node.path}>
+    <svg class="chevron" viewBox="0 0 20 20" width="12" height="12" aria-hidden="true">
+      <path
+        d="M8 5l5 5-5 5"
+        stroke="currentColor"
+        stroke-width="1.8"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        fill="none"></path>
+    </svg>
+    <span class="topic__name">{node.name}</span>
+    <span class="topic__count">{node.total}</span>
+  </summary>
+
+  {node.children.map((child) => <Astro.self node={child} depth={depth + 1} path={path} pinned={pinned} />)}
+
+  {
+    node.posts.length > 0 && (
+      <ul>
+        {node.posts.map((post) => (
+          <li>
+            <a
+              href={`/posts/${post.id}/`}
+              aria-current={path === `/posts/${post.id}/` ? 'page' : undefined}
+              title={post.data.title}
+            >
+              {post.data.title}
+            </a>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+</details>
+
+<style>
+  /*
+   * depth당 0.75rem씩 밀되 2.25rem에서 멈춘다.
+   * --depth는 단위 없는 수라서 길이와 곱해 쓴다.
+   */
+  .topic {
+    --indent: min(var(--depth) * 0.75rem, 2.25rem);
+  }
+
+  .topic > summary {
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+    padding: var(--space-2);
+    padding-left: calc(var(--space-2) + var(--indent));
+    border-radius: var(--radius);
+    color: var(--sidebar-fg);
+    font-size: var(--text-sm);
+    line-height: var(--leading-ui);
+    cursor: pointer;
+    list-style: none; /* 기본 삼각형 마커 제거 */
+  }
+
+  .topic > summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .topic > summary:hover {
+    background: var(--bg-hover);
+    color: var(--sidebar-fg-active);
+  }
+
+  .chevron {
+    flex: none;
+    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .topic[open] > summary .chevron {
+    transform: rotate(90deg);
+  }
+
+  .topic__name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .topic__count {
+    margin-left: auto;
+    padding-left: var(--space-2);
+    color: var(--sidebar-fg-label);
+    font-size: var(--text-xs);
+  }
+
+  .topic > ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* 글 항목은 그 노드보다 셰브론(12px) 폭만큼 더 들어간다 */
+  .topic > ul a {
+    display: block;
+    padding: var(--space-2);
+    padding-left: calc(var(--space-2) + var(--indent) + 12px + var(--space-1));
+    border-radius: var(--radius);
+    color: var(--sidebar-fg);
+    text-decoration: none;
+    font-size: var(--text-sm);
+    line-height: var(--leading-ui);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .topic > ul a:hover {
+    background: var(--bg-hover);
+    color: var(--sidebar-fg-active);
+  }
+
+  .topic > ul a[aria-current='page'] {
+    background: var(--bg-active);
+    color: var(--sidebar-fg-active);
+  }
+</style>

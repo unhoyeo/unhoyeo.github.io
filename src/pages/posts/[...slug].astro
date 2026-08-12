@@ -4,7 +4,7 @@ import { render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import CodeBlocks from '../../components/CodeBlocks.astro';
 import TableOfContents from '../../components/TableOfContents.astro';
-import { getPublishedPosts, formatDate, isoDate, hasToc } from '../../utils';
+import { getPublishedPosts, formatDate, isoDate, hasToc, postCrumbs } from '../../utils';
 
 export const getStaticPaths = (async () => {
   const posts = await getPublishedPosts();
@@ -28,6 +28,7 @@ const { Content, headings } = await render(post);
   description={post.data.description}
   type="article"
   pubDate={post.data.pubDate}
+  crumbs={postCrumbs(post)}
 >
   {/* 레이아웃이 본문 열 옆 레일에 꽂는다. 목차가 없는 글이면 슬롯을 아예 넘기지 않는다 */}
   {hasToc(headings) && <TableOfContents slot="toc" headings={headings} />}

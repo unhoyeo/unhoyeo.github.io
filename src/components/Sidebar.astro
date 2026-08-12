@@ -1,7 +1,8 @@
 ---
 import { SITE_TITLE, AUTHOR, NAV_LINKS, SOCIAL_LINKS } from '../consts';
-import { getPublishedPosts, getPostsByCategory } from '../utils';
+import { getPublishedPosts, getPostsByCategory, parseCategory, categoryAncestors } from '../utils';
 import PanelIcon from './icons/PanelIcon.astro';
+import CategoryTree from './CategoryTree.astro';
 
 // '최근'은 전부 렌더하고, 화면에 몇 개를 보일지는 클라이언트가 정한다(무한 스크롤)
 const posts = await getPublishedPosts();
@@ -13,12 +14,13 @@ const path = Astro.url.pathname;
 const isActive = (href: string) => path === href;
 
 /*
- * 지금 보고 있는 글이 속한 주제는 서버에서 미리 열어둔다.
+ * 지금 보고 있는 글이 속한 주제는 서버에서 미리 열어둔다. 중첩이므로 조상까지 전부.
  * (localStorage 복원보다 우선 — 저장된 상태가 닫힘이어도 이건 열린 채로 둔다)
  */
-const openCategory = categories.find((group) =>
-  group.posts.some((post) => path === `/posts/${post.id}/`)
-)?.name;
+const currentPost = posts.find((post) => path === `/posts/${post.id}/`);
+const pinnedPaths = currentPost
+  ? categoryAncestors(parseCategory(currentPost.data.category))
+  : [];
 ---
 
 <aside id="sidebar" class="sidebar" data-open="false">
@@ -73,41 +75,8 @@ const openCategory = categories.find((group) =>
                   />
                 </svg>
               </summary>
-              {categories.map((group) => (
-              <details
-                class="topic"
-                data-category={group.name}
-                open={group.name === openCategory}
-                data-pinned={group.name === openCategory ? 'true' : undefined}
-              >
-                <summary title={group.name}>
-                  <svg class="chevron topic__chevron" viewBox="0 0 20 20" width="12" height="12" aria-hidden="true">
-                    <path
-                      d="M8 5l5 5-5 5"
-                      stroke="currentColor"
-                      stroke-width="1.8"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      fill="none"
-                    />
-                  </svg>
-                  <span class="topic__name">{group.name}</span>
-                  <span class="topic__count">{group.posts.length}</span>
-                </summary>
-                <ul>
-                  {group.posts.map((post) => (
-                    <li>
-                      <a
-                        href={`/posts/${post.id}/`}
-                        aria-current={path === `/posts/${post.id}/` ? 'page' : undefined}
-                        title={post.data.title}
-                      >
-                        {post.data.title}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </details>
+              {categories.map((node) => (
+                <CategoryTree node={node} path={path} pinned={pinnedPaths} />
               ))}
             </details>
           </nav>
@@ -321,8 +290,7 @@ const openCategory = categories.find((group) =>
   }
 
   .sidebar__nav ul,
-  .sidebar__recent ul,
-  .sidebar__topics ul {
+  .sidebar__recent ul {
     list-style: none;
     margin: 0;
     padding: 0;
@@ -330,8 +298,7 @@ const openCategory = categories.find((group) =>
 
   /* 목록 항목은 ChatGPT 사이드바처럼 한 줄로 자르고 라운드 하이라이트 */
   .sidebar__nav a,
-  .sidebar__recent a,
-  .sidebar__topics a {
+  .sidebar__recent a {
     display: block;
     padding: var(--space-2);
     border-radius: var(--radius);
@@ -345,15 +312,13 @@ const openCategory = categories.find((group) =>
   }
 
   .sidebar__nav a:hover,
-  .sidebar__recent a:hover,
-  .sidebar__topics a:hover {
+  .sidebar__recent a:hover {
     background: var(--bg-hover);
     color: var(--sidebar-fg-active);
   }
 
   .sidebar__nav a[aria-current='page'],
-  .sidebar__recent a[aria-current='page'],
-  .sidebar__topics a[aria-current='page'] {
+  .sidebar__recent a[aria-current='page'] {
     background: var(--bg-active);
     color: var(--sidebar-fg-active);
   }
@@ -374,51 +339,7 @@ const openCategory = categories.find((group) =>
     gap: var(--space-4);
   }
 
-  /* --- 주제 트리 --- */
-
-  .topic > summary {
-    display: flex;
-    align-items: center;
-    gap: var(--space-1);
-    padding: var(--space-2);
-    border-radius: var(--radius);
-    color: var(--sidebar-fg);
-    font-size: var(--text-sm);
-    line-height: var(--leading-ui);
-    cursor: pointer;
-    list-style: none; /* 기본 삼각형 마커 제거 */
-  }
-
-  .topic > summary::-webkit-details-marker {
-    display: none;
-  }
-
-  .topic > summary:hover {
-    background: var(--bg-hover);
-    color: var(--sidebar-fg-active);
-  }
-
-  .topic[open] > summary .topic__chevron {
-    transform: rotate(90deg);
-  }
-
-  .topic__name {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .topic__count {
-    margin-left: auto;
-    padding-left: var(--space-2);
-    color: var(--sidebar-fg-label);
-    font-size: var(--text-xs);
-  }
-
-  /* 글 항목은 셰브론(12px) + gap 만큼 들여쓴다 */
-  .topic > ul a {
-    padding-left: calc(var(--space-2) + 12px + var(--space-1));
-  }
+  /* 주제 트리 노드의 생김새는 CategoryTree.astro가 갖는다(스코프가 다르므로) */
 
   .empty {
     padding: 0 var(--space-2);

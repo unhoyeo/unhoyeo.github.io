@@ -1,0 +1,117 @@
+---
+import type { GetStaticPaths } from 'astro';
+import Base from '../../layouts/Base.astro';
+import PostList from '../../components/PostList.astro';
+import { getPostsByCategory, flattenCategories, postsUnder, categoryAncestors } from '../../utils';
+
+/*
+ * 트리의 모든 노드마다 페이지를 하나씩 만든다. 경로는 그대로 URL이 된다
+ * (한글은 Astro가 인코딩해 `/categories/%EC%8A%A4%ED%94%84%EB%A7%81/`로 나간다).
+ */
+export const getStaticPaths = (async () => {
+  const tree = await getPostsByCategory();
+  return flattenCategories(tree).map((node) => ({
+    params: { path: node.path },
+    props: {
+      posts: postsUnder(node),
+      childNames: node.children.map((child) => ({ name: child.name, path: child.path })),
+    },
+  }));
+}) satisfies GetStaticPaths;
+
+const { path } = Astro.params;
+const { posts, childNames } = Astro.props;
+
+const segments = (path ?? '').split('/');
+const ancestors = categoryAncestors(segments);
+const name = segments[segments.length - 1];
+---
+
+<Base title={name} description={`${path} 주제의 글`} label={path}>
+  <nav class="crumbs" aria-label="상위 주제">
+    {
+      ancestors.slice(0, -1).map((ancestor, i) => (
+        <>
+          <a href={`/categories/${ancestor}/`}>{segments[i]}</a>
+          <span aria-hidden="true">/</span>
+        </>
+      ))
+    }
+    <span class="crumbs__current">{name}</span>
+  </nav>
+
+  <h1>{name}</h1>
+  <p class="count">하위 주제 포함 {posts.length}편</p>
+
+  {
+    childNames.length > 0 && (
+      <ul class="children">
+        {childNames.map((child) => (
+          <li>
+            <a href={`/categories/${child.path}/`}>{child.name}</a>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+
+  <PostList posts={posts} />
+</Base>
+
+<style>
+  .crumbs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    color: var(--fg-faint);
+    font-size: var(--text-sm);
+  }
+
+  .crumbs a {
+    color: var(--fg-muted);
+    text-decoration: none;
+  }
+
+  .crumbs a:hover {
+    color: var(--fg);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .crumbs__current {
+    color: var(--fg);
+  }
+
+  h1 {
+    margin-top: var(--space-2);
+  }
+
+  .count {
+    color: var(--fg-faint);
+    font-size: var(--text-sm);
+  }
+
+  .children {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    list-style: none;
+    margin: 0 0 var(--space-8);
+    padding: 0;
+  }
+
+  .children a {
+    display: block;
+    padding: var(--space-1) var(--space-3);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    color: var(--fg-muted);
+    text-decoration: none;
+    font-size: var(--text-sm);
+  }
+
+  .children a:hover {
+    background: var(--bg-subtle);
+    color: var(--fg);
+  }
+</style>
