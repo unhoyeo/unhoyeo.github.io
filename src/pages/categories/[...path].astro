@@ -25,21 +25,20 @@ const { posts, childNames } = Astro.props;
 const segments = (path ?? '').split('/');
 const ancestors = categoryAncestors(segments);
 const name = segments[segments.length - 1];
+
+/*
+ * 경로 표시는 글 페이지와 같은 규칙으로 상단바가 그린다.
+ * 여기서 label로 경로 문자열을 통째로 넘기면 계층이 사라지고,
+ * 본문에 또 그리면 같은 것이 두 군데 나온다.
+ * 마지막(현재 주제) 세그먼트는 자기 자신이므로 링크를 걸지 않는다.
+ */
+const crumbs = ancestors.map((ancestor, i) => ({
+  label: segments[i],
+  href: i < segments.length - 1 ? `/categories/${ancestor}/` : undefined,
+}));
 ---
 
-<Base title={name} description={`${path} 주제의 글`} label={path}>
-  <nav class="crumbs" aria-label="상위 주제">
-    {
-      ancestors.slice(0, -1).map((ancestor, i) => (
-        <>
-          <a href={`/categories/${ancestor}/`}>{segments[i]}</a>
-          <span aria-hidden="true">/</span>
-        </>
-      ))
-    }
-    <span class="crumbs__current">{name}</span>
-  </nav>
-
+<Base title={name} description={`${path} 주제의 글`} crumbs={crumbs}>
   <h1>{name}</h1>
   <p class="count">하위 주제 포함 {posts.length}편</p>
 
@@ -59,31 +58,8 @@ const name = segments[segments.length - 1];
 </Base>
 
 <style>
-  .crumbs {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-2);
-    color: var(--fg-faint);
-    font-size: var(--text-sm);
-  }
-
-  .crumbs a {
-    color: var(--fg-muted);
-    text-decoration: none;
-  }
-
-  .crumbs a:hover {
-    color: var(--fg);
-    text-decoration: underline;
-    text-underline-offset: 3px;
-  }
-
-  .crumbs__current {
-    color: var(--fg);
-  }
-
   h1 {
-    margin-top: var(--space-2);
+    margin-top: var(--space-8);
   }
 
   .count {
