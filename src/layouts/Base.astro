@@ -66,6 +66,11 @@ const hasHeader = headerHtml.trim() !== '';
         flex-direction: column;
       }
 
+      /* 사이드바를 접으면 본문이 전체 폭을 쓴다 */
+      :global(html[data-sidebar='collapsed']) .shell {
+        margin-left: 0;
+      }
+
       main {
         flex: 1;
         padding: var(--space-6) var(--space-6) var(--space-16);

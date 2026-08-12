@@ -41,10 +41,13 @@ const ogImage = image ? new URL(image, Astro.site) : undefined;
 <meta name="twitter:card" content={ogImage ? 'summary_large_image' : 'summary'} />
 {pubDate && <meta property="article:published_time" content={pubDate.toISOString()} />}
 
-<!-- 테마: 첫 페인트 전에 적용해 깜빡임 방지 -->
+<!-- 테마·사이드바 접힘: 첫 페인트 전에 적용해 깜빡임 방지 -->
 <script is:inline>
   const stored = localStorage.getItem('theme');
   if (stored === 'light' || stored === 'dark') {
     document.documentElement.dataset.theme = stored;
+  }
+  if (localStorage.getItem('sidebar:collapsed') === 'true') {
+    document.documentElement.dataset.sidebar = 'collapsed';
   }
 </script>
