@@ -3,7 +3,7 @@
  * 목차 — 넓은 화면(≥84rem)에서는 우측 여백에 박스 없는 플랫 텍스트 목록으로 뜨고
  * (카카오 테크 블로그 방식), 좁은 화면에서는 본문 위 정적인 박스로 접힌다.
  * 마크업은 하나뿐이고 CSS만 분기한다.
- * 항목이 3개 미만이면 아예 렌더하지 않는다.
+ * 항목이 2개 미만이면 렌더하지 않는다 — 하나짜리 목차는 의미가 없다.
  */
 import type { MarkdownHeading } from 'astro';
 
@@ -16,7 +16,7 @@ const toc = headings.filter((h) => h.depth === 2 || h.depth === 3);
 ---
 
 {
-  toc.length > 2 && (
+  toc.length > 1 && (
     <nav id="toc" class="toc" aria-label="목차">
       <ul>
         {toc.map((h) => (
