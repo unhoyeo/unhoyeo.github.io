@@ -1,0 +1,192 @@
+---
+/*
+ * 목차 — 넓은 화면(≥84rem)에서는 우측 여백에 박스 없는 플랫 텍스트 목록으로 뜨고
+ * (카카오 테크 블로그 방식), 좁은 화면에서는 본문 위 정적인 박스로 접힌다.
+ * 마크업은 하나뿐이고 CSS만 분기한다.
+ * 항목이 3개 미만이면 아예 렌더하지 않는다.
+ */
+import type { MarkdownHeading } from 'astro';
+
+interface Props {
+  headings: MarkdownHeading[];
+}
+
+const { headings } = Astro.props;
+const toc = headings.filter((h) => h.depth === 2 || h.depth === 3);
+---
+
+{
+  toc.length > 2 && (
+    <nav id="toc" class="toc" aria-label="목차">
+      <ul>
+        {toc.map((h) => (
+          <li data-depth={h.depth}>
+            <a href={`#${h.slug}`}>{h.text}</a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  )
+}
+
+<style>
+  /* 좁은 화면 기본형: 본문 위 정적 박스 (여기서는 박스여도 된다) */
+  .toc {
+    background: var(--bg-subtle);
+    border-radius: var(--radius-lg);
+    padding: var(--space-4);
+    margin-bottom: var(--space-10);
+    font-size: var(--text-sm);
+  }
+
+  .toc ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  /*
+   * 항목 치수는 tech.kakao.com 실측값. 14px / line-height 22px / padding 5px 8px
+   * → 항목 하나가 32px. 간격은 li가 아니라 링크 패딩이 만든다(칩 배경 크기와 같아야 하므로).
+   */
+  .toc a {
+    display: block;
+    padding: 0.3125rem var(--space-2);
+    border-radius: var(--radius); /* 8px — 실측과 일치 */
+    color: var(--fg-muted);
+    line-height: 1.6;
+    text-decoration: none;
+  }
+
+  /* 들여쓰기는 li가 아니라 링크 패딩으로 준다 — 칩 배경이 들여쓴 위치에서 시작하도록 */
+  .toc li[data-depth='3'] a {
+    padding-left: 2.5rem; /* 실측 40px */
+  }
+
+  /*
+   * h3도 h2와 같은 --fg-muted를 쓴다. 한 단계 흐리게 하면 가독성이 떨어지고,
+   * 계층은 들여쓰기만으로 충분히 읽힌다.
+   */
+
+  .toc a:hover {
+    color: var(--fg);
+  }
+
+  /*
+   * 활성 표시는 글자색·굵기를 그대로 두고 배경 칩만 쓴다(실측).
+   * 2단계다 — 지금 보는 항목은 진한 칩, 그 항목이 속한 상위 h2는 연한 칩.
+   */
+  .toc a[aria-current='true'] {
+    background: var(--toc-current);
+  }
+
+  .toc a[data-parent='true'] {
+    background: var(--toc-parent);
+  }
+
+  /* 넓은 화면: 박스 없이 본문 옆 여백에 뜨는 플랫 텍스트 목록 */
+  @media (min-width: 84rem) {
+    .toc {
+      position: fixed;
+      top: 4rem;
+      right: var(--space-10);
+      z-index: 10;
+      width: var(--toc-w);
+      max-height: calc(100vh - 8rem);
+      overflow-y: auto;
+      scrollbar-width: thin;
+      margin-bottom: 0;
+      padding: var(--space-2) 0;
+      background: none;
+      border: 0;
+      border-radius: 0;
+      box-shadow: none;
+    }
+
+    /*
+     * 패널이 뜨는 폭에서만 본문 열의 오른쪽 자리를 비워 겹침을 막는다.
+     * 본문과 목차 사이 간격 = 실측 41px ≈ var(--space-10).
+     */
+    :global(main:has(#toc)) {
+      padding-right: calc(var(--toc-w) + var(--space-10) * 2);
+    }
+  }
+</style>
+
+<script>
+  const toc = document.getElementById('toc');
+
+  if (toc) {
+    const links = new Map<string, HTMLAnchorElement>();
+    // 문서 순서대로 들고 있어야 depth 3의 상위 h2를 뒤로 훑어 찾을 수 있다
+    const ordered: HTMLAnchorElement[] = [];
+
+    toc.querySelectorAll<HTMLAnchorElement>('a[href^="#"]').forEach((a) => {
+      links.set(decodeURIComponent(a.hash.slice(1)), a);
+      ordered.push(a);
+    });
+
+    const depthOf = (a: HTMLAnchorElement) =>
+      Number((a.closest('li') as HTMLElement | null)?.dataset.depth ?? 2);
+
+    // 활성 항목이 h3이면 그보다 앞에 있는 가장 가까운 h2 항목
+    const parentOf = (a: HTMLAnchorElement) => {
+      if (depthOf(a) !== 3) return null;
+      for (let i = ordered.indexOf(a) - 1; i >= 0; i--) {
+        if (depthOf(ordered[i]) === 2) return ordered[i];
+      }
+      return null;
+    };
+
+    const headings = Array.from(
+      document.querySelectorAll<HTMLElement>('.prose h2, .prose h3')
+    ).filter((h) => links.has(h.id));
+
+    if (headings.length > 0) {
+      const visible = new Set<HTMLElement>();
+      let current: HTMLAnchorElement | null = null;
+      let currentParent: HTMLAnchorElement | null = null;
+
+      const highlight = () => {
+        // 화면에 보이는 것 중 가장 위, 하나도 없으면 이미 지나친 마지막 섹션
+        let target: HTMLElement | undefined;
+        if (visible.size > 0) {
+          target = headings.filter((h) => visible.has(h))[0];
+        } else {
+          target = headings.filter((h) => h.getBoundingClientRect().top < 0).pop();
+        }
+
+        const next = target ? (links.get(target.id) ?? null) : null;
+        if (next === current) return;
+
+        current?.removeAttribute('aria-current');
+        currentParent?.removeAttribute('data-parent');
+
+        const nextParent = next ? parentOf(next) : null;
+        next?.setAttribute('aria-current', 'true');
+        nextParent?.setAttribute('data-parent', 'true');
+
+        current = next;
+        currentParent = nextParent;
+        // 목차가 길어 자체 스크롤이 생겼을 때만 활성 항목을 보이게 유지한다.
+        // (정적 박스일 때는 스크롤이 없으므로 페이지가 튀지 않는다)
+        if (toc.scrollHeight > toc.clientHeight) next?.scrollIntoView({ block: 'nearest' });
+      };
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            const el = entry.target as HTMLElement;
+            if (entry.isIntersecting) visible.add(el);
+            else visible.delete(el);
+          }
+          highlight();
+        },
+        // rootMargin은 px/%만 허용된다. 상단바(약 3rem=48px)에 가린 부분은 제외.
+        { rootMargin: '-64px 0px -60% 0px' }
+      );
+
+      headings.forEach((h) => observer.observe(h));
+    }
+  }
+</script>

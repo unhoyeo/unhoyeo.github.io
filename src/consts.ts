@@ -1,4 +1,4 @@
-export const SITE_TITLE = 'Unho Yeo';
+export const SITE_TITLE = 'unhoyeo tech';
 export const SITE_TAGLINE = '개발하며 남기는 기록';
 export const SITE_DESCRIPTION =
   '개발, 사이드 프로젝트, 그리고 만들면서 배운 것들을 기록하는 블로그입니다.';
@@ -10,7 +10,7 @@ export const NAV_LINKS = [
   { href: '/', label: '홈' },
   { href: '/posts/', label: '글' },
   { href: '/tags/', label: '태그' },
-  { href: '/about/', label: '소개' },
+  // '/about/'은 사이드바 하단 프로필이 담당하므로 네비에는 두지 않는다
 ];
 
 export const SOCIAL_LINKS = [{ href: 'https://github.com/unhoyeo', label: 'GitHub' }];

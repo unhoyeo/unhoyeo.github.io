@@ -4,22 +4,33 @@
  * 컴포넌트는 원시값을 쓰지 않고 항상 var(--...)만 참조한다.
  */
 :root {
-  /* 색 — light */
+  /*
+   * 색 — light. 레퍼런스 스크린샷에서 영역별 최빈색을 뽑아 그대로 옮겼다.
+   * 라이트에서는 사이드바가 본문보다 아주 살짝 어둡고,
+   * 다크에서는 반대로 사이드바가 본문보다 밝다. (아래 다크 블록 참고)
+   */
   --bg: #ffffff; /* 본문 영역 */
-  --bg-sidebar: #f9f9f9; /* 사이드바 */
-  --bg-subtle: #f4f4f4; /* 코드블록·카드 */
-  --bg-hover: #ececec; /* 사이드바 항목 hover */
-  --bg-active: #e8e8e8; /* 사이드바 활성 항목 */
-  --code-header: #ececec; /* 코드블록 언어 라벨 바 */
+  --bg-sidebar: #fcfcfc; /* 사이드바 */
+  --bg-subtle: #f4f4f4; /* 코드블록 */
+  --bg-panel: #ffffff; /* 우측 목차 패널 */
+  --bg-hover: #f0f0f0; /* 항목 hover */
+  --bg-active: #eff0f0; /* 활성 항목 */
+  --code-header: #f4f4f4; /* 코드블록 라벨 바 — 본문과 같은 색, 경계는 보더로 */
 
-  --fg: #0d0d0d;
-  --fg-muted: #5d5d5d;
-  --fg-faint: #8f8f8f;
-  --border: #e5e5e5;
+  /* 목차 활성 칩 2단계 — tech.kakao.com 실측값 */
+  --toc-current: #d1d8dc; /* 지금 보고 있는 항목 */
+  --toc-parent: #edeff1; /* 그 항목이 속한 상위 h2 */
+
+  --fg: #1a1c1f;
+  --fg-muted: #5d5f61;
+  --fg-faint: #8e8f90;
+  --border: #e8e8e8;
   --border-strong: #d4d4d4;
 
-  --accent: #0d0d0d; /* 레퍼런스가 무채색이라 액센트도 텍스트색 */
-  --accent-hover: #5d5d5d;
+  --accent: #1a1c1f; /* 레퍼런스가 무채색이라 액센트도 텍스트색 */
+  --accent-hover: #5d5f61;
+
+  --shadow-panel: 0 1px 3px rgb(0 0 0 / 0.06);
 
   /* 타이포 */
   --font-sans:
@@ -43,6 +54,7 @@
 
   /* 레이아웃 */
   --sidebar-w: 16rem;
+  --toc-w: 16rem;
   --measure: 46rem; /* 본문 최대 폭 */
   --space-1: 0.25rem;
   --space-2: 0.5rem;
@@ -61,42 +73,57 @@
 /* 다크 팔레트를 한 곳에서 정의하고 두 셀렉터에 적용 */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) {
-    --bg: #212121;
-    --bg-sidebar: #171717;
-    --bg-subtle: #2f2f2f;
-    --bg-hover: #2f2f2f;
-    --bg-active: #373737;
-    --code-header: #2f2f2f;
+    /* 다크에서는 사이드바가 본문보다 밝다 (레퍼런스 실측값) */
+    --bg: #181818;
+    --bg-sidebar: #222222;
+    --bg-subtle: #242424;
+    --bg-panel: #2d2d2d;
+    --bg-hover: #2a2a2a;
+    --bg-active: #333333;
+    --code-header: #242424;
+
+    /* 라이트의 명도 대비 관계를 다크로 옮긴 값 */
+    --toc-current: #3d3d3d;
+    --toc-parent: #2b2b2b;
 
     --fg: #ececec;
     --fg-muted: #b4b4b4;
     --fg-faint: #8f8f8f;
-    --border: #373737;
-    --border-strong: #4d4d4d;
+    --border: #2f2f2f;
+    --border-strong: #444444;
 
     --accent: #ececec;
     --accent-hover: #b4b4b4;
+
+    --shadow-panel: none;
 
     color-scheme: dark;
   }
 }
 
 :root[data-theme='dark'] {
-  --bg: #212121;
-  --bg-sidebar: #171717;
-  --bg-subtle: #2f2f2f;
-  --bg-hover: #2f2f2f;
-  --bg-active: #373737;
-  --code-header: #2f2f2f;
+  --bg: #181818;
+  --bg-sidebar: #222222;
+  --bg-subtle: #242424;
+  --bg-panel: #2d2d2d;
+  --bg-hover: #2a2a2a;
+  --bg-active: #333333;
+  --code-header: #242424;
+
+  /* 라이트의 명도 대비 관계를 다크로 옮긴 값 */
+  --toc-current: #3d3d3d;
+  --toc-parent: #2b2b2b;
 
   --fg: #ececec;
   --fg-muted: #b4b4b4;
   --fg-faint: #8f8f8f;
-  --border: #373737;
-  --border-strong: #4d4d4d;
+  --border: #2f2f2f;
+  --border-strong: #444444;
 
   --accent: #ececec;
   --accent-hover: #b4b4b4;
+
+  --shadow-panel: none;
 
   color-scheme: dark;
 }
@@ -109,6 +136,8 @@
 
 html {
   -webkit-text-size-adjust: 100%;
+  /* 목차 링크로 이동할 때 부드럽게 (reduced-motion에서는 아래에서 auto로 되돌린다) */
+  scroll-behavior: smooth;
 }
 
 body {
@@ -234,6 +263,8 @@ pre:not(.code-block pre) {
   gap: var(--space-4);
   padding: var(--space-2) var(--space-3) var(--space-2) var(--space-4);
   background: var(--code-header);
+  /* 라벨 바와 코드 본문이 같은 색이라 경계는 보더로 만든다 */
+  border-bottom: 1px solid var(--border);
   color: var(--fg-muted);
   font-size: var(--text-xs);
   line-height: var(--leading-ui);
@@ -320,6 +351,10 @@ td {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
   *,
   *::before,
   *::after {

@@ -3,6 +3,7 @@ import type { GetStaticPaths } from 'astro';
 import { render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import CodeBlocks from '../../components/CodeBlocks.astro';
+import TableOfContents from '../../components/TableOfContents.astro';
 import { getPublishedPosts, formatDate, isoDate } from '../../utils';
 
 export const getStaticPaths = (async () => {
@@ -20,7 +21,6 @@ export const getStaticPaths = (async () => {
 
 const { post, newer, older } = Astro.props;
 const { Content, headings } = await render(post);
-const toc = headings.filter((h) => h.depth === 2 || h.depth === 3);
 ---
 
 <Base
@@ -49,20 +49,7 @@ const toc = headings.filter((h) => h.depth === 2 || h.depth === 3);
       }
     </header>
 
-    {
-      toc.length > 2 && (
-        <nav class="toc" aria-label="목차">
-          <p class="toc__label">목차</p>
-          <ul>
-            {toc.map((h) => (
-              <li data-depth={h.depth}>
-                <a href={`#${h.slug}`}>{h.text}</a>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      )
-    }
+    <TableOfContents headings={headings} />
 
     <div class="prose">
       <Content />
@@ -127,45 +114,6 @@ const toc = headings.filter((h) => h.depth === 2 || h.depth === 3);
 
   .tags a:hover {
     color: var(--fg);
-  }
-
-  .toc {
-    background: var(--bg-subtle);
-    border-radius: var(--radius-lg);
-    padding: var(--space-4);
-    margin-bottom: var(--space-10);
-    font-size: var(--text-sm);
-  }
-
-  .toc__label {
-    margin: 0 0 var(--space-2);
-    color: var(--fg-faint);
-    font-size: var(--text-xs);
-  }
-
-  .toc ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-
-  .toc li {
-    line-height: 1.9;
-  }
-
-  .toc li[data-depth='3'] {
-    padding-left: var(--space-4);
-  }
-
-  .toc a {
-    color: var(--fg-muted);
-    text-decoration: none;
-  }
-
-  .toc a:hover {
-    color: var(--fg);
-    text-decoration: underline;
-    text-underline-offset: 3px;
   }
 
   .prose :global(h2),

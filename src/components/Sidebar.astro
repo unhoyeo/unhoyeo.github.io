@@ -14,7 +14,6 @@ const isActive = (href: string) => path === href;
   <div class="sidebar__inner">
     <div class="sidebar__top">
       <a href="/" class="brand">
-        <span class="brand__mark" aria-hidden="true">U</span>
         <span class="brand__name">{SITE_TITLE}</span>
       </a>
       <button type="button" class="icon-btn sidebar__close" data-sidebar-close aria-label="메뉴 닫기">
@@ -76,7 +75,6 @@ const isActive = (href: string) => path === href;
             </a>
           ))
         }
-        <a href="/rss.xml">RSS</a>
       </div>
     </div>
   </div>
@@ -120,21 +118,11 @@ const isActive = (href: string) => path === href;
     font-weight: 600;
     font-size: var(--text-sm);
     line-height: var(--leading-ui);
+    letter-spacing: -0.01em;
   }
 
   .brand:hover {
     background: var(--bg-hover);
-  }
-
-  .brand__mark {
-    display: grid;
-    place-items: center;
-    width: 1.5rem;
-    height: 1.5rem;
-    border-radius: 50%;
-    background: var(--fg);
-    color: var(--bg-sidebar);
-    font-size: var(--text-xs);
   }
 
   .section-label {
