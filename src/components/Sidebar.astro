@@ -1,0 +1,294 @@
+---
+import { SITE_TITLE, AUTHOR, NAV_LINKS, SOCIAL_LINKS } from '../consts';
+import { getPublishedPosts } from '../utils';
+
+const posts = (await getPublishedPosts()).slice(0, 25);
+
+// 상세 글에서는 아래 '최근' 목록이 활성 표시를 가져가므로,
+// 상단 네비는 정확히 그 페이지일 때만 하이라이트한다.
+const path = Astro.url.pathname;
+const isActive = (href: string) => path === href;
+---
+
+<aside id="sidebar" class="sidebar" data-open="false">
+  <div class="sidebar__inner">
+    <div class="sidebar__top">
+      <a href="/" class="brand">
+        <span class="brand__mark" aria-hidden="true">U</span>
+        <span class="brand__name">{SITE_TITLE}</span>
+      </a>
+      <button type="button" class="icon-btn sidebar__close" data-sidebar-close aria-label="메뉴 닫기">
+        <svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true">
+          <path
+            d="M5 5l10 10M15 5L5 15"
+            stroke="currentColor"
+            stroke-width="1.6"
+            stroke-linecap="round"
+            fill="none"></path>
+        </svg>
+      </button>
+    </div>
+
+    <nav class="sidebar__nav" aria-label="주 메뉴">
+      <ul>
+        {
+          NAV_LINKS.map((link) => (
+            <li>
+              <a href={link.href} aria-current={isActive(link.href) ? 'page' : undefined}>
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <nav class="sidebar__recent" aria-label="최근 글">
+      <p class="section-label">최근</p>
+      <ul>
+        {
+          posts.map((post) => (
+            <li>
+              <a
+                href={`/posts/${post.id}/`}
+                aria-current={path === `/posts/${post.id}/` ? 'page' : undefined}
+                title={post.data.title}
+              >
+                {post.data.title}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      {posts.length === 0 && <p class="empty">아직 글이 없습니다</p>}
+    </nav>
+
+    <div class="sidebar__bottom">
+      <a href="/about/" class="profile">
+        <span class="profile__avatar" aria-hidden="true">{AUTHOR.slice(0, 1)}</span>
+        <span class="profile__name">{AUTHOR}</span>
+      </a>
+      <div class="sidebar__links">
+        {
+          SOCIAL_LINKS.map((link) => (
+            <a href={link.href} rel="me noopener" target="_blank">
+              {link.label}
+            </a>
+          ))
+        }
+        <a href="/rss.xml">RSS</a>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<div class="scrim" data-sidebar-close aria-hidden="true"></div>
+
+<style>
+  .sidebar {
+    position: fixed;
+    inset: 0 auto 0 0;
+    width: var(--sidebar-w);
+    background: var(--bg-sidebar);
+    border-right: 1px solid var(--border);
+    z-index: 40;
+  }
+
+  .sidebar__inner {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: var(--space-3);
+    gap: var(--space-4);
+  }
+
+  .sidebar__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-2);
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2);
+    border-radius: var(--radius);
+    color: var(--fg);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: var(--text-sm);
+    line-height: var(--leading-ui);
+  }
+
+  .brand:hover {
+    background: var(--bg-hover);
+  }
+
+  .brand__mark {
+    display: grid;
+    place-items: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    background: var(--fg);
+    color: var(--bg-sidebar);
+    font-size: var(--text-xs);
+  }
+
+  .section-label {
+    margin: 0 0 var(--space-1);
+    padding: 0 var(--space-2);
+    color: var(--fg-faint);
+    font-size: var(--text-xs);
+    line-height: var(--leading-ui);
+  }
+
+  .sidebar__nav ul,
+  .sidebar__recent ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* 목록 항목은 ChatGPT 사이드바처럼 한 줄로 자르고 라운드 하이라이트 */
+  .sidebar__nav a,
+  .sidebar__recent a {
+    display: block;
+    padding: var(--space-2);
+    border-radius: var(--radius);
+    color: var(--fg-muted);
+    text-decoration: none;
+    font-size: var(--text-sm);
+    line-height: var(--leading-ui);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .sidebar__nav a:hover,
+  .sidebar__recent a:hover {
+    background: var(--bg-hover);
+    color: var(--fg);
+  }
+
+  .sidebar__nav a[aria-current='page'],
+  .sidebar__recent a[aria-current='page'] {
+    background: var(--bg-active);
+    color: var(--fg);
+  }
+
+  /* 글 목록만 넘치면 스크롤 — 상단 브랜드와 하단 프로필은 항상 고정 */
+  .sidebar__recent {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    scrollbar-width: thin;
+  }
+
+  .empty {
+    padding: 0 var(--space-2);
+    color: var(--fg-faint);
+    font-size: var(--text-sm);
+  }
+
+  .sidebar__bottom {
+    border-top: 1px solid var(--border);
+    padding-top: var(--space-2);
+  }
+
+  .profile {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2);
+    border-radius: var(--radius);
+    color: var(--fg);
+    text-decoration: none;
+    font-size: var(--text-sm);
+    line-height: var(--leading-ui);
+  }
+
+  .profile:hover {
+    background: var(--bg-hover);
+  }
+
+  .profile__avatar {
+    display: grid;
+    place-items: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    background: var(--bg-active);
+    color: var(--fg-muted);
+    font-size: var(--text-xs);
+  }
+
+  .sidebar__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    padding: var(--space-1) var(--space-2) var(--space-2);
+    font-size: var(--text-xs);
+  }
+
+  .sidebar__links a {
+    color: var(--fg-faint);
+    text-decoration: none;
+  }
+
+  .sidebar__links a:hover {
+    color: var(--fg);
+  }
+
+  .icon-btn {
+    display: grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    background: none;
+    border: 0;
+    border-radius: var(--radius);
+    color: var(--fg-muted);
+    cursor: pointer;
+  }
+
+  .icon-btn:hover {
+    background: var(--bg-hover);
+    color: var(--fg);
+  }
+
+  .sidebar__close {
+    display: none;
+  }
+
+  .scrim {
+    display: none;
+  }
+
+  /* 데스크톱보다 좁으면 사이드바를 오프캔버스로 */
+  @media (max-width: 60rem) {
+    .sidebar {
+      transform: translateX(-100%);
+      transition: transform 0.2s ease;
+    }
+
+    .sidebar[data-open='true'] {
+      transform: none;
+      box-shadow: 0 0 2rem rgb(0 0 0 / 0.2);
+    }
+
+    .sidebar__close {
+      display: grid;
+    }
+
+    .sidebar[data-open='true'] ~ .scrim {
+      display: block;
+      position: fixed;
+      inset: 0;
+      z-index: 30;
+      background: rgb(0 0 0 / 0.4);
+    }
+  }
+</style>

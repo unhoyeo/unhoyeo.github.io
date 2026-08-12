@@ -7,15 +7,26 @@ const posts = await getPublishedPosts();
 ---
 
 <Base title="글" description="전체 글 목록">
-  <h1>글</h1>
-  <p class="count">{posts.length}편</p>
+  <header>
+    <h1>글</h1>
+    <p>{posts.length}편</p>
+  </header>
   <PostList posts={posts} />
 </Base>
 
 <style>
-  .count {
+  header {
+    padding: var(--space-8) var(--space-4) var(--space-8);
+  }
+
+  h1 {
+    font-size: var(--text-xl);
+    margin: 0 0 var(--space-1);
+  }
+
+  p {
+    margin: 0;
     color: var(--fg-faint);
     font-size: var(--text-sm);
-    margin-bottom: var(--space-12);
   }
 </style>

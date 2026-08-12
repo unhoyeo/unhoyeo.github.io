@@ -1,75 +1,104 @@
 /*
- * 디자인 토큰 — 레퍼런스가 정해지면 이 :root 블록의 값만 바꾸면 된다.
+ * 디자인 토큰 — ChatGPT 데스크톱 앱 UI 기준.
+ * 채도를 거의 쓰지 않는 무채색 팔레트, 사이드바가 본문보다 한 단계 어둡다(밝다).
  * 컴포넌트는 원시값을 쓰지 않고 항상 var(--...)만 참조한다.
  */
 :root {
   /* 색 — light */
-  --bg: #ffffff;
-  --bg-subtle: #f6f6f7;
-  --fg: #17171a;
-  --fg-muted: #62626b;
-  --fg-faint: #8e8e98;
-  --border: #e4e4e8;
-  --accent: #2f5fe0;
-  --accent-fg: #ffffff;
-  --code-bg: #f6f6f7;
+  --bg: #ffffff; /* 본문 영역 */
+  --bg-sidebar: #f9f9f9; /* 사이드바 */
+  --bg-subtle: #f4f4f4; /* 코드블록·카드 */
+  --bg-hover: #ececec; /* 사이드바 항목 hover */
+  --bg-active: #e8e8e8; /* 사이드바 활성 항목 */
+  --code-header: #ececec; /* 코드블록 언어 라벨 바 */
+
+  --fg: #0d0d0d;
+  --fg-muted: #5d5d5d;
+  --fg-faint: #8f8f8f;
+  --border: #e5e5e5;
+  --border-strong: #d4d4d4;
+
+  --accent: #0d0d0d; /* 레퍼런스가 무채색이라 액센트도 텍스트색 */
+  --accent-hover: #5d5d5d;
 
   /* 타이포 */
-  --font-sans: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont,
-    'Apple SD Gothic Neo', system-ui, 'Segoe UI', Roboto, 'Noto Sans KR', sans-serif;
-  --font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas,
-    'Liberation Mono', monospace;
+  --font-sans:
+    'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo',
+    system-ui, 'Segoe UI', Roboto, 'Noto Sans KR', sans-serif;
+  --font-mono:
+    ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
 
-  --text-xs: 0.8125rem;
-  --text-sm: 0.9375rem;
-  --text-base: 1.0625rem;
-  --text-lg: 1.25rem;
-  --text-xl: 1.5rem;
-  --text-2xl: 2rem;
-  --text-3xl: 2.5rem;
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.375rem;
+  --text-2xl: 1.75rem;
+  --text-3xl: 2.125rem;
 
   /* 한글 가독성: 라틴 기준보다 행간을 넉넉히 */
   --leading-body: 1.75;
   --leading-tight: 1.3;
+  --leading-ui: 1.4;
 
   /* 레이아웃 */
-  --measure: 44rem; /* 본문 최대 폭 */
-  --wide: 64rem;
+  --sidebar-w: 16rem;
+  --measure: 46rem; /* 본문 최대 폭 */
   --space-1: 0.25rem;
   --space-2: 0.5rem;
   --space-3: 0.75rem;
   --space-4: 1rem;
+  --space-5: 1.25rem;
   --space-6: 1.5rem;
   --space-8: 2rem;
+  --space-10: 2.5rem;
   --space-12: 3rem;
   --space-16: 4rem;
-  --radius: 8px;
+  --radius: 0.5rem;
+  --radius-lg: 0.75rem;
 }
 
+/* 다크 팔레트를 한 곳에서 정의하고 두 셀렉터에 적용 */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) {
-    --bg: #0f0f11;
-    --bg-subtle: #17171a;
-    --fg: #ececee;
-    --fg-muted: #a0a0aa;
-    --fg-faint: #74747e;
-    --border: #2a2a30;
-    --accent: #7fa4ff;
-    --accent-fg: #0f0f11;
-    --code-bg: #17171a;
+    --bg: #212121;
+    --bg-sidebar: #171717;
+    --bg-subtle: #2f2f2f;
+    --bg-hover: #2f2f2f;
+    --bg-active: #373737;
+    --code-header: #2f2f2f;
+
+    --fg: #ececec;
+    --fg-muted: #b4b4b4;
+    --fg-faint: #8f8f8f;
+    --border: #373737;
+    --border-strong: #4d4d4d;
+
+    --accent: #ececec;
+    --accent-hover: #b4b4b4;
+
+    color-scheme: dark;
   }
 }
 
 :root[data-theme='dark'] {
-  --bg: #0f0f11;
-  --bg-subtle: #17171a;
-  --fg: #ececee;
-  --fg-muted: #a0a0aa;
-  --fg-faint: #74747e;
-  --border: #2a2a30;
-  --accent: #7fa4ff;
-  --accent-fg: #0f0f11;
-  --code-bg: #17171a;
+  --bg: #212121;
+  --bg-sidebar: #171717;
+  --bg-subtle: #2f2f2f;
+  --bg-hover: #2f2f2f;
+  --bg-active: #373737;
+  --code-header: #2f2f2f;
+
+  --fg: #ececec;
+  --fg-muted: #b4b4b4;
+  --fg-faint: #8f8f8f;
+  --border: #373737;
+  --border-strong: #4d4d4d;
+
+  --accent: #ececec;
+  --accent-hover: #b4b4b4;
+
+  color-scheme: dark;
 }
 
 *,
@@ -99,13 +128,13 @@ h2,
 h3,
 h4 {
   line-height: var(--leading-tight);
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  margin: var(--space-12) 0 var(--space-4);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin: var(--space-10) 0 var(--space-4);
 }
 
 h1 {
-  font-size: var(--text-3xl);
+  font-size: var(--text-2xl);
   margin-top: 0;
 }
 h2 {
@@ -119,19 +148,19 @@ p,
 ul,
 ol,
 blockquote,
-pre,
 table {
-  margin: 0 0 var(--space-6);
+  margin: 0 0 var(--space-5);
 }
 
 a {
   color: var(--accent);
-  text-decoration: none;
+  text-decoration: underline;
+  text-decoration-color: var(--border-strong);
+  text-underline-offset: 3px;
 }
 
 a:hover {
-  text-decoration: underline;
-  text-underline-offset: 3px;
+  text-decoration-color: currentColor;
 }
 
 img,
@@ -144,30 +173,39 @@ video {
 hr {
   border: 0;
   border-top: 1px solid var(--border);
-  margin: var(--space-12) 0;
+  margin: var(--space-10) 0;
 }
 
 blockquote {
-  border-left: 3px solid var(--border);
+  border-left: 2px solid var(--border-strong);
   padding-left: var(--space-4);
   color: var(--fg-muted);
 }
 
-code {
-  font-family: var(--font-mono);
-  font-size: 0.9em;
-  background: var(--code-bg);
-  padding: 0.15em 0.4em;
-  border-radius: 4px;
+blockquote p:last-child {
+  margin-bottom: 0;
 }
 
+/* 인라인 코드 */
+code {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  background: var(--bg-subtle);
+  padding: 0.15em 0.4em;
+  border-radius: 0.25rem;
+}
+
+/*
+ * 코드블록 — 레퍼런스처럼 언어 라벨 바 + 복사 버튼을 얹는다.
+ * .code-block 래퍼는 CodeBlocks.astro의 클라이언트 스크립트가 생성한다.
+ */
 pre {
-  background: var(--code-bg);
+  margin: 0;
   padding: var(--space-4);
-  border-radius: var(--radius);
   overflow-x: auto;
   font-size: var(--text-sm);
   line-height: 1.6;
+  background: var(--bg-subtle) !important;
 }
 
 pre code {
@@ -176,19 +214,66 @@ pre code {
   font-size: inherit;
 }
 
-/* 코드 블록 다크모드 전환 (shiki dual theme) */
+/* 래퍼가 아직 안 씌워진 경우에도 모서리가 깨지지 않도록 */
+pre:not(.code-block pre) {
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--space-5);
+}
+
+.code-block {
+  margin: 0 0 var(--space-5);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--bg-subtle);
+}
+
+.code-block__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-2) var(--space-3) var(--space-2) var(--space-4);
+  background: var(--code-header);
+  color: var(--fg-muted);
+  font-size: var(--text-xs);
+  line-height: var(--leading-ui);
+}
+
+.code-block__lang {
+  font-family: var(--font-sans);
+}
+
+.code-block__copy {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  background: none;
+  border: 0;
+  border-radius: 0.25rem;
+  padding: var(--space-1) var(--space-2);
+  color: var(--fg-muted);
+  font: inherit;
+  cursor: pointer;
+}
+
+.code-block__copy:hover {
+  background: var(--bg-hover);
+  color: var(--fg);
+}
+
+/* shiki 이중 테마: 다크에서 --shiki-dark 변수로 전환 */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) .astro-code,
   :root:not([data-theme='light']) .astro-code span {
     color: var(--shiki-dark) !important;
-    background-color: var(--code-bg) !important;
+    background-color: transparent !important;
   }
 }
 
 :root[data-theme='dark'] .astro-code,
 :root[data-theme='dark'] .astro-code span {
   color: var(--shiki-dark) !important;
-  background-color: var(--code-bg) !important;
+  background-color: transparent !important;
 }
 
 table {
@@ -204,26 +289,10 @@ td {
   text-align: left;
 }
 
-/* 넓은 콘텐츠는 자기 컨테이너 안에서 스크롤 — body는 가로 스크롤 금지 */
-.scroll-x {
-  overflow-x: auto;
-}
-
 :focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 2px solid var(--fg);
   outline-offset: 2px;
-  border-radius: 3px;
-}
-
-.container {
-  width: 100%;
-  max-width: var(--measure);
-  margin: 0 auto;
-  padding: 0 var(--space-6);
-}
-
-.container-wide {
-  max-width: var(--wide);
+  border-radius: 0.25rem;
 }
 
 .sr-only {
@@ -233,4 +302,28 @@ td {
   overflow: hidden;
   clip: rect(0 0 0 0);
   white-space: nowrap;
+}
+
+/* 키보드로 도달했을 때만 보이는 건너뛰기 링크 */
+.skip-link:focus {
+  position: fixed;
+  top: var(--space-3);
+  left: var(--space-3);
+  z-index: 100;
+  width: auto;
+  height: auto;
+  clip: auto;
+  background: var(--bg);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  padding: var(--space-2) var(--space-4);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }

@@ -1,7 +1,7 @@
 ---
 import BaseHead from '../components/BaseHead.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
+import Sidebar from '../components/Sidebar.astro';
+import Topbar from '../components/Topbar.astro';
 import { LOCALE } from '../consts';
 
 interface Props {
@@ -10,10 +10,11 @@ interface Props {
   image?: string;
   type?: 'website' | 'article';
   pubDate?: Date;
-  wide?: boolean;
+  /** 상단 바에 표시할 현재 위치 */
+  label?: string;
 }
 
-const { wide = false, ...head } = Astro.props;
+const { label, ...head } = Astro.props;
 ---
 
 <!doctype html>
@@ -22,17 +23,47 @@ const { wide = false, ...head } = Astro.props;
     <BaseHead {...head} />
   </head>
   <body>
-    <a href="#main" class="sr-only">본문으로 건너뛰기</a>
-    <Header />
-    <main id="main" class:list={['container', { 'container-wide': wide }]}>
-      <slot />
-    </main>
-    <Footer />
+    <a href="#main" class="sr-only skip-link">본문으로 건너뛰기</a>
+
+    <Sidebar />
+
+    <div class="shell">
+      <Topbar label={label ?? head.title} />
+      <main id="main">
+        <div class="column">
+          <slot />
+        </div>
+      </main>
+    </div>
+
+    <style>
+      /* 사이드바는 fixed라 본문 열을 그만큼 밀어준다 */
+      .shell {
+        margin-left: var(--sidebar-w);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      main {
+        flex: 1;
+        padding: var(--space-6) var(--space-6) var(--space-16);
+      }
+
+      .column {
+        max-width: var(--measure);
+        margin: 0 auto;
+      }
+
+      @media (max-width: 60rem) {
+        .shell {
+          margin-left: 0;
+        }
+
+        main {
+          padding: var(--space-4) var(--space-4) var(--space-12);
+        }
+      }
+    </style>
   </body>
 </html>
-
-<style>
-  main {
-    padding-top: var(--space-16);
-  }
-</style>

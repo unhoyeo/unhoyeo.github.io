@@ -1,0 +1,84 @@
+---
+// 마크다운이 렌더한 <pre>에 언어 라벨 바 + 복사 버튼을 씌운다.
+// shiki가 붙여주는 data-language 속성을 그대로 활용한다.
+---
+
+<script>
+  const LABELS: Record<string, string> = {
+    plaintext: '일반 텍스트',
+    text: '일반 텍스트',
+    ansi: '일반 텍스트',
+    js: 'JavaScript',
+    javascript: 'JavaScript',
+    ts: 'TypeScript',
+    typescript: 'TypeScript',
+    jsx: 'JSX',
+    tsx: 'TSX',
+    java: 'Java',
+    kotlin: 'Kotlin',
+    py: 'Python',
+    python: 'Python',
+    rb: 'Ruby',
+    go: 'Go',
+    rust: 'Rust',
+    sh: 'Shell',
+    bash: 'Bash',
+    zsh: 'Zsh',
+    console: '터미널',
+    json: 'JSON',
+    yaml: 'YAML',
+    yml: 'YAML',
+    toml: 'TOML',
+    sql: 'SQL',
+    html: 'HTML',
+    css: 'CSS',
+    scss: 'SCSS',
+    md: 'Markdown',
+    markdown: 'Markdown',
+    diff: 'Diff',
+    dockerfile: 'Dockerfile',
+  };
+
+  const COPY_ICON = `<svg viewBox="0 0 20 20" width="14" height="14" aria-hidden="true"><rect x="7" y="7" width="9" height="9" rx="2" stroke="currentColor" stroke-width="1.4" fill="none"/><path d="M13 7V6a2 2 0 00-2-2H6a2 2 0 00-2 2v5a2 2 0 002 2h1" stroke="currentColor" stroke-width="1.4" fill="none"/></svg>`;
+
+  for (const pre of document.querySelectorAll<HTMLPreElement>('.prose pre')) {
+    if (pre.parentElement?.classList.contains('code-block')) continue;
+
+    const lang = pre.dataset.language ?? 'plaintext';
+    const label = LABELS[lang] ?? lang;
+
+    const wrapper = document.createElement('div');
+    wrapper.className = 'code-block';
+
+    const bar = document.createElement('div');
+    bar.className = 'code-block__bar';
+
+    const name = document.createElement('span');
+    name.className = 'code-block__lang';
+    name.textContent = label;
+
+    const copy = document.createElement('button');
+    copy.type = 'button';
+    copy.className = 'code-block__copy';
+    copy.innerHTML = `${COPY_ICON}<span>복사</span>`;
+
+    copy.addEventListener('click', async () => {
+      const text = pre.innerText;
+      const status = copy.querySelector('span')!;
+      try {
+        await navigator.clipboard.writeText(text);
+        status.textContent = '복사됨';
+      } catch {
+        status.textContent = '복사 실패';
+      }
+      setTimeout(() => {
+        status.textContent = '복사';
+      }, 1500);
+    });
+
+    bar.append(name, copy);
+
+    pre.replaceWith(wrapper);
+    wrapper.append(bar, pre);
+  }
+</script>

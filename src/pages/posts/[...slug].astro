@@ -2,14 +2,23 @@
 import type { GetStaticPaths } from 'astro';
 import { render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
+import CodeBlocks from '../../components/CodeBlocks.astro';
 import { getPublishedPosts, formatDate, isoDate } from '../../utils';
 
 export const getStaticPaths = (async () => {
   const posts = await getPublishedPosts();
-  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+  return posts.map((post, index) => ({
+    params: { slug: post.id },
+    props: {
+      post,
+      // 목록이 최신순이므로 이전 인덱스가 더 최근 글이다
+      newer: posts[index - 1] ?? null,
+      older: posts[index + 1] ?? null,
+    },
+  }));
 }) satisfies GetStaticPaths;
 
-const { post } = Astro.props;
+const { post, newer, older } = Astro.props;
 const { Content, headings } = await render(post);
 const toc = headings.filter((h) => h.depth === 2 || h.depth === 3);
 ---
@@ -25,16 +34,7 @@ const toc = headings.filter((h) => h.depth === 2 || h.depth === 3);
       <h1>{post.data.title}</h1>
       <p class="meta">
         <time datetime={isoDate(post.data.pubDate)}>{formatDate(post.data.pubDate)}</time>
-        {
-          post.data.updatedDate && (
-            <>
-              <span aria-hidden="true"> · </span>
-              <span>
-                {formatDate(post.data.updatedDate)} 수정
-              </span>
-            </>
-          )
-        }
+        {post.data.updatedDate && <span>· {formatDate(post.data.updatedDate)} 수정</span>}
       </p>
       {
         post.data.tags.length > 0 && (
@@ -52,7 +52,7 @@ const toc = headings.filter((h) => h.depth === 2 || h.depth === 3);
     {
       toc.length > 2 && (
         <nav class="toc" aria-label="목차">
-          <p>목차</p>
+          <p class="toc__label">목차</p>
           <ul>
             {toc.map((h) => (
               <li data-depth={h.depth}>
@@ -69,22 +69,45 @@ const toc = headings.filter((h) => h.depth === 2 || h.depth === 3);
     </div>
   </article>
 
-  <p class="back"><a href="/posts/">← 글 목록</a></p>
+  <nav class="pager" aria-label="다른 글">
+    {
+      older && (
+        <a href={`/posts/${older.id}/`} class="pager__item">
+          <span>이전 글</span>
+          {older.data.title}
+        </a>
+      )
+    }
+    {
+      newer && (
+        <a href={`/posts/${newer.id}/`} class="pager__item pager__item--next">
+          <span>다음 글</span>
+          {newer.data.title}
+        </a>
+      )
+    }
+  </nav>
+
+  <CodeBlocks />
 </Base>
 
 <style>
   header {
-    margin-bottom: var(--space-12);
+    padding: var(--space-8) 0 var(--space-8);
   }
 
   header h1 {
-    margin-bottom: var(--space-3);
+    font-size: var(--text-2xl);
+    margin: 0 0 var(--space-3);
   }
 
   .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin: 0;
     color: var(--fg-faint);
     font-size: var(--text-sm);
-    margin: 0;
   }
 
   .tags {
@@ -92,29 +115,32 @@ const toc = headings.filter((h) => h.depth === 2 || h.depth === 3);
     flex-wrap: wrap;
     gap: var(--space-3);
     list-style: none;
-    margin: var(--space-4) 0 0;
+    margin: var(--space-3) 0 0;
     padding: 0;
     font-size: var(--text-xs);
   }
 
   .tags a {
     color: var(--fg-faint);
+    text-decoration: none;
+  }
+
+  .tags a:hover {
+    color: var(--fg);
   }
 
   .toc {
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: var(--space-4) var(--space-6);
-    margin-bottom: var(--space-12);
+    background: var(--bg-subtle);
+    border-radius: var(--radius-lg);
+    padding: var(--space-4);
+    margin-bottom: var(--space-10);
     font-size: var(--text-sm);
   }
 
-  .toc p {
+  .toc__label {
     margin: 0 0 var(--space-2);
     color: var(--fg-faint);
     font-size: var(--text-xs);
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
   }
 
   .toc ul {
@@ -123,26 +149,68 @@ const toc = headings.filter((h) => h.depth === 2 || h.depth === 3);
     padding: 0;
   }
 
+  .toc li {
+    line-height: 1.9;
+  }
+
   .toc li[data-depth='3'] {
     padding-left: var(--space-4);
   }
 
   .toc a {
     color: var(--fg-muted);
+    text-decoration: none;
+  }
+
+  .toc a:hover {
+    color: var(--fg);
+    text-decoration: underline;
+    text-underline-offset: 3px;
   }
 
   .prose :global(h2),
   .prose :global(h3) {
-    scroll-margin-top: var(--space-8);
+    scroll-margin-top: var(--space-12);
   }
 
+  /* 넓은 표는 자기 컨테이너 안에서만 스크롤 */
   .prose :global(table) {
     display: block;
     overflow-x: auto;
   }
 
-  .back {
+  .pager {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+    gap: var(--space-2);
     margin-top: var(--space-16);
+    padding-top: var(--space-6);
+    border-top: 1px solid var(--border);
+  }
+
+  .pager__item {
+    display: block;
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-lg);
+    background: var(--bg-subtle);
+    color: var(--fg);
+    text-decoration: none;
     font-size: var(--text-sm);
+    line-height: 1.5;
+  }
+
+  .pager__item:hover {
+    background: var(--bg-hover);
+  }
+
+  .pager__item span {
+    display: block;
+    color: var(--fg-faint);
+    font-size: var(--text-xs);
+    margin-bottom: var(--space-1);
+  }
+
+  .pager__item--next {
+    text-align: right;
   }
 </style>

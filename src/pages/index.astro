@@ -4,24 +4,36 @@ import PostList from '../components/PostList.astro';
 import { SITE_TAGLINE, SITE_DESCRIPTION } from '../consts';
 import { getPublishedPosts } from '../utils';
 
-const posts = (await getPublishedPosts()).slice(0, 10);
+const all = await getPublishedPosts();
+const posts = all.slice(0, 8);
 ---
 
-<Base>
+<Base label="홈">
   <section class="intro">
     <h1>{SITE_TAGLINE}</h1>
     <p>{SITE_DESCRIPTION}</p>
   </section>
 
-  <h2 class="section-title">최근 글</h2>
+  <p class="section-label">최근 글</p>
   <PostList posts={posts} />
 
-  <p class="more"><a href="/posts/">글 전체 보기 →</a></p>
+  {
+    all.length > posts.length && (
+      <p class="more">
+        <a href="/posts/">글 전체 보기 ({all.length}편) →</a>
+      </p>
+    )
+  }
 </Base>
 
 <style>
   .intro {
-    margin-bottom: var(--space-16);
+    padding: var(--space-10) 0 var(--space-12);
+  }
+
+  .intro h1 {
+    font-size: var(--text-2xl);
+    margin: 0 0 var(--space-3);
   }
 
   .intro p {
@@ -29,17 +41,16 @@ const posts = (await getPublishedPosts()).slice(0, 10);
     margin: 0;
   }
 
-  .section-title {
-    font-size: var(--text-sm);
-    font-weight: 600;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
+  .section-label {
+    margin: 0 0 var(--space-3);
+    padding: 0 var(--space-4);
     color: var(--fg-faint);
-    margin: 0 0 var(--space-8);
+    font-size: var(--text-xs);
   }
 
   .more {
-    margin-top: var(--space-12);
+    margin: var(--space-6) 0 0;
+    padding: 0 var(--space-4);
     font-size: var(--text-sm);
   }
 </style>

@@ -9,6 +9,7 @@ export const LOCALE = 'ko-KR';
 export const NAV_LINKS = [
   { href: '/', label: '홈' },
   { href: '/posts/', label: '글' },
+  { href: '/tags/', label: '태그' },
   { href: '/about/', label: '소개' },
 ];
 
