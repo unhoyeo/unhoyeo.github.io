@@ -24,6 +24,39 @@ export async function getPublishedPosts(): Promise<CollectionEntry<'posts'>[]> {
   return posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 }
 
+/** 카테고리가 없는 글이 모이는 그룹. 정렬에서 항상 맨 뒤로 간다 */
+export const UNCATEGORIZED = '기타';
+
+export interface CategoryGroup {
+  name: string;
+  posts: CollectionEntry<'posts'>[];
+}
+
+/*
+ * 사이드바 주제 트리용. 드래프트 처리는 getPublishedPosts()에 위임한다.
+ * 그룹은 글 많은 순 → 이름 오름차순, '기타'만 개수와 무관하게 맨 마지막.
+ * 그룹 안 글은 getPublishedPosts()의 최신순 정렬을 그대로 물려받는다.
+ */
+export async function getPostsByCategory(): Promise<CategoryGroup[]> {
+  const posts = await getPublishedPosts();
+
+  const groups = new Map<string, CollectionEntry<'posts'>[]>();
+  for (const post of posts) {
+    const name = post.data.category?.trim() || UNCATEGORIZED;
+    const bucket = groups.get(name);
+    if (bucket) bucket.push(post);
+    else groups.set(name, [post]);
+  }
+
+  return [...groups]
+    .map(([name, items]) => ({ name, posts: items }))
+    .sort((a, b) => {
+      if (a.name === UNCATEGORIZED) return 1;
+      if (b.name === UNCATEGORIZED) return -1;
+      return b.posts.length - a.posts.length || a.name.localeCompare(b.name, 'ko');
+    });
+}
+
 export function formatDate(date: Date): string {
   return date.toLocaleDateString(LOCALE, {
     year: 'numeric',

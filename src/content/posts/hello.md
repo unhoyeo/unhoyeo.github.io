@@ -2,6 +2,7 @@
 title: 블로그를 새로 만들었다
 description: Jekyll을 걷어내고 Astro로 옮겼다. 이 글은 템플릿 겸 첫 글이다.
 pubDate: 2026-08-12
+category: 블로그
 tags: ['블로그']
 ---
 

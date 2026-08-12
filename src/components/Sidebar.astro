@@ -1,13 +1,22 @@
 ---
 import { SITE_TITLE, AUTHOR, NAV_LINKS, SOCIAL_LINKS } from '../consts';
-import { getPublishedPosts } from '../utils';
+import { getPublishedPosts, getPostsByCategory } from '../utils';
 
 const posts = (await getPublishedPosts()).slice(0, 25);
+const categories = await getPostsByCategory();
 
 // 상세 글에서는 아래 '최근' 목록이 활성 표시를 가져가므로,
 // 상단 네비는 정확히 그 페이지일 때만 하이라이트한다.
 const path = Astro.url.pathname;
 const isActive = (href: string) => path === href;
+
+/*
+ * 지금 보고 있는 글이 속한 주제는 서버에서 미리 열어둔다.
+ * (localStorage 복원보다 우선 — 저장된 상태가 닫힘이어도 이건 열린 채로 둔다)
+ */
+const openCategory = categories.find((group) =>
+  group.posts.some((post) => path === `/posts/${post.id}/`)
+)?.name;
 ---
 
 <aside id="sidebar" class="sidebar" data-open="false">
@@ -42,25 +51,90 @@ const isActive = (href: string) => path === href;
       </ul>
     </nav>
 
-    <nav class="sidebar__recent" aria-label="최근 글">
-      <p class="section-label">최근</p>
-      <ul>
-        {
-          posts.map((post) => (
-            <li>
-              <a
-                href={`/posts/${post.id}/`}
-                aria-current={path === `/posts/${post.id}/` ? 'page' : undefined}
-                title={post.data.title}
+    {/* 최근 + 주제를 한 덩어리로 스크롤한다 — 브랜드와 하단 프로필은 항상 고정 */}
+    <div class="sidebar__scroll">
+      <nav class="sidebar__recent" aria-label="최근 글">
+        <p class="section-label">최근</p>
+        <ul>
+          {
+            posts.map((post) => (
+              <li>
+                <a
+                  href={`/posts/${post.id}/`}
+                  aria-current={path === `/posts/${post.id}/` ? 'page' : undefined}
+                  title={post.data.title}
+                >
+                  {post.data.title}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+        {posts.length === 0 && <p class="empty">아직 글이 없습니다</p>}
+      </nav>
+
+      {
+        categories.length > 0 && (
+          <nav class="sidebar__topics" aria-label="주제별 글">
+            <p class="section-label">주제</p>
+            {categories.map((group) => (
+              <details
+                class="topic"
+                data-category={group.name}
+                open={group.name === openCategory}
+                data-pinned={group.name === openCategory ? 'true' : undefined}
               >
-                {post.data.title}
-              </a>
-            </li>
-          ))
+                <summary title={group.name}>
+                  <svg class="topic__chevron" viewBox="0 0 20 20" width="12" height="12" aria-hidden="true">
+                    <path
+                      d="M8 5l5 5-5 5"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      fill="none"
+                    />
+                  </svg>
+                  <span class="topic__name">{group.name}</span>
+                  <span class="topic__count">{group.posts.length}</span>
+                </summary>
+                <ul>
+                  {group.posts.map((post) => (
+                    <li>
+                      <a
+                        href={`/posts/${post.id}/`}
+                        aria-current={path === `/posts/${post.id}/` ? 'page' : undefined}
+                        title={post.data.title}
+                      >
+                        {post.data.title}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </details>
+            ))}
+          </nav>
+        )
+      }
+
+      {/*
+        저장된 열림 상태 복원. 모듈 스크립트는 지연 실행이라 접혔다 펴지는 게 보인다 —
+        트리 바로 뒤에서 동기로 실행해 첫 페인트 전에 상태를 맞춘다.
+      */}
+      <script is:inline>
+        try {
+          const saved = JSON.parse(localStorage.getItem('sidebar:open-categories') || '[]');
+          if (Array.isArray(saved)) {
+            for (const el of document.querySelectorAll('.sidebar__topics .topic')) {
+              // data-pinned(=현재 글의 주제)은 저장 상태와 무관하게 열어둔다
+              if (el.dataset.pinned !== 'true') el.open = saved.includes(el.dataset.category);
+            }
+          }
+        } catch {
+          /* 저장값이 깨졌으면 기본(접힘) 상태를 그대로 쓴다 */
         }
-      </ul>
-      {posts.length === 0 && <p class="empty">아직 글이 없습니다</p>}
-    </nav>
+      </script>
+    </div>
 
     <div class="sidebar__bottom">
       <a href="/about/" class="profile">
@@ -136,7 +210,8 @@ const isActive = (href: string) => path === href;
   }
 
   .sidebar__nav ul,
-  .sidebar__recent ul {
+  .sidebar__recent ul,
+  .sidebar__topics ul {
     list-style: none;
     margin: 0;
     padding: 0;
@@ -144,7 +219,8 @@ const isActive = (href: string) => path === href;
 
   /* 목록 항목은 ChatGPT 사이드바처럼 한 줄로 자르고 라운드 하이라이트 */
   .sidebar__nav a,
-  .sidebar__recent a {
+  .sidebar__recent a,
+  .sidebar__topics a {
     display: block;
     padding: var(--space-2);
     border-radius: var(--radius);
@@ -158,23 +234,82 @@ const isActive = (href: string) => path === href;
   }
 
   .sidebar__nav a:hover,
-  .sidebar__recent a:hover {
+  .sidebar__recent a:hover,
+  .sidebar__topics a:hover {
     background: var(--bg-hover);
     color: var(--fg);
   }
 
   .sidebar__nav a[aria-current='page'],
-  .sidebar__recent a[aria-current='page'] {
+  .sidebar__recent a[aria-current='page'],
+  .sidebar__topics a[aria-current='page'] {
     background: var(--bg-active);
     color: var(--fg);
   }
 
-  /* 글 목록만 넘치면 스크롤 — 상단 브랜드와 하단 프로필은 항상 고정 */
-  .sidebar__recent {
+  /*
+   * '최근'과 '주제'를 한 덩어리로 스크롤한다.
+   * 상단 브랜드와 하단 프로필은 이 영역 밖이라 항상 고정된다.
+   */
+  .sidebar__scroll {
     flex: 1;
     min-height: 0;
     overflow-y: auto;
     scrollbar-width: thin;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  /* --- 주제 트리 --- */
+
+  .topic > summary {
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+    padding: var(--space-2);
+    border-radius: var(--radius);
+    color: var(--fg-muted);
+    font-size: var(--text-sm);
+    line-height: var(--leading-ui);
+    cursor: pointer;
+    list-style: none; /* 기본 삼각형 마커 제거 */
+  }
+
+  .topic > summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .topic > summary:hover {
+    background: var(--bg-hover);
+    color: var(--fg);
+  }
+
+  .topic__chevron {
+    flex: none;
+    transition: transform 0.15s ease;
+  }
+
+  .topic[open] > summary .topic__chevron {
+    transform: rotate(90deg);
+  }
+
+  .topic__name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .topic__count {
+    margin-left: auto;
+    padding-left: var(--space-2);
+    color: var(--fg-faint);
+    font-size: var(--text-xs);
+  }
+
+  /* 글 항목은 셰브론(12px) + gap 만큼 들여쓴다 */
+  .topic > ul a {
+    padding-left: calc(var(--space-2) + 12px + var(--space-1));
   }
 
   .empty {
@@ -282,3 +417,23 @@ const isActive = (href: string) => path === href;
     }
   }
 </style>
+
+<script>
+  /*
+   * 열고 닫은 상태를 저장한다. 복원은 트리 바로 뒤 is:inline 스크립트가 하고
+   * (깜빡임 방지), 저장은 급하지 않으므로 여기서 한다.
+   */
+  const KEY = 'sidebar:open-categories';
+  const topics = document.querySelectorAll<HTMLDetailsElement>('.sidebar__topics .topic');
+
+  const save = () => {
+    const open = [...topics].filter((el) => el.open).map((el) => el.dataset.category ?? '');
+    try {
+      localStorage.setItem(KEY, JSON.stringify(open));
+    } catch {
+      /* 저장 실패(사생활 보호 모드 등)는 무시한다 — 화면 동작에는 영향 없다 */
+    }
+  };
+
+  topics.forEach((el) => el.addEventListener('toggle', save));
+</script>
