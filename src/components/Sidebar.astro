@@ -277,7 +277,8 @@ const openCategory = categories.find((group) =>
     margin: 0 0 var(--space-1);
     padding: 0 var(--space-2);
     color: var(--fg-faint);
-    font-size: var(--text-xs);
+    /* 사이드바의 다른 항목(네비·카테고리·글 제목)과 같은 크기 */
+    font-size: var(--text-sm);
     line-height: var(--leading-ui);
     cursor: pointer;
     list-style: none;
@@ -287,9 +288,11 @@ const openCategory = categories.find((group) =>
     display: none;
   }
 
-  .section-label:hover {
-    color: var(--fg-muted);
-  }
+  /*
+   * 섹션 라벨은 hover 시 아무 변화도 주지 않는다.
+   * 접히고 펴진다는 신호는 셰브론이 이미 하고 있고, 포커스 표시는
+   * global.css의 :focus-visible 전역 규칙이 그대로 담당한다.
+   */
 
   .chevron {
     flex: none;
