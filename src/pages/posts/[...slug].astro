@@ -32,27 +32,34 @@ const { Content, headings } = await render(post);
   {/* 레이아웃이 본문 열 옆 레일에 꽂는다. 목차가 없는 글이면 슬롯을 아예 넘기지 않는다 */}
   {hasToc(headings) && <TableOfContents slot="toc" headings={headings} />}
 
-  <article>
-    <header>
-      <h1>{post.data.title}</h1>
-      <p class="meta">
-        <time datetime={isoDate(post.data.pubDate)}>{formatDate(post.data.pubDate)}</time>
-        {post.data.updatedDate && <span>· {formatDate(post.data.updatedDate)} 수정</span>}
-      </p>
-      {
-        post.data.tags.length > 0 && (
-          <ul class="tags">
-            {post.data.tags.map((tag) => (
-              <li>
-                <a href={`/tags/${tag}/`}>#{tag}</a>
-              </li>
-            ))}
-          </ul>
-        )
-      }
-    </header>
+  {/*
+    헤더는 레이아웃의 1행에 따로 들어간다 — 목차 레일이 2행에서,
+    즉 본문 첫 줄 높이에서 시작하도록.
+  */}
+  <header slot="post-header">
+    <h1 id="post-title">{post.data.title}</h1>
+    <p class="meta">
+      <time datetime={isoDate(post.data.pubDate)}>{formatDate(post.data.pubDate)}</time>
+      {post.data.updatedDate && <span>· {formatDate(post.data.updatedDate)} 수정</span>}
+    </p>
+    {
+      post.data.tags.length > 0 && (
+        <ul class="tags">
+          {post.data.tags.map((tag) => (
+            <li>
+              <a href={`/tags/${tag}/`}>#{tag}</a>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </header>
 
-
+  {/*
+    레이아웃 때문에 제목이 article 밖(1행)에 있다. 보조기기가 이 article의
+    이름을 제목에서 가져가도록 aria-labelledby로 다시 이어준다.
+  */}
+  <article aria-labelledby="post-title">
     <div class="prose">
       <Content />
     </div>

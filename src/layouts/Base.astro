@@ -26,6 +26,14 @@ const { label, ...head } = Astro.props;
  */
 const tocHtml = Astro.slots.has('toc') ? await Astro.slots.render('toc') : '';
 const hasToc = tocHtml.trim() !== '';
+
+/*
+ * 글 헤더(제목·날짜·태그)를 따로 받는 이유는 목차 레일의 시작 높이 때문이다.
+ * 헤더를 별도 행에 두고 레일을 2행에 배치하면, 헤더가 몇 줄이든
+ * 레일 상단이 본문 첫 줄과 자동으로 맞는다(오프셋 하드코딩 없이).
+ */
+const headerHtml = Astro.slots.has('post-header') ? await Astro.slots.render('post-header') : '';
+const hasHeader = headerHtml.trim() !== '';
 ---
 
 <!doctype html>
@@ -41,12 +49,11 @@ const hasToc = tocHtml.trim() !== '';
     <div class="shell">
       <Topbar label={label ?? head.title} />
       <main id="main" class={hasToc ? 'with-toc' : undefined}>
+        {hasHeader && <div class="post-header" set:html={headerHtml} />}
         <div class="column">
           <slot />
         </div>
-        {
-          hasToc && <div class="toc-rail" set:html={tocHtml} />
-        }
+        {hasToc && <div class="toc-rail" set:html={tocHtml} />}
       </main>
     </div>
 
@@ -64,7 +71,8 @@ const hasToc = tocHtml.trim() !== '';
         padding: var(--space-6) var(--space-6) var(--space-16);
       }
 
-      .column {
+      .column,
+      .post-header {
         max-width: var(--measure);
         margin: 0 auto;
       }
@@ -85,24 +93,41 @@ const hasToc = tocHtml.trim() !== '';
        * gap 2.5rem = 카카오 실측 41px.
        */
       @media (min-width: 84rem) {
+        /*
+         * 2행 그리드. 1행은 글 헤더(본문 열 폭 전체), 2행은 본문 + 목차 레일.
+         * 레일이 2행에서 시작하므로 목차 첫 항목이 본문 첫 줄과 자동으로 맞는다.
+         * 제목이 몇 줄이든, 태그가 있든 없든 1행 높이가 알아서 달라진다.
+         */
         .with-toc {
-          display: flex;
-          flex-direction: row;
+          display: grid;
+          grid-template-columns: minmax(0, var(--measure)) var(--toc-w);
+          column-gap: var(--space-10);
           justify-content: center;
-          gap: var(--space-10);
         }
 
-        .with-toc .column {
-          flex: 1 1 var(--measure);
-          min-width: 0;
+        .with-toc .post-header {
+          grid-column: 1;
+          grid-row: 1;
+          max-width: none;
           margin: 0;
         }
 
-        /* 레일은 main 높이만큼 늘어난다 — 안쪽 sticky가 움직일 공간이 된다 */
-        .toc-rail {
+        .with-toc .column {
+          grid-column: 1;
+          grid-row: 2;
+          min-width: 0;
+          max-width: none;
+          margin: 0;
+        }
+
+        /*
+         * 레일은 2행 높이(=본문 높이)만큼 늘어난다 — 안쪽 sticky가 움직일 공간이 된다.
+         * align-items를 start로 주면 레일이 납작해져 sticky가 죽으니 stretch(기본)를 유지한다.
+         */
+        .with-toc .toc-rail {
           display: block;
-          flex: none;
-          width: var(--toc-w);
+          grid-column: 2;
+          grid-row: 2;
         }
       }
 

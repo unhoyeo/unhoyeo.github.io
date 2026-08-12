@@ -98,7 +98,8 @@ const toc = tocHeadings(headings);
       overflow-y: auto;
       scrollbar-width: thin;
       margin-bottom: 0;
-      padding: var(--space-2) 0;
+      /* 첫 항목 상단이 본문 첫 줄과 맞아야 하므로 위쪽 여백을 두지 않는다 */
+      padding: 0;
       background: none;
       border: 0;
       border-radius: 0;
