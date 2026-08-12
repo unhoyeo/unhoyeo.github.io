@@ -6,17 +6,18 @@
  * 항목이 2개 미만이면 렌더하지 않는다 — 하나짜리 목차는 의미가 없다.
  */
 import type { MarkdownHeading } from 'astro';
+import { tocHeadings, hasToc } from '../utils';
 
 interface Props {
   headings: MarkdownHeading[];
 }
 
 const { headings } = Astro.props;
-const toc = headings.filter((h) => h.depth === 2 || h.depth === 3);
+const toc = tocHeadings(headings);
 ---
 
 {
-  toc.length > 1 && (
+  hasToc(headings) && (
     <nav id="toc" class="toc" aria-label="목차">
       <ul>
         {toc.map((h) => (
@@ -84,15 +85,16 @@ const toc = headings.filter((h) => h.depth === 2 || h.depth === 3);
     background: var(--toc-parent);
   }
 
-  /* 넓은 화면: 박스 없이 본문 옆 여백에 뜨는 플랫 텍스트 목록 */
+  /*
+   * 넓은 화면: 박스 없는 플랫 목록이 본문 옆 레일 안에서 sticky로 따라온다.
+   * 레일 폭·위치는 Base.astro가 잡는다. 여기서는 생김새와 붙는 높이만.
+   */
   @media (min-width: 84rem) {
     .toc {
-      position: fixed;
+      position: sticky;
       top: 4rem;
-      right: var(--space-10);
-      z-index: 10;
-      width: var(--toc-w);
-      max-height: calc(100vh - 8rem);
+      align-self: start;
+      max-height: calc(100vh - 6rem);
       overflow-y: auto;
       scrollbar-width: thin;
       margin-bottom: 0;
@@ -101,14 +103,6 @@ const toc = headings.filter((h) => h.depth === 2 || h.depth === 3);
       border: 0;
       border-radius: 0;
       box-shadow: none;
-    }
-
-    /*
-     * 패널이 뜨는 폭에서만 본문 열의 오른쪽 자리를 비워 겹침을 막는다.
-     * 본문과 목차 사이 간격 = 실측 41px ≈ var(--space-10).
-     */
-    :global(main:has(#toc)) {
-      padding-right: calc(var(--toc-w) + var(--space-10) * 2);
     }
   }
 </style>
@@ -143,20 +137,34 @@ const toc = headings.filter((h) => h.depth === 2 || h.depth === 3);
     ).filter((h) => links.has(h.id));
 
     if (headings.length > 0) {
-      const visible = new Set<HTMLElement>();
+      /*
+       * 판정은 관측 띠가 아니라 기준선 하나로 한다.
+       * '현재 섹션 = 상단 기준선을 이미 지나간 헤딩 중 마지막 것'.
+       * 다음 제목이 기준선을 넘기 전까지는 이전 섹션이 계속 활성이다.
+       */
+      const LINE = 88; // 상단바(48px) + 여유
+
       let current: HTMLAnchorElement | null = null;
       let currentParent: HTMLAnchorElement | null = null;
 
-      const highlight = () => {
-        // 화면에 보이는 것 중 가장 위, 하나도 없으면 이미 지나친 마지막 섹션
-        let target: HTMLElement | undefined;
-        if (visible.size > 0) {
-          target = headings.filter((h) => visible.has(h))[0];
-        } else {
-          target = headings.filter((h) => h.getBoundingClientRect().top < 0).pop();
+      // 목차가 자체 스크롤 중일 때만, 목차 안에서만 스크롤해 활성 항목을 보이게 유지
+      const keepVisible = (a: HTMLAnchorElement) => {
+        if (toc.scrollHeight <= toc.clientHeight) return;
+        const item = a.getBoundingClientRect();
+        const box = toc.getBoundingClientRect();
+        if (item.top < box.top) toc.scrollTop += item.top - box.top;
+        else if (item.bottom > box.bottom) toc.scrollTop += item.bottom - box.bottom;
+      };
+
+      const update = () => {
+        // 글 맨 위(아직 아무 제목도 기준선을 안 지남)에서는 첫 항목을 활성으로 둔다
+        let target = headings[0];
+        for (const h of headings) {
+          if (h.getBoundingClientRect().top > LINE) break;
+          target = h;
         }
 
-        const next = target ? (links.get(target.id) ?? null) : null;
+        const next = links.get(target.id) ?? null;
         if (next === current) return;
 
         current?.removeAttribute('aria-current');
@@ -168,25 +176,22 @@ const toc = headings.filter((h) => h.depth === 2 || h.depth === 3);
 
         current = next;
         currentParent = nextParent;
-        // 목차가 길어 자체 스크롤이 생겼을 때만 활성 항목을 보이게 유지한다.
-        // (정적 박스일 때는 스크롤이 없으므로 페이지가 튀지 않는다)
-        if (toc.scrollHeight > toc.clientHeight) next?.scrollIntoView({ block: 'nearest' });
+        if (next) keepVisible(next);
       };
 
-      const observer = new IntersectionObserver(
-        (entries) => {
-          for (const entry of entries) {
-            const el = entry.target as HTMLElement;
-            if (entry.isIntersecting) visible.add(el);
-            else visible.delete(el);
-          }
-          highlight();
-        },
-        // rootMargin은 px/%만 허용된다. 상단바(약 3rem=48px)에 가린 부분은 제외.
-        { rootMargin: '-64px 0px -60% 0px' }
-      );
+      let queued = false;
+      const onScroll = () => {
+        if (queued) return;
+        queued = true;
+        requestAnimationFrame(() => {
+          queued = false;
+          update();
+        });
+      };
 
-      headings.forEach((h) => observer.observe(h));
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', onScroll, { passive: true });
+      update();
     }
   }
 </script>

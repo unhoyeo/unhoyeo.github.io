@@ -15,6 +15,17 @@ interface Props {
 }
 
 const { label, ...head } = Astro.props;
+
+/*
+ * 목차를 넘긴 페이지에서만 우측 레일을 만든다. 슬롯이 비었는데 레일이 있으면
+ * 빈 폭이 자리를 차지해 본문이 왼쪽으로 밀린다 — 서버에서 미리 판정해 아예 안 그린다.
+ *
+ * has()만으로는 부족하다. 페이지가 `{조건 && <TableOfContents slot="toc" />}`처럼
+ * 넘기면 조건이 거짓이어도 has()는 true다(슬롯 자체는 존재하므로).
+ * 그래서 실제로 렌더해보고 결과가 비었는지까지 확인한다.
+ */
+const tocHtml = Astro.slots.has('toc') ? await Astro.slots.render('toc') : '';
+const hasToc = tocHtml.trim() !== '';
 ---
 
 <!doctype html>
@@ -29,10 +40,13 @@ const { label, ...head } = Astro.props;
 
     <div class="shell">
       <Topbar label={label ?? head.title} />
-      <main id="main">
+      <main id="main" class={hasToc ? 'with-toc' : undefined}>
         <div class="column">
           <slot />
         </div>
+        {
+          hasToc && <div class="toc-rail" set:html={tocHtml} />
+        }
       </main>
     </div>
 
@@ -53,6 +67,43 @@ const { label, ...head } = Astro.props;
       .column {
         max-width: var(--measure);
         margin: 0 auto;
+      }
+
+      /*
+       * 좁은 화면에서는 목차를 숨긴다.
+       * 레일이 DOM상 본문 뒤에 있어서, 세로로 쌓으면 목차가 글 제목보다 위로 온다.
+       * 글을 열자마자 목차부터 보이는 건 좋지 않고, 제목 아래로 넣으려면
+       * 마크업을 이중으로 들고 있어야 한다. 목차는 여백이 있는 넓은 화면의 장치로 둔다.
+       */
+      .toc-rail {
+        display: none;
+      }
+
+      /*
+       * 넓은 화면: 본문 열 + 목차 레일을 한 묶음으로 가운데 정렬한다.
+       * 목차는 화면 오른쪽 끝이 아니라 본문 바로 옆에 붙어 다닌다.
+       * gap 2.5rem = 카카오 실측 41px.
+       */
+      @media (min-width: 84rem) {
+        .with-toc {
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+          gap: var(--space-10);
+        }
+
+        .with-toc .column {
+          flex: 1 1 var(--measure);
+          min-width: 0;
+          margin: 0;
+        }
+
+        /* 레일은 main 높이만큼 늘어난다 — 안쪽 sticky가 움직일 공간이 된다 */
+        .toc-rail {
+          display: block;
+          flex: none;
+          width: var(--toc-w);
+        }
       }
 
       @media (max-width: 60rem) {

@@ -307,6 +307,15 @@ pre:not(.code-block pre) {
   background-color: transparent !important;
 }
 
+/* 체크리스트: 체크박스 옆에 불릿이 같이 찍히지 않게 한다 */
+li:has(> input[type='checkbox']) {
+  list-style: none;
+}
+
+input[type='checkbox'] {
+  margin: 0 var(--space-2) 0 0;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;

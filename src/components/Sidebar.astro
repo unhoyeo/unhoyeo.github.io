@@ -116,9 +116,11 @@ const isActive = (href: string) => path === href;
     color: var(--fg);
     text-decoration: none;
     font-weight: 600;
-    font-size: var(--text-sm);
-    line-height: var(--leading-ui);
+    /* 로고 자리라 UI 기본(14px)보다 한 단계 크게 — 하단 프로필과 위계를 가른다 */
+    font-size: var(--text-lg);
+    line-height: var(--leading-tight);
     letter-spacing: -0.01em;
+    padding: var(--space-2) var(--space-2) var(--space-3);
   }
 
   .brand:hover {
