@@ -249,7 +249,7 @@ const openCategory = categories.find((group) =>
     gap: var(--space-2);
     padding: var(--space-2);
     border-radius: var(--radius);
-    color: var(--fg);
+    color: var(--sidebar-fg);
     text-decoration: none;
     font-weight: 600;
     /* 로고 자리라 UI 기본(14px)보다 한 단계 크게 — 하단 프로필과 위계를 가른다 */
@@ -276,7 +276,7 @@ const openCategory = categories.find((group) =>
     width: fit-content;
     margin: 0 0 var(--space-1);
     padding: 0 var(--space-2);
-    color: var(--fg-faint);
+    color: var(--sidebar-fg-label);
     /* 사이드바의 다른 항목(네비·카테고리·글 제목)과 같은 크기 */
     font-size: var(--text-sm);
     line-height: var(--leading-ui);
@@ -318,7 +318,7 @@ const openCategory = categories.find((group) =>
     display: block;
     padding: var(--space-2);
     border-radius: var(--radius);
-    color: var(--fg-muted);
+    color: var(--sidebar-fg);
     text-decoration: none;
     font-size: var(--text-sm);
     line-height: var(--leading-ui);
@@ -331,14 +331,14 @@ const openCategory = categories.find((group) =>
   .sidebar__recent a:hover,
   .sidebar__topics a:hover {
     background: var(--bg-hover);
-    color: var(--fg);
+    color: var(--sidebar-fg-active);
   }
 
   .sidebar__nav a[aria-current='page'],
   .sidebar__recent a[aria-current='page'],
   .sidebar__topics a[aria-current='page'] {
     background: var(--bg-active);
-    color: var(--fg);
+    color: var(--sidebar-fg-active);
   }
 
   /*
@@ -365,7 +365,7 @@ const openCategory = categories.find((group) =>
     gap: var(--space-1);
     padding: var(--space-2);
     border-radius: var(--radius);
-    color: var(--fg-muted);
+    color: var(--sidebar-fg);
     font-size: var(--text-sm);
     line-height: var(--leading-ui);
     cursor: pointer;
@@ -378,7 +378,7 @@ const openCategory = categories.find((group) =>
 
   .topic > summary:hover {
     background: var(--bg-hover);
-    color: var(--fg);
+    color: var(--sidebar-fg-active);
   }
 
   .topic[open] > summary .topic__chevron {
@@ -394,7 +394,7 @@ const openCategory = categories.find((group) =>
   .topic__count {
     margin-left: auto;
     padding-left: var(--space-2);
-    color: var(--fg-faint);
+    color: var(--sidebar-fg-label);
     font-size: var(--text-xs);
   }
 
@@ -405,7 +405,7 @@ const openCategory = categories.find((group) =>
 
   .empty {
     padding: 0 var(--space-2);
-    color: var(--fg-faint);
+    color: var(--sidebar-fg-label);
     font-size: var(--text-sm);
   }
 
@@ -420,7 +420,7 @@ const openCategory = categories.find((group) =>
     gap: var(--space-2);
     padding: var(--space-2);
     border-radius: var(--radius);
-    color: var(--fg);
+    color: var(--sidebar-fg);
     text-decoration: none;
     font-size: var(--text-sm);
     line-height: var(--leading-ui);
@@ -437,7 +437,7 @@ const openCategory = categories.find((group) =>
     height: 1.5rem;
     border-radius: 50%;
     background: var(--bg-active);
-    color: var(--fg-muted);
+    color: var(--sidebar-fg-label);
     font-size: var(--text-xs);
   }
 
@@ -450,12 +450,12 @@ const openCategory = categories.find((group) =>
   }
 
   .sidebar__links a {
-    color: var(--fg-faint);
+    color: var(--sidebar-fg-label);
     text-decoration: none;
   }
 
   .sidebar__links a:hover {
-    color: var(--fg);
+    color: var(--sidebar-fg-active);
   }
 
   .icon-btn {
@@ -466,13 +466,13 @@ const openCategory = categories.find((group) =>
     background: none;
     border: 0;
     border-radius: var(--radius);
-    color: var(--fg-muted);
+    color: var(--sidebar-fg-label);
     cursor: pointer;
   }
 
   .icon-btn:hover {
     background: var(--bg-hover);
-    color: var(--fg);
+    color: var(--sidebar-fg-active);
   }
 
   /*
