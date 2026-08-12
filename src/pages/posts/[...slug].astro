@@ -1,0 +1,148 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { getPublishedPosts, formatDate, isoDate } from '../../utils';
+
+export const getStaticPaths = (async () => {
+  const posts = await getPublishedPosts();
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}) satisfies GetStaticPaths;
+
+const { post } = Astro.props;
+const { Content, headings } = await render(post);
+const toc = headings.filter((h) => h.depth === 2 || h.depth === 3);
+---
+
+<Base
+  title={post.data.title}
+  description={post.data.description}
+  type="article"
+  pubDate={post.data.pubDate}
+>
+  <article>
+    <header>
+      <h1>{post.data.title}</h1>
+      <p class="meta">
+        <time datetime={isoDate(post.data.pubDate)}>{formatDate(post.data.pubDate)}</time>
+        {
+          post.data.updatedDate && (
+            <>
+              <span aria-hidden="true"> · </span>
+              <span>
+                {formatDate(post.data.updatedDate)} 수정
+              </span>
+            </>
+          )
+        }
+      </p>
+      {
+        post.data.tags.length > 0 && (
+          <ul class="tags">
+            {post.data.tags.map((tag) => (
+              <li>
+                <a href={`/tags/${tag}/`}>#{tag}</a>
+              </li>
+            ))}
+          </ul>
+        )
+      }
+    </header>
+
+    {
+      toc.length > 2 && (
+        <nav class="toc" aria-label="목차">
+          <p>목차</p>
+          <ul>
+            {toc.map((h) => (
+              <li data-depth={h.depth}>
+                <a href={`#${h.slug}`}>{h.text}</a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      )
+    }
+
+    <div class="prose">
+      <Content />
+    </div>
+  </article>
+
+  <p class="back"><a href="/posts/">← 글 목록</a></p>
+</Base>
+
+<style>
+  header {
+    margin-bottom: var(--space-12);
+  }
+
+  header h1 {
+    margin-bottom: var(--space-3);
+  }
+
+  .meta {
+    color: var(--fg-faint);
+    font-size: var(--text-sm);
+    margin: 0;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    list-style: none;
+    margin: var(--space-4) 0 0;
+    padding: 0;
+    font-size: var(--text-xs);
+  }
+
+  .tags a {
+    color: var(--fg-faint);
+  }
+
+  .toc {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: var(--space-4) var(--space-6);
+    margin-bottom: var(--space-12);
+    font-size: var(--text-sm);
+  }
+
+  .toc p {
+    margin: 0 0 var(--space-2);
+    color: var(--fg-faint);
+    font-size: var(--text-xs);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .toc ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .toc li[data-depth='3'] {
+    padding-left: var(--space-4);
+  }
+
+  .toc a {
+    color: var(--fg-muted);
+  }
+
+  .prose :global(h2),
+  .prose :global(h3) {
+    scroll-margin-top: var(--space-8);
+  }
+
+  .prose :global(table) {
+    display: block;
+    overflow-x: auto;
+  }
+
+  .back {
+    margin-top: var(--space-16);
+    font-size: var(--text-sm);
+  }
+</style>

@@ -1,0 +1,38 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { LOCALE } from '../consts';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  type?: 'website' | 'article';
+  pubDate?: Date;
+  wide?: boolean;
+}
+
+const { wide = false, ...head } = Astro.props;
+---
+
+<!doctype html>
+<html lang={LOCALE}>
+  <head>
+    <BaseHead {...head} />
+  </head>
+  <body>
+    <a href="#main" class="sr-only">본문으로 건너뛰기</a>
+    <Header />
+    <main id="main" class:list={['container', { 'container-wide': wide }]}>
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>
+
+<style>
+  main {
+    padding-top: var(--space-16);
+  }
+</style>

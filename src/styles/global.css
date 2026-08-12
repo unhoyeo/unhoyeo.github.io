@@ -1,0 +1,236 @@
+/*
+ * 디자인 토큰 — 레퍼런스가 정해지면 이 :root 블록의 값만 바꾸면 된다.
+ * 컴포넌트는 원시값을 쓰지 않고 항상 var(--...)만 참조한다.
+ */
+:root {
+  /* 색 — light */
+  --bg: #ffffff;
+  --bg-subtle: #f6f6f7;
+  --fg: #17171a;
+  --fg-muted: #62626b;
+  --fg-faint: #8e8e98;
+  --border: #e4e4e8;
+  --accent: #2f5fe0;
+  --accent-fg: #ffffff;
+  --code-bg: #f6f6f7;
+
+  /* 타이포 */
+  --font-sans: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont,
+    'Apple SD Gothic Neo', system-ui, 'Segoe UI', Roboto, 'Noto Sans KR', sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas,
+    'Liberation Mono', monospace;
+
+  --text-xs: 0.8125rem;
+  --text-sm: 0.9375rem;
+  --text-base: 1.0625rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.5rem;
+  --text-2xl: 2rem;
+  --text-3xl: 2.5rem;
+
+  /* 한글 가독성: 라틴 기준보다 행간을 넉넉히 */
+  --leading-body: 1.75;
+  --leading-tight: 1.3;
+
+  /* 레이아웃 */
+  --measure: 44rem; /* 본문 최대 폭 */
+  --wide: 64rem;
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --radius: 8px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --bg: #0f0f11;
+    --bg-subtle: #17171a;
+    --fg: #ececee;
+    --fg-muted: #a0a0aa;
+    --fg-faint: #74747e;
+    --border: #2a2a30;
+    --accent: #7fa4ff;
+    --accent-fg: #0f0f11;
+    --code-bg: #17171a;
+  }
+}
+
+:root[data-theme='dark'] {
+  --bg: #0f0f11;
+  --bg-subtle: #17171a;
+  --fg: #ececee;
+  --fg-muted: #a0a0aa;
+  --fg-faint: #74747e;
+  --border: #2a2a30;
+  --accent: #7fa4ff;
+  --accent-fg: #0f0f11;
+  --code-bg: #17171a;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: var(--leading-body);
+  word-break: keep-all; /* 한글 단어 중간에서 줄바꿈 방지 */
+  overflow-wrap: break-word;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  line-height: var(--leading-tight);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: var(--space-12) 0 var(--space-4);
+}
+
+h1 {
+  font-size: var(--text-3xl);
+  margin-top: 0;
+}
+h2 {
+  font-size: var(--text-xl);
+}
+h3 {
+  font-size: var(--text-lg);
+}
+
+p,
+ul,
+ol,
+blockquote,
+pre,
+table {
+  margin: 0 0 var(--space-6);
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+img,
+video {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius);
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--border);
+  margin: var(--space-12) 0;
+}
+
+blockquote {
+  border-left: 3px solid var(--border);
+  padding-left: var(--space-4);
+  color: var(--fg-muted);
+}
+
+code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  background: var(--code-bg);
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+}
+
+pre {
+  background: var(--code-bg);
+  padding: var(--space-4);
+  border-radius: var(--radius);
+  overflow-x: auto;
+  font-size: var(--text-sm);
+  line-height: 1.6;
+}
+
+pre code {
+  background: none;
+  padding: 0;
+  font-size: inherit;
+}
+
+/* 코드 블록 다크모드 전환 (shiki dual theme) */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .astro-code,
+  :root:not([data-theme='light']) .astro-code span {
+    color: var(--shiki-dark) !important;
+    background-color: var(--code-bg) !important;
+  }
+}
+
+:root[data-theme='dark'] .astro-code,
+:root[data-theme='dark'] .astro-code span {
+  color: var(--shiki-dark) !important;
+  background-color: var(--code-bg) !important;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-sm);
+}
+
+th,
+td {
+  border-bottom: 1px solid var(--border);
+  padding: var(--space-2) var(--space-3);
+  text-align: left;
+}
+
+/* 넓은 콘텐츠는 자기 컨테이너 안에서 스크롤 — body는 가로 스크롤 금지 */
+.scroll-x {
+  overflow-x: auto;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 0 var(--space-6);
+}
+
+.container-wide {
+  max-width: var(--wide);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}

@@ -1,0 +1,27 @@
+---
+import Base from '../layouts/Base.astro';
+import { AUTHOR, SOCIAL_LINKS } from '../consts';
+---
+
+<Base title="소개" description="Unho Yeo 소개">
+  <h1>소개</h1>
+
+  <p>안녕하세요, {AUTHOR}입니다.</p>
+
+  <p>
+    만들면서 배운 것들을 기록합니다. 잘 된 것보다 <strong>왜 안 됐는지</strong>를 더 자주 씁니다.
+  </p>
+
+  <h2>어디서 찾을 수 있나</h2>
+  <ul>
+    {
+      SOCIAL_LINKS.map((link) => (
+        <li>
+          <a href={link.href} rel="me noopener" target="_blank">
+            {link.label}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</Base>

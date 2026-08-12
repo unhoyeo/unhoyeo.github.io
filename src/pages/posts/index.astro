@@ -1,0 +1,21 @@
+---
+import Base from '../../layouts/Base.astro';
+import PostList from '../../components/PostList.astro';
+import { getPublishedPosts } from '../../utils';
+
+const posts = await getPublishedPosts();
+---
+
+<Base title="글" description="전체 글 목록">
+  <h1>글</h1>
+  <p class="count">{posts.length}편</p>
+  <PostList posts={posts} />
+</Base>
+
+<style>
+  .count {
+    color: var(--fg-faint);
+    font-size: var(--text-sm);
+    margin-bottom: var(--space-12);
+  }
+</style>
