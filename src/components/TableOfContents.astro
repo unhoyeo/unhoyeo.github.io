@@ -92,7 +92,8 @@ const toc = tocHeadings(headings);
   @media (min-width: 84rem) {
     .toc {
       position: sticky;
-      top: 4rem;
+      /* 상단바 아래로 한 칸 — 기존 4rem과 같은 값이고, 관계만 명시했다 */
+      top: calc(var(--topbar-h) + var(--space-4));
       align-self: start;
       max-height: calc(100vh - 6rem);
       overflow-y: auto;

@@ -1,4 +1,6 @@
 ---
+import PanelIcon from './icons/PanelIcon.astro';
+
 interface Props {
   label?: string;
 }
@@ -15,14 +17,7 @@ const { label } = Astro.props;
     aria-expanded="false"
     aria-label="사이드바 펼치기"
   >
-    <svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true">
-      <path
-        d="M3 5h14M3 10h14M3 15h14"
-        stroke="currentColor"
-        stroke-width="1.6"
-        stroke-linecap="round"
-        fill="none"></path>
-    </svg>
+    <PanelIcon />
   </button>
 
   {label && <p class="label">{label}</p>}
@@ -47,7 +42,7 @@ const { label } = Astro.props;
     display: flex;
     align-items: center;
     gap: var(--space-2);
-    min-height: 3rem;
+    min-height: var(--topbar-h);
     padding: 0 var(--space-3);
     background: var(--bg);
   }

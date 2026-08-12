@@ -64,6 +64,8 @@ const hasHeader = headerHtml.trim() !== '';
         min-height: 100vh;
         display: flex;
         flex-direction: column;
+        /* 사이드바가 미끄러지는 것과 같은 duration·easing으로 함께 움직인다 */
+        transition: margin-left 0.2s cubic-bezier(0.4, 0, 0.2, 1);
       }
 
       /* 사이드바를 접으면 본문이 전체 폭을 쓴다 */

@@ -1,6 +1,7 @@
 ---
 import { SITE_TITLE, AUTHOR, NAV_LINKS, SOCIAL_LINKS } from '../consts';
 import { getPublishedPosts, getPostsByCategory } from '../utils';
+import PanelIcon from './icons/PanelIcon.astro';
 
 // '최근'은 전부 렌더하고, 화면에 몇 개를 보일지는 클라이언트가 정한다(무한 스크롤)
 const posts = await getPublishedPosts();
@@ -26,10 +27,7 @@ const openCategory = categories.find((group) =>
       <a href="/" class="brand">
         <span class="brand__name">{SITE_TITLE}</span>
       </a>
-      {/*
-        넓은 화면에서는 사이드바 접기, 좁은 화면(오프캔버스)에서는 닫기.
-        하는 일이 달라서 아이콘도 둘을 두고 CSS로 바꿔 보인다.
-      */}
+      {/* 접기(넓은 화면) / 닫기(오프캔버스). 상단바의 펴기 버튼과 같은 아이콘을 쓴다 */}
       <button
         type="button"
         class="icon-btn sidebar__collapse"
@@ -38,26 +36,7 @@ const openCategory = categories.find((group) =>
         aria-expanded="true"
         aria-label="사이드바 접기"
       >
-        <svg class="icon-panel" viewBox="0 0 20 20" width="16" height="16" aria-hidden="true">
-          <rect
-            x="2.5"
-            y="3.5"
-            width="15"
-            height="13"
-            rx="2.5"
-            stroke="currentColor"
-            stroke-width="1.4"
-            fill="none"></rect>
-          <path d="M8 3.5v13" stroke="currentColor" stroke-width="1.4" fill="none"></path>
-        </svg>
-        <svg class="icon-close" viewBox="0 0 20 20" width="16" height="16" aria-hidden="true">
-          <path
-            d="M5 5l10 10M15 5L5 15"
-            stroke="currentColor"
-            stroke-width="1.6"
-            stroke-linecap="round"
-            fill="none"></path>
-        </svg>
+        <PanelIcon />
       </button>
     </div>
 
@@ -80,8 +59,21 @@ const openCategory = categories.find((group) =>
       {
         categories.length > 0 && (
           <nav class="sidebar__topics" aria-label="주제별 글">
-            <p class="section-label">주제</p>
-            {categories.map((group) => (
+            <details class="section" data-section="topics" open>
+              <summary class="section-label">
+                <span>주제</span>
+                <svg class="chevron" viewBox="0 0 20 20" width="12" height="12" aria-hidden="true">
+                  <path
+                    d="M8 5l5 5-5 5"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    fill="none"
+                  />
+                </svg>
+              </summary>
+              {categories.map((group) => (
               <details
                 class="topic"
                 data-category={group.name}
@@ -89,7 +81,7 @@ const openCategory = categories.find((group) =>
                 data-pinned={group.name === openCategory ? 'true' : undefined}
               >
                 <summary title={group.name}>
-                  <svg class="topic__chevron" viewBox="0 0 20 20" width="12" height="12" aria-hidden="true">
+                  <svg class="chevron topic__chevron" viewBox="0 0 20 20" width="12" height="12" aria-hidden="true">
                     <path
                       d="M8 5l5 5-5 5"
                       stroke="currentColor"
@@ -116,7 +108,8 @@ const openCategory = categories.find((group) =>
                   ))}
                 </ul>
               </details>
-            ))}
+              ))}
+            </details>
           </nav>
         )
       }
@@ -126,8 +119,20 @@ const openCategory = categories.find((group) =>
         CSS로 미리 감추면 JS가 꺼진 환경에서 영영 안 보인다.
       */}
       <nav class="sidebar__recent" aria-label="최근 글">
-        <p class="section-label">최근</p>
-        <ul>
+        <details class="section" data-section="recent" open>
+          <summary class="section-label">
+            <span>최근</span>
+            <svg class="chevron" viewBox="0 0 20 20" width="12" height="12" aria-hidden="true">
+              <path
+                d="M8 5l5 5-5 5"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                fill="none"></path>
+            </svg>
+          </summary>
+          <ul>
           {
             posts.map((post) => (
               <li>
@@ -141,9 +146,10 @@ const openCategory = categories.find((group) =>
               </li>
             ))
           }
-        </ul>
-        {posts.length === 0 && <p class="empty">아직 글이 없습니다</p>}
-        <div class="recent__sentinel" aria-hidden="true"></div>
+          </ul>
+          {posts.length === 0 && <p class="empty">아직 글이 없습니다</p>}
+          <div class="recent__sentinel" aria-hidden="true"></div>
+        </details>
       </nav>
 
       {/*
@@ -161,6 +167,18 @@ const openCategory = categories.find((group) =>
           }
         } catch {
           /* 저장값이 깨졌으면 기본(접힘) 상태를 그대로 쓴다 */
+        }
+
+        // 섹션(주제/최근)은 카테고리와 키를 분리한다. 기본은 둘 다 펼침
+        try {
+          const closed = JSON.parse(localStorage.getItem('sidebar:open-sections') || 'null');
+          if (closed && typeof closed === 'object') {
+            for (const el of document.querySelectorAll('.sidebar__scroll .section')) {
+              if (el.dataset.section in closed) el.open = !!closed[el.dataset.section];
+            }
+          }
+        } catch {
+          /* 저장값이 깨졌으면 기본(펼침) 상태를 그대로 쓴다 */
         }
       </script>
     </div>
@@ -193,21 +211,36 @@ const openCategory = categories.find((group) =>
     background: var(--bg-sidebar);
     border-right: 1px solid var(--border);
     z-index: 40;
+    /*
+     * 접기·오프캔버스 모두 같은 값으로 미끄러진다(.shell의 margin-left도 동일).
+     * visibility는 보간이 이산적이라 이 목록에 넣어두면 이동이 끝난 뒤에 hidden이 된다 —
+     * 접히는 동안 내용이 보이면서 빠져나간다.
+     */
+    transition:
+      transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+      visibility 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .sidebar__inner {
     display: flex;
     flex-direction: column;
     height: 100%;
-    padding: var(--space-3);
+    /* 위쪽 패딩은 .sidebar__top이 직접 갖는다 — 상단바와 높이를 맞춰야 하므로 */
+    padding: 0 var(--space-3) var(--space-3);
     gap: var(--space-4);
   }
 
+  /*
+   * 상단바와 같은 높이를 갖고 내용물을 세로 가운데 정렬한다.
+   * 사이드바를 접으면 아이콘이 상단바로 옮겨가는데, 두 영역의 중심선이 같아야 튀지 않는다.
+   */
   .sidebar__top {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: var(--space-2);
+    height: var(--topbar-h);
+    flex: none;
   }
 
   .brand {
@@ -223,20 +256,48 @@ const openCategory = categories.find((group) =>
     font-size: var(--text-lg);
     line-height: var(--leading-tight);
     letter-spacing: -0.01em;
-    padding: var(--space-2) var(--space-2) var(--space-3);
+    /* 패딩이 위아래 대칭이어야 글자 중심이 상단바 기준선과 맞는다 */
+    padding: var(--space-2);
   }
 
-  /* 로고 성격이라 목록 항목처럼 눌리는 배경을 주지 않는다. 글자만 살짝 흐려진다 */
-  .brand:hover {
-    color: var(--fg-muted);
-  }
+  /*
+   * 로고 자리라 hover에 아무 시각 변화도 주지 않는다(배경도 글자색도).
+   * 키보드 포커스 표시는 global.css의 전역 :focus-visible 규칙이 담당한다.
+   */
 
+  /*
+   * 섹션 라벨은 이제 summary다. 셰브론이 라벨 글자 바로 오른쪽에 붙고,
+   * 클릭 영역도 글자+셰브론 폭까지만이다(사이드바 전체 폭이 아니라).
+   */
   .section-label {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    width: fit-content;
     margin: 0 0 var(--space-1);
     padding: 0 var(--space-2);
     color: var(--fg-faint);
     font-size: var(--text-xs);
     line-height: var(--leading-ui);
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .section-label::-webkit-details-marker {
+    display: none;
+  }
+
+  .section-label:hover {
+    color: var(--fg-muted);
+  }
+
+  .chevron {
+    flex: none;
+    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .section[open] > .section-label .chevron {
+    transform: rotate(90deg);
   }
 
   .sidebar__nav ul,
@@ -315,11 +376,6 @@ const openCategory = categories.find((group) =>
   .topic > summary:hover {
     background: var(--bg-hover);
     color: var(--fg);
-  }
-
-  .topic__chevron {
-    flex: none;
-    transition: transform 0.15s ease;
   }
 
   .topic[open] > summary .topic__chevron {
@@ -416,11 +472,6 @@ const openCategory = categories.find((group) =>
     color: var(--fg);
   }
 
-  /* 넓은 화면에서는 패널 토글 아이콘, 좁은 화면에서는 X */
-  .icon-close {
-    display: none;
-  }
-
   /*
    * 넓은 화면 접기. 좁은 화면의 오프캔버스(data-open)와 섞이지 않도록
    * 60rem 초과에서만 적용한다.
@@ -438,23 +489,14 @@ const openCategory = categories.find((group) =>
 
   /* 데스크톱보다 좁으면 사이드바를 오프캔버스로 */
   @media (max-width: 60rem) {
+    /* transition 값은 위 기본 규칙과 같다 */
     .sidebar {
       transform: translateX(-100%);
-      transition: transform 0.2s ease;
     }
 
     .sidebar[data-open='true'] {
       transform: none;
       box-shadow: 0 0 2rem rgb(0 0 0 / 0.2);
-    }
-
-    /* 좁은 화면에서는 같은 버튼이 '닫기'라 X로 보인다 */
-    .icon-panel {
-      display: none;
-    }
-
-    .icon-close {
-      display: block;
     }
 
     .sidebar[data-open='true'] ~ .scrim {
@@ -485,6 +527,23 @@ const openCategory = categories.find((group) =>
   };
 
   topics.forEach((el) => el.addEventListener('toggle', save));
+
+  /* 섹션(주제/최근)은 기본이 '펼침'이라 이름 목록이 아니라 이름→불리언으로 저장한다 */
+  const sections = document.querySelectorAll<HTMLDetailsElement>('.sidebar__scroll .section');
+
+  const saveSections = () => {
+    const state: Record<string, boolean> = {};
+    sections.forEach((el) => {
+      if (el.dataset.section) state[el.dataset.section] = el.open;
+    });
+    try {
+      localStorage.setItem('sidebar:open-sections', JSON.stringify(state));
+    } catch {
+      /* 저장 실패는 무시 */
+    }
+  };
+
+  sections.forEach((el) => el.addEventListener('toggle', saveSections));
 
   /*
    * '최근' 무한 스크롤. 전체가 이미 DOM에 있으므로 네트워크 요청이 없다.
