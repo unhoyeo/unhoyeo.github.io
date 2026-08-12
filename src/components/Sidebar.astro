@@ -303,6 +303,23 @@ const openCategory = categories.find((group) =>
     transform: rotate(90deg);
   }
 
+  /*
+   * 섹션 라벨(주제·최근)의 셰브론은 평소엔 숨겨두고 hover에서 떠오른다.
+   * opacity만 바꾸므로 자리는 계속 차지한다 — 나타날 때 라벨이 밀리지 않는다.
+   * 키보드로 왔을 때도 보여야 해서 :focus-visible을 함께 건다.
+   */
+  .section-label .chevron {
+    opacity: 0;
+    transition:
+      opacity 0.15s ease,
+      transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .section-label:hover .chevron,
+  .section-label:focus-visible .chevron {
+    opacity: 1;
+  }
+
   .sidebar__nav ul,
   .sidebar__recent ul,
   .sidebar__topics ul {
