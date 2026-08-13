@@ -1,6 +1,6 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
 import type { MarkdownHeading } from 'astro';
-import { LOCALE } from './consts';
+
 
 /*
  * 목차에 넣을 헤딩. depth 2~3만 쓰고, 각주를 쓸 때 remark-gfm이 끼워 넣는
@@ -134,15 +134,23 @@ export function postCrumbs(post: CollectionEntry<'posts'>): Crumb[] {
   ];
 }
 
+/*
+ * 화면에 보이는 날짜 형식: 2026.08.12
+ * en-CA가 YYYY-MM-DD로 0을 채워 주므로 구분자만 바꾼다.
+ * (직접 자르면 UTC 기준이 되어 한국 시간과 하루 어긋날 수 있다)
+ */
+const dateFormatter = new Intl.DateTimeFormat('en-CA', {
+  year: 'numeric',
+  month: '2-digit',
+  day: '2-digit',
+  timeZone: 'Asia/Seoul',
+});
+
 export function formatDate(date: Date): string {
-  return date.toLocaleDateString(LOCALE, {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-    timeZone: 'Asia/Seoul',
-  });
+  return dateFormatter.format(date).replaceAll('-', '.');
 }
 
+/* <time datetime="…">에 넣는 기계용 값. 화면 표기와 같은 날을 가리켜야 하므로 같은 기준을 쓴다 */
 export function isoDate(date: Date): string {
-  return date.toISOString().slice(0, 10);
+  return dateFormatter.format(date);
 }
