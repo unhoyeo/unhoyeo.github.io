@@ -1,4 +1,4 @@
-export const SITE_TITLE = 'unhoyeo tech';
+export const SITE_TITLE = 'unhoyeo blog';
 export const SITE_TAGLINE = '개발하며 남기는 기록';
 export const SITE_DESCRIPTION =
   '개발, 사이드 프로젝트, 그리고 만들면서 배운 것들을 기록하는 블로그입니다.';
