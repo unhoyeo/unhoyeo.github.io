@@ -1,5 +1,5 @@
 ---
-import { SITE_TITLE, AUTHOR, NAV_LINKS, SOCIAL_LINKS } from '../consts';
+import { SITE_TITLE, AUTHOR, NAV_LINKS } from '../consts';
 import { getPublishedPosts, getPostsByCategory, parseCategory, categoryAncestors } from '../utils';
 import PanelIcon from './icons/PanelIcon.astro';
 import CategoryTree from './CategoryTree.astro';
@@ -157,15 +157,7 @@ const pinnedPaths = currentPost
         <span class="profile__avatar" aria-hidden="true">{AUTHOR.slice(0, 1)}</span>
         <span class="profile__name">{AUTHOR}</span>
       </a>
-      <div class="sidebar__links">
-        {
-          SOCIAL_LINKS.map((link) => (
-            <a href={link.href} rel="me noopener" target="_blank">
-              {link.label}
-            </a>
-          ))
-        }
-      </div>
+      {/* 외부 링크(GitHub 등)는 소개 페이지로 옮겼다 — 사이드바 하단은 프로필만 */}
     </div>
   </div>
 </aside>
