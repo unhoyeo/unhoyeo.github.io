@@ -479,6 +479,25 @@ const pinnedPaths = currentPost
   sections.forEach((el) => el.addEventListener('toggle', saveSections));
 
   /*
+   * '주제' 섹션을 접으면 그 안의 카테고리 토글도 전부 접는다.
+   * 안 그러면 다시 펼쳤을 때 예전에 열어둔 것들이 그대로 쏟아져 나온다.
+   * data-pinned(현재 글의 주제)도 같이 접는다 — 접었다는 행동이 더 최근 의사다.
+   * 페이지를 다시 열면 서버가 현재 글의 조상을 다시 열어준다.
+   */
+  document.querySelector('.sidebar__topics .section')?.addEventListener('toggle', (event) => {
+    const section = event.currentTarget as HTMLDetailsElement;
+    if (section.open) return;
+
+    let changed = false;
+    section.querySelectorAll<HTMLDetailsElement>('.topic[open]').forEach((topic) => {
+      topic.open = false;
+      changed = true;
+    });
+    // 각 토글의 'toggle' 이벤트가 save()를 부르지만, 한 번 더 불러 확실히 맞춘다
+    if (changed) save();
+  });
+
+  /*
    * '최근' 무한 스크롤. 전체가 이미 DOM에 있으므로 네트워크 요청이 없다.
    * 여기서 처음 STEP개만 남기고 감춘 뒤, sentinel이 보일 때마다 STEP개씩 푼다.
    * (JS가 없으면 이 코드가 안 돌아 전체가 그냥 보인다 — 그게 맞는 폴백이다)
