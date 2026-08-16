@@ -160,6 +160,20 @@ const pinnedPaths = currentPost
       {/* 외부 링크(GitHub 등)는 소개 페이지로 옮겼다 — 사이드바 하단은 프로필만 */}
     </div>
   </div>
+
+  {/*
+    너비 조절 손잡이. separator 롤이라 스크린리더에도 조절 가능한 요소로 읽히고,
+    포인터를 못 쓰는 경우를 위해 좌우 방향키로도 움직인다.
+  */}
+  <div
+    class="sidebar__resizer"
+    role="separator"
+    aria-orientation="vertical"
+    aria-label="사이드바 너비 조절"
+    title="드래그해서 너비 조절 · 더블클릭하면 기본값"
+    tabindex="0"
+  >
+  </div>
 </aside>
 
 <div class="scrim" data-sidebar-close aria-hidden="true"></div>
@@ -180,6 +194,61 @@ const pinnedPaths = currentPost
     transition:
       transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
       visibility 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /*
+   * 너비 조절 손잡이. 경계선 위에 걸치도록 살짝 밖으로 빼서, 선을 정확히
+   * 겨냥하지 않아도 잡힌다. 평소에는 보이지 않고 커서를 올렸을 때만 드러난다.
+   */
+  .sidebar__resizer {
+    position: absolute;
+    top: 0;
+    right: -3px;
+    bottom: 0;
+    width: 7px;
+    z-index: 1;
+    cursor: col-resize;
+    /* 포인터 이벤트로만 다룬다 — 브라우저가 끼어들어 스크롤/줌으로 해석하지 않도록 */
+    touch-action: none;
+  }
+
+  .sidebar__resizer::after {
+    content: '';
+    position: absolute;
+    inset: 0 3px;
+    background: var(--border-strong);
+    opacity: 0;
+    transition: opacity 0.15s ease;
+  }
+
+  .sidebar__resizer:hover::after,
+  .sidebar__resizer:focus-visible::after,
+  :global(html[data-resizing]) .sidebar__resizer::after {
+    opacity: 1;
+  }
+
+  .sidebar__resizer:focus-visible {
+    outline: none;
+  }
+
+  /* 접혀 있으면 조절할 대상이 없다 */
+  :global(html[data-sidebar='collapsed']) .sidebar__resizer {
+    display: none;
+  }
+
+  /*
+   * 드래그하는 동안에는 폭이 커서를 그대로 따라와야 한다.
+   * 미끄러짐(transition)을 켜둔 채로 끌면 손잡이보다 사이드바가 늦게 따라와 미끌거린다.
+   */
+  :global(html[data-resizing]) .sidebar,
+  :global(html[data-resizing]) :global(.shell) {
+    transition: none;
+  }
+
+  /* 끄는 도중 본문 글자가 선택되는 것을 막는다 */
+  :global(html[data-resizing]) {
+    cursor: col-resize;
+    user-select: none;
   }
 
   .sidebar__inner {
@@ -427,6 +496,14 @@ const pinnedPaths = currentPost
       transform: translateX(-100%);
     }
 
+    /*
+     * 좁은 화면에서는 사이드바가 본문 위를 덮는 오프캔버스라 폭을 줄일 이유가 없고,
+     * 손가락으로 끌면 스크롤과 충돌한다.
+     */
+    .sidebar__resizer {
+      display: none;
+    }
+
     .sidebar[data-open='true'] {
       transform: none;
       box-shadow: 0 0 2rem rgb(0 0 0 / 0.2);
@@ -443,6 +520,87 @@ const pinnedPaths = currentPost
 </style>
 
 <script>
+  /*
+   * 너비 조절. 값은 --sidebar-w 하나만 바꾼다 — 본문(.shell의 margin-left)이
+   * 같은 변수를 보고 있어서 따로 손댈 곳이 없다.
+   * 복원은 <head>의 is:inline 스크립트가 첫 페인트 전에 한다(깜빡임 방지).
+   */
+  const WIDTH_KEY = 'sidebar:width';
+  const MIN_W = 180;
+  const MAX_W = 480;
+
+  const root = document.documentElement;
+  const resizer = document.querySelector<HTMLElement>('.sidebar__resizer');
+  const aside = document.querySelector<HTMLElement>('.sidebar');
+
+  if (resizer && aside) {
+    /** 화면 밖으로 나가거나 본문이 사라질 만큼은 못 끌게 막는다 */
+    const applyWidth = (px: number) => {
+      const w = Math.round(Math.min(MAX_W, Math.max(MIN_W, px)));
+      root.style.setProperty('--sidebar-w', `${w}px`);
+      return w;
+    };
+
+    const remember = (w: number) => {
+      try {
+        localStorage.setItem(WIDTH_KEY, String(w));
+      } catch {
+        /* 저장 실패는 무시한다 — 이번 세션 동안은 그대로 쓰인다 */
+      }
+    };
+
+    resizer.addEventListener('pointerdown', (event) => {
+      // 기본 동작(글자 선택, 드래그 시작)을 막아야 커서가 매끄럽게 따라온다
+      event.preventDefault();
+      root.dataset.resizing = '';
+
+      /*
+       * 이동·종료는 window에서 듣는다. 포인터 캡처에 기대면 캡처가 실패하는
+       * 경우(합성 입력, 일부 펜/터치 장치)에 드래그가 통째로 죽는다.
+       * 캡처는 커서가 손잡이 밖으로 나가도 이벤트를 유지해 주는 보너스로만 쓴다.
+       */
+      try {
+        resizer.setPointerCapture(event.pointerId);
+      } catch {
+        /* 캡처를 못 걸어도 window 리스너가 있으므로 계속 진행한다 */
+      }
+
+      // 사이드바 왼쪽 끝은 0이므로 커서의 x가 곧 너비다
+      const onMove = (e: PointerEvent) => applyWidth(e.clientX);
+
+      const onUp = (e: PointerEvent) => {
+        remember(applyWidth(e.clientX));
+        delete root.dataset.resizing;
+        window.removeEventListener('pointermove', onMove);
+        window.removeEventListener('pointerup', onUp);
+        window.removeEventListener('pointercancel', onUp);
+      };
+
+      window.addEventListener('pointermove', onMove);
+      window.addEventListener('pointerup', onUp);
+      window.addEventListener('pointercancel', onUp);
+    });
+
+    /* 더블클릭하면 기본 너비로 되돌린다 */
+    resizer.addEventListener('dblclick', () => {
+      root.style.removeProperty('--sidebar-w');
+      try {
+        localStorage.removeItem(WIDTH_KEY);
+      } catch {
+        /* 무시 */
+      }
+    });
+
+    /* 포인터를 쓰기 어려운 경우를 위한 방향키 조절 */
+    resizer.addEventListener('keydown', (event) => {
+      if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+      event.preventDefault();
+      const step = event.shiftKey ? 32 : 8;
+      const current = aside.getBoundingClientRect().width;
+      remember(applyWidth(current + (event.key === 'ArrowRight' ? step : -step)));
+    });
+  }
+
   /*
    * 열고 닫은 상태를 저장한다. 복원은 트리 바로 뒤 is:inline 스크립트가 하고
    * (깜빡임 방지), 저장은 급하지 않으므로 여기서 한다.

@@ -50,4 +50,8 @@ const ogImage = image ? new URL(image, Astro.site) : undefined;
   if (localStorage.getItem('sidebar:collapsed') === 'true') {
     document.documentElement.dataset.sidebar = 'collapsed';
   }
+  const width = Number(localStorage.getItem('sidebar:width'));
+  if (width >= 180 && width <= 480) {
+    document.documentElement.style.setProperty('--sidebar-w', width + 'px');
+  }
 </script>

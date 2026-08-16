@@ -5,6 +5,7 @@ import Base from '../../layouts/Base.astro';
 import CodeBlocks from '../../components/CodeBlocks.astro';
 import TableOfContents from '../../components/TableOfContents.astro';
 import { getPublishedPosts, formatDate, isoDate, hasToc, postCrumbs } from '../../utils';
+import { REPO_URL, REPO_BRANCH, POSTS_DIR } from '../../consts';
 
 export const getStaticPaths = (async () => {
   const posts = await getPublishedPosts();
@@ -21,6 +22,14 @@ export const getStaticPaths = (async () => {
 
 const { post, newer, older } = Astro.props;
 const { Content, headings } = await render(post);
+
+/*
+ * 이 글의 원본 마크다운을 GitHub 웹 편집기에서 연다.
+ * filePath는 glob 로더가 채워 주는 저장소 기준 경로다. 혹시 없을 때를 대비해
+ * id(= 확장자 뺀 파일명)로도 만들 수 있게 해 둔다.
+ */
+const filePath = post.filePath ?? `${POSTS_DIR}/${post.id}.md`;
+const editUrl = `${REPO_URL}/edit/${REPO_BRANCH}/${filePath}`;
 ---
 
 <Base
@@ -42,6 +51,14 @@ const { Content, headings } = await render(post);
     <p class="meta">
       <time datetime={isoDate(post.data.pubDate)}>{formatDate(post.data.pubDate)}</time>
       {post.data.updatedDate && <span>· {formatDate(post.data.updatedDate)} 수정</span>}
+      <a class="edit" href={editUrl} rel="noopener" target="_blank">
+        <svg viewBox="0 0 16 16" width="13" height="13" aria-hidden="true" fill="currentColor">
+          <path
+            d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61Zm1.414 1.06a.25.25 0 0 0-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 0 0 0-.354l-1.086-1.086Zm-.176 4.823L9.812 5.871 4.63 11.052a.25.25 0 0 0-.064.108l-.558 1.953 1.953-.558a.25.25 0 0 0 .108-.064l5.182-5.181Z"
+          ></path>
+        </svg>
+        수정
+      </a>
     </p>
     {
       post.data.tags.length > 0 && (
@@ -105,6 +122,20 @@ const { Content, headings } = await render(post);
     margin: 0;
     color: var(--fg-faint);
     font-size: var(--text-sm);
+  }
+
+  /* 날짜 줄 오른쪽 끝에 붙는다 — 눈에 띄지 않다가 필요할 때만 찾으면 되는 장치다 */
+  .edit {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    margin-left: auto;
+    color: var(--fg-faint);
+    text-decoration: none;
+  }
+
+  .edit:hover {
+    color: var(--fg);
   }
 
   .tags {
