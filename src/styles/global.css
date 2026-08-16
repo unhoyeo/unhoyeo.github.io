@@ -157,10 +157,22 @@ html {
   -webkit-text-size-adjust: 100%;
   /* 목차 링크로 이동할 때 부드럽게 (reduced-motion에서는 아래에서 auto로 되돌린다) */
   scroll-behavior: smooth;
+  /*
+   * 세로 스크롤바 자리를 항상 비워둔다. 사이드바 폭을 끌면 본문이 다시 흘러
+   * 문서 높이가 오르내리는데, 그때마다 스크롤바가 생겼다 사라지면 화면 폭이
+   * 바뀌어 내용이 들썩인다.
+   */
+  scrollbar-gutter: stable;
 }
 
 body {
   margin: 0;
+  /*
+   * 가로 스크롤은 만들지 않는다. 넓은 표·코드블록은 각자 안에서 스크롤하므로
+   * 여기까지 넘어올 것은 사고뿐이다. clip은 scroll과 달리 스크롤 컨테이너를
+   * 만들지 않아서 목차의 sticky가 그대로 동작한다.
+   */
+  overflow-x: clip;
   background: var(--bg);
   color: var(--fg);
   font-family: var(--font-sans);

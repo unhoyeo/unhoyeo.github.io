@@ -288,6 +288,19 @@ const pinnedPaths = currentPost
     letter-spacing: -0.01em;
     /* 패딩이 위아래 대칭이어야 글자 중심이 상단바 기준선과 맞는다 */
     padding: var(--space-2);
+    /*
+     * 폭을 최소로 줄이면 블로그 이름이 두 줄로 접히면서 상단 높이가 늘어난다.
+     * 접지 말고 넘치는 만큼만 잘라낸다 — 높이가 흔들리지 않아야 접기 버튼과
+     * 상단바 아이콘의 중심선이 유지된다.
+     */
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  .brand__name {
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   /*
@@ -555,6 +568,14 @@ const pinnedPaths = currentPost
       root.dataset.resizing = '';
 
       /*
+       * 커서의 절대 위치가 아니라 '눌렀을 때부터 움직인 거리'로 계산한다.
+       * 절대 위치를 쓰면 손잡이(7px) 안에서 어디를 눌렀느냐에 따라 폭이
+       * 몇 px 튀어서, 그냥 클릭만 해도 미세하게 조절돼 버린다.
+       */
+      const startX = event.clientX;
+      const startWidth = aside.getBoundingClientRect().width;
+
+      /*
        * 이동·종료는 window에서 듣는다. 포인터 캡처에 기대면 캡처가 실패하는
        * 경우(합성 입력, 일부 펜/터치 장치)에 드래그가 통째로 죽는다.
        * 캡처는 커서가 손잡이 밖으로 나가도 이벤트를 유지해 주는 보너스로만 쓴다.
@@ -565,11 +586,12 @@ const pinnedPaths = currentPost
         /* 캡처를 못 걸어도 window 리스너가 있으므로 계속 진행한다 */
       }
 
-      // 사이드바 왼쪽 끝은 0이므로 커서의 x가 곧 너비다
-      const onMove = (e: PointerEvent) => applyWidth(e.clientX);
+      const widthAt = (e: PointerEvent) => startWidth + (e.clientX - startX);
+      const onMove = (e: PointerEvent) => applyWidth(widthAt(e));
 
       const onUp = (e: PointerEvent) => {
-        remember(applyWidth(e.clientX));
+        // 움직이지 않았으면(=그냥 클릭) 아무것도 바꾸지 않는다
+        if (e.clientX !== startX) remember(applyWidth(widthAt(e)));
         delete root.dataset.resizing;
         window.removeEventListener('pointermove', onMove);
         window.removeEventListener('pointerup', onUp);
@@ -598,6 +620,44 @@ const pinnedPaths = currentPost
       const step = event.shiftKey ? 32 : 8;
       const current = aside.getBoundingClientRect().width;
       remember(applyWidth(current + (event.key === 'ArrowRight' ? step : -step)));
+    });
+  }
+
+  /*
+   * 잘린 글 제목에 커서를 올리면 뒷부분이 보이도록 왼쪽으로 밀어준다.
+   * 넘친 만큼만 밀고 멈춘다(반복하지 않는다). 커서가 벗어나면 제자리로.
+   *
+   * 감싸는 요소를 새로 만들지 않고 text-indent를 음수로 주는 방식이다 —
+   * 마크업을 건드리지 않아도 되고, 다 밀리면 넘치는 폭이 0이 되어
+   * 말줄임표(…)도 저절로 사라진다.
+   */
+  const marqueeRoot = document.querySelector<HTMLElement>('.sidebar__scroll');
+  const slowMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (marqueeRoot && !slowMotion) {
+    const PX_PER_SEC = 90; // 읽을 수 있을 만큼만 천천히
+
+    const reveal = (link: HTMLElement) => {
+      const hidden = link.scrollWidth - link.clientWidth;
+      if (hidden <= 0) return; // 안 잘린 제목은 건드리지 않는다
+      link.style.transition = `text-indent ${Math.round((hidden / PX_PER_SEC) * 1000)}ms linear`;
+      link.style.textIndent = `-${hidden}px`;
+    };
+
+    const restore = (link: HTMLElement) => {
+      link.style.transition = 'text-indent 0.2s ease';
+      link.style.textIndent = '';
+    };
+
+    // pointerenter/leave와 달리 over/out은 버블링되므로 위임해서 한 번만 단다
+    marqueeRoot.addEventListener('pointerover', (event) => {
+      const link = (event.target as HTMLElement)?.closest?.('a');
+      if (link && marqueeRoot.contains(link)) reveal(link);
+    });
+
+    marqueeRoot.addEventListener('pointerout', (event) => {
+      const link = (event.target as HTMLElement)?.closest?.('a');
+      if (link) restore(link);
     });
   }
 
