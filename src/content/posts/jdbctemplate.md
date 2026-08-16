@@ -8,7 +8,7 @@ tags: []
 
 ## JdbcTemplate: JDBC의 반복 작업을 대신 처리하는 템플릿
 
-순수 JDBC는 커넥션을 열고 닫는 과정, 예외 처리 등 **개발자가 직접 처리해야 할 반복적인 코드**가 너무 많다는 단점이 있다.
+순수 JDBC는 커넥션을 열고 닫는 과정, 예외 처리 등 개발자가 직접 처리해야 할 반복적인 코드가 너무 많다는 단점이 있다.
 
 스프링의 JdbcTemplate은 **템플릿 콜백 패턴**을 사용하여 JDBC 프로그래밍의 반복적인 작업을 대신 처리해주는 클래스다.
 
@@ -20,7 +20,7 @@ tags: []
 - 트랜잭션 처리를 위한 커넥션 동기화
 - SQLException 발생 시 스프링 예외 변환기 실행
 
-이 덕분에 개발자는 **SQL 작성**과 **결과 매핑**이라는 핵심 작업에 더 집중할 수 있다.
+이 덕분에 개발자는 SQL 작성과 결과 매핑이라는 핵심 작업에 더 집중할 수 있다.
 
 > JdbcTemplate의 자세한 사용법은 스프링의 [공식 메뉴얼](https://docs.spring.io/spring-framework/reference/data-access/jdbc/core.html#jdbc-JdbcTemplate)을 참고하자.
 
@@ -45,7 +45,7 @@ create table item (
 );
 ```
 
-JdbcTemplate은 **DataSource**를 필요로 하며, 보통 **리포지토리 생성자**에서 DataSource를 주입받아 JdbcTemplate 객체를 생성하는 방식으로 사용한다.
+JdbcTemplate은 **DataSource**를 필요로 하며, 보통 리포지토리 생성자에서 DataSource를 주입받아 JdbcTemplate 객체를 생성하는 방식으로 사용한다.
 
 ```java
 public class JdbcTemplateItemRepositoryV1 implements ItemRepository {
@@ -146,21 +146,21 @@ public class JdbcTemplateItemRepositoryV1 implements ItemRepository {
 **데이터 변경 (INSERT, UPDATE, DELETE)**:
 
 - **template.update()** 메서드를 사용한다.
-- **SQL**과 함께 ?에 바인딩할 **파라미터**를 순서대로 전달하면 된다.
-- 반환 값은 **쿼리의 영향을 받은 행(row)의 수**다.
+- SQL과 함께 ?에 바인딩할 파라미터를 순서대로 전달하면 된다.
+- 반환 값은 쿼리의 영향을 받은 행(row)의 수다.
 
 **데이터 조회 (SELECT)**:
 
-- **template.queryForObject()**: **단 하나의 행**을 조회할 때 사용한다.
+- **template.queryForObject()**: 단 하나의 행을 조회할 때 사용한다.
   - 결과가 없으면 EmptyResultDataAccessException 예외가 발생한다.
   - 결과가 두 개 이상이면 IncorrectResultSizeDataAccessException 예외가 발생한다.
-- **template.query()**: **여러 행**을 조회하여 List 형태로 반환할 때 사용한다.
+- **template.query()**: 여러 행을 조회하여 List 형태로 반환할 때 사용한다.
   - 결과가 없으면 빈 컬렉션을 반환한다.
 
 ## RowMapper (조회 결과를 객체로)
 
-- RowMapper는 데이터베이스 조회 결과인 **ResultSet을 자바 객체로 변환**하는 역할을 한다.
-- JdbcTemplate이 ResultSet의 반복 처리를 대신해주므로, 개발자는 **한 행의 데이터를 어떻게 객체로 매핑**할지만 정의하면 된다.
+- RowMapper는 데이터베이스 조회 결과인 ResultSet을 자바 객체로 변환하는 역할을 한다.
+- JdbcTemplate이 ResultSet의 반복 처리를 대신해주므로, 개발자는 한 행의 데이터를 어떻게 객체로 매핑할지만 정의하면 된다.
 - 특히 **BeanPropertyRowMapper**를 사용하면, 데이터베이스의 snake\_case 컬럼명(예: item\_name)을 자바 객체의 camelCase 프로퍼티명(예: itemName)으로 자동으로 변환하여 매핑해주므로 매우 편리하다.
 
 > 데이터 저장 시 PK인 id는 identity(auto increment) 방식을 사용하기 때문에 데이터베이스가 대신 생성해 준다.
@@ -174,7 +174,7 @@ public class JdbcTemplateItemRepositoryV1 implements ItemRepository {
 
 ## NamedParameterJdbcTemplate: ? 대신 이름을 지정하는 JdbcTemplate
 
-?를 사용하는 기존의 **순서 기반 파라미터 바인딩**은 파라미터가 많아질 경우 **순서가 꼬여** 버그를 유발할 위험이 있다.
+?를 사용하는 기존의 **순서 기반 파라미터 바인딩**은 파라미터가 많아질 경우 순서가 꼬여 버그를 유발할 위험이 있다.
 
 ```java
 String sql = "update item set item_name = ?, price = ?, quantity = ? where id = ?";
@@ -284,8 +284,8 @@ public class JdbcTemplateItemRepositoryV2 implements ItemRepository {
 ```
 
 - **BeanPropertyRowMapper**:
-  - ResultSet의 결과를 받아서 **자바빈 규약**에 맞추어 데이터를 변환한다.
-  - 데이터베이스의 **snake\_case** 컬럼명을 자바 객체의 **camelCase** 프로퍼티명으로 자동으로 변환하여 매핑해준다.
+  - ResultSet의 결과를 받아서 자바빈 규약에 맞추어 데이터를 변환한다.
+  - 데이터베이스의 snake\_case 컬럼명을 자바 객체의 camelCase 프로퍼티명으로 자동으로 변환하여 매핑해준다.
 
 > 컬럼명과 프로퍼티명이 완전히 다른 경우에는 SQL에서 별칭(alias)을 사용하자.
 
@@ -293,7 +293,7 @@ public class JdbcTemplateItemRepositoryV2 implements ItemRepository {
 
 ## SimpleJdbcInsert: INSERT 쿼리를 대신 작성
 
-INSERT 쿼리를 직접 작성할 필요 없이, **테이블명과 컬럼 정보**만으로 간단하게 INSERT 문을 실행할 수 있는 기능을 제공한다.
+INSERT 쿼리를 직접 작성할 필요 없이, 테이블명과 컬럼 정보만으로 간단하게 INSERT 문을 실행할 수 있는 기능을 제공한다.
 
 ```java
 public class JdbcTemplateItemRepositoryV3 implements ItemRepository {

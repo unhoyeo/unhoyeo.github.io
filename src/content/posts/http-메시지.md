@@ -8,7 +8,7 @@ tags: []
 
 HTTP 메시지는 클라이언트와 서버 간의 데이터 교환 형식으로, 크게 **요청(Request) 메시지**와 **응답(Response) 메시지**로 구분된다.
 
-또한, 각 메시지는 <strong>시작 라인(Start Line)</strong>, <strong>헤더(Header)</strong>, <strong>본문(Body)</strong>으로 구성된다.
+또한, 각 메시지는 시작 라인(Start Line), 헤더(Header), 본문(Body)으로 구성된다.
 
 > 요청 메시지의 시작 라인은 <strong>요청 라인(Request Line)</strong>, 응답 메시지의 시작 라인은 <strong>상태 라인(Status Line)</strong>이라 한다.
 
@@ -32,7 +32,7 @@ HTTP 메시지는 클라이언트와 서버 간의 데이터 교환 형식으로
 ```
 
 - **메서드**: 수행할 작업 (예: GET, POST, PUT, PATCH, DELETE)
-- **URI**: 요청하는 리소스의 경로 → 보통은 **절대 경로**("/" 로 시작하는 경로)로 지정
+- **URI**: 요청하는 리소스의 경로 → 보통은 절대 경로("/" 로 시작하는 경로)로 지정
 - **HTTP 버전**: 사용되는 HTTP 프로토콜 버전 (예: HTTP/1.1, HTTP/2, HTTP/3)
 
 ## 요청 라인 예시
@@ -61,7 +61,7 @@ Authorization: Bearer <토큰>
 
 ## 1.3. 요청 본문 (Request Body)
 
-GET 요청에는 보통 본문이 포함되지 않으며, POST, PUT, PATCH 요청에서는 **본문을 통해 데이터를 전달**한다.
+GET 요청에는 보통 본문이 포함되지 않으며, POST, PUT, PATCH 요청에서는 본문을 통해 데이터를 전달한다.
 
 ## 요청 본문 예시 (application/json)
 
@@ -119,7 +119,7 @@ HTTP/1.1 200 OK
 
 ## 2.2. 응답 헤더 (Response Headers)
 
-응답에 대한 추가 정보를 제공하는 **Key: Value** 형태의 데이터로, 여러 줄로 구성된다.
+응답에 대한 추가 정보를 제공하는 Key: Value 형태의 데이터로, 여러 줄로 구성된다.
 
 ## 응답 헤더 예시
 

@@ -55,7 +55,7 @@ const isPinned = pinned.includes(node.path);
               aria-current={path === `/posts/${post.id}/` ? 'page' : undefined}
               title={post.data.title}
             >
-              {post.data.title}
+              <span class="label">{post.data.title}</span>
             </a>
           </li>
         ))}

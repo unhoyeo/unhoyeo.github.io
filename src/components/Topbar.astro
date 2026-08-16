@@ -50,16 +50,7 @@ const { label, crumbs } = Astro.props;
     )
   }
 
-  <button type="button" class="icon-btn theme" id="theme-toggle" aria-label="테마 전환">
-    <svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true">
-      <path
-        d="M10 2a8 8 0 100 16 8 8 0 000-16zm0 0v16"
-        stroke="currentColor"
-        stroke-width="1.4"
-        fill="none"></path>
-      <path d="M10 2a8 8 0 010 16z" fill="currentColor"></path>
-    </svg>
-  </button>
+  {/* 테마 전환 버튼은 사이드바 하단 프로필 옆으로 옮겼다 */}
 </div>
 
 <style>
@@ -126,10 +117,6 @@ const { label, crumbs } = Astro.props;
   .crumbs__sep {
     flex: none;
     color: var(--fg-faint);
-  }
-
-  .theme {
-    margin-left: auto;
   }
 
   .icon-btn {

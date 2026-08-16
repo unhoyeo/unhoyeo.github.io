@@ -123,7 +123,7 @@ const navCounts: Record<string, number> = {
                   aria-current={path === `/posts/${post.id}/` ? 'page' : undefined}
                   title={post.data.title}
                 >
-                  {post.data.title}
+                  <span class="label">{post.data.title}</span>
                 </a>
               </li>
             ))
@@ -170,7 +170,17 @@ const navCounts: Record<string, number> = {
         <span class="profile__avatar" aria-hidden="true">{AUTHOR.slice(0, 1)}</span>
         <span class="profile__name">{AUTHOR}</span>
       </a>
-      {/* 외부 링크(GitHub 등)는 소개 페이지로 옮겼다 — 사이드바 하단은 프로필만 */}
+      {/* 외부 링크(GitHub 등)는 소개 페이지로 옮겼다 — 하단은 프로필과 테마 전환만 */}
+      <button type="button" class="icon-btn theme" id="theme-toggle" aria-label="테마 전환">
+        <svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true">
+          <path
+            d="M10 2a8 8 0 100 16 8 8 0 000-16zm0 0v16"
+            stroke="currentColor"
+            stroke-width="1.4"
+            fill="none"></path>
+          <path d="M10 2a8 8 0 010 16z" fill="currentColor"></path>
+        </svg>
+      </button>
     </div>
   </div>
 
@@ -271,6 +281,14 @@ const navCounts: Record<string, number> = {
     /* 위쪽 패딩은 .sidebar__top이 직접 갖는다 — 상단바와 높이를 맞춰야 하므로 */
     padding: 0 var(--space-3) var(--space-3);
     gap: var(--space-4);
+  }
+
+  /*
+   * 로고와 메뉴 사이는 나머지 간격보다 좁게. 로고 줄은 상단바와 높이를 맞추느라
+   * 이미 자체 여백을 갖고 있어서, 여기에 gap이 그대로 붙으면 붕 뜬다.
+   */
+  .sidebar__top + .sidebar__nav {
+    margin-top: calc(-1 * var(--space-3));
   }
 
   /*
@@ -392,6 +410,27 @@ const navCounts: Record<string, number> = {
     font-size: var(--text-xs);
   }
 
+  /*
+   * 잘린 제목을 커서로 밀어 보는 장치.
+   * transform은 합성기가 처리해서 매 프레임 재배치가 없다(text-indent는 있다).
+   * 넘치는 항목은 오른쪽 끝을 흐리게 해 잘렸다는 것을 알린다 —
+   * 말줄임표는 글자가 움직이는 동안 켜졌다 꺼졌다 하며 덜컥거린다.
+   */
+  :global(.sidebar__scroll .label) {
+    display: block;
+    white-space: nowrap;
+    transform: translateX(0);
+  }
+
+  /*
+   * 쉬고 있을 때만 흐리게. 커서를 올리면 글자가 밀려 나오므로 마스크를 걷고,
+   * 배경이 있는 항목(현재 글)은 배경까지 흐려지니 제외한다.
+   */
+  :global(.sidebar__scroll a[data-clipped]:not(:hover):not([aria-current])) {
+    -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 1.25rem), transparent);
+    mask-image: linear-gradient(to right, #000 calc(100% - 1.25rem), transparent);
+  }
+
   /* 목록 항목은 ChatGPT 사이드바처럼 한 줄로 자르고 라운드 하이라이트 */
   .sidebar__nav a,
   .sidebar__recent a {
@@ -452,6 +491,24 @@ const navCounts: Record<string, number> = {
   .sidebar__bottom {
     border-top: 1px solid var(--border);
     padding-top: var(--space-2);
+    /* 이름은 왼쪽, 테마 버튼은 오른쪽 끝 */
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  .sidebar__bottom .profile {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .sidebar__bottom .theme {
+    flex: none;
+    color: var(--sidebar-fg-label);
+  }
+
+  .sidebar__bottom .theme:hover {
+    color: var(--sidebar-fg);
   }
 
   .profile {
@@ -687,42 +744,69 @@ const navCounts: Record<string, number> = {
   const marqueeRoot = document.querySelector<HTMLElement>('.sidebar__scroll');
   const slowMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  if (marqueeRoot && !slowMotion) {
+  if (marqueeRoot) {
     const PX_PER_SEC = 90; // 읽을 수 있을 만큼만 천천히
 
-    /*
-     * 글자가 실제로 차지하는 폭을 Range로 잰다.
-     * scrollWidth는 오른쪽 패딩을 넘치는 영역에 넣어주지 않아서, 그걸로 계산하면
-     * 패딩만큼 덜 밀려 제목 끝이 잘린 채로 멈춘다.
-     */
-    const reveal = (link: HTMLElement) => {
+    /** 글자가 링크 안쪽 폭보다 얼마나 넘치는지. 0 이하면 안 잘린 제목이다 */
+    const overflowOf = (link: HTMLElement) => {
+      const label = link.firstElementChild as HTMLElement | null;
+      if (!label) return 0;
       const style = getComputedStyle(link);
-      const range = document.createRange();
-      range.selectNodeContents(link);
-      const textWidth = range.getBoundingClientRect().width;
       const inner =
         link.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
-      const hidden = Math.ceil(textWidth - inner);
-      if (hidden <= 0) return; // 안 잘린 제목은 건드리지 않는다
-      link.style.transition = `text-indent ${Math.round((hidden / PX_PER_SEC) * 1000)}ms linear`;
-      link.style.textIndent = `-${hidden}px`;
+      return Math.ceil(label.scrollWidth - inner);
     };
 
-    const restore = (link: HTMLElement) => {
-      link.style.transition = 'text-indent 0.2s ease';
-      link.style.textIndent = '';
+    /*
+     * 잘린 항목에 표시를 남긴다. 사이드바 폭을 바꾸면 잘리는 항목도 달라지므로
+     * 다시 잰다. 목록이 300개 가까이라 실제로 보이는 것만 훑는다.
+     */
+    const markClipped = () => {
+      marqueeRoot.querySelectorAll<HTMLElement>('a').forEach((link) => {
+        if (!link.offsetParent) return;
+        if (overflowOf(link) > 0) link.dataset.clipped = '';
+        else delete link.dataset.clipped;
+      });
     };
 
-    // pointerenter/leave와 달리 over/out은 버블링되므로 위임해서 한 번만 단다
-    marqueeRoot.addEventListener('pointerover', (event) => {
-      const link = (event.target as HTMLElement)?.closest?.('a');
-      if (link && marqueeRoot.contains(link)) reveal(link);
-    });
+    markClipped();
+    new ResizeObserver(markClipped).observe(marqueeRoot);
 
-    marqueeRoot.addEventListener('pointerout', (event) => {
-      const link = (event.target as HTMLElement)?.closest?.('a');
-      if (link) restore(link);
-    });
+    if (!slowMotion) {
+      const reveal = (link: HTMLElement) => {
+        const label = link.firstElementChild as HTMLElement | null;
+        if (!label || label.dataset.revealing) return; // 이미 미는 중이면 다시 시작하지 않는다
+        const hidden = overflowOf(link);
+        if (hidden <= 0) return;
+        label.dataset.revealing = '';
+        label.style.transition = `transform ${Math.round((hidden / PX_PER_SEC) * 1000)}ms linear`;
+        label.style.transform = `translateX(-${hidden}px)`;
+      };
+
+      const restore = (link: HTMLElement) => {
+        const label = link.firstElementChild as HTMLElement | null;
+        if (!label) return;
+        delete label.dataset.revealing;
+        label.style.transition = 'transform 0.18s ease-out';
+        label.style.transform = 'translateX(0)';
+      };
+
+      // pointerenter/leave와 달리 over/out은 버블링되므로 위임해서 한 번만 단다
+      marqueeRoot.addEventListener('pointerover', (event) => {
+        const link = (event.target as HTMLElement)?.closest?.('a');
+        const from = (event as PointerEvent).relatedTarget as HTMLElement | null;
+        // 링크 안에서 글자 위로 옮겨 다니는 것은 새로 들어온 것이 아니다
+        if (!link || !marqueeRoot.contains(link) || link.contains(from)) return;
+        reveal(link);
+      });
+
+      marqueeRoot.addEventListener('pointerout', (event) => {
+        const link = (event.target as HTMLElement)?.closest?.('a');
+        const to = (event as PointerEvent).relatedTarget as HTMLElement | null;
+        if (!link || link.contains(to)) return; // 아직 링크 안이면 되돌리지 않는다
+        restore(link);
+      });
+    }
   }
 
   /*

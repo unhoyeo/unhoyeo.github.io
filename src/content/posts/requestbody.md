@@ -8,7 +8,7 @@ tags: []
 
 **@RequestBody란?**
 
-스프링 MVC에서 <strong>HTTP 요청 본문(body)</strong>을 <strong>자바 객체로 변환</strong>하여 핸들러 메서드 파라미터에 바인딩할 때 사용하는 애노테이션이다.
+스프링 MVC에서 <strong>HTTP 요청 본문(body)</strong>을 자바 객체로 변환하여 핸들러 메서드 파라미터에 바인딩할 때 사용하는 애노테이션이다.
 
 @ModelAttribute는 주로 <strong>폼 데이터(application/x-www-form-urlencoded)</strong>를 자바 객체로 받을 때 사용한다면,
 
@@ -31,13 +31,13 @@ Content-Type: application/json
 public String saveUser(@RequestBody UserDto user) { ... }
 ```
 
-요청 body의 JSON → **UserDto 객체**로 자동 변환
+요청 body의 JSON → UserDto 객체로 자동 변환
 
 ---
 
 ## 속성 정리
 
-- required: 요청 바디 내용의 필수 여부 (**기본값: true**)
+- required: 요청 바디 내용의 필수 여부 (기본값: true)
 
 ---
 
@@ -59,34 +59,34 @@ HttpMessageConverter (e.g. MappingJackson2HttpMessageConverter)
 핸들러 메서드 실행
 ```
 
-1. **DispatcherServlet**
+1. DispatcherServlet
    - 모든 HTTP 요청의 진입점이며, Spring MVC의 프론트 컨트롤러
    - 요청을 HandlerMapping에 위임하여 어떤 핸들러를 호출할지 결정
-2. **HandlerMapping (RequestMappingHandlerMapping)**
+2. HandlerMapping (RequestMappingHandlerMapping)
    - 요청 URL, HTTP 메서드 등을 기반으로 호출할 핸들러(핸들러 메서드)를 찾음
-3. **HandlerAdapter (RequestMappingHandlerAdapter)**
-   - 핸들러 메서드의 **파라미터를 바인딩**하여, 핸들러 메서드를 실행함
+3. HandlerAdapter (RequestMappingHandlerAdapter)
+   - 핸들러 메서드의 파라미터를 바인딩하여, 핸들러 메서드를 실행함
    - 파라미터 분석, 리졸버 호출, 바디/리턴값 처리 등 포함
-4. **HandlerMethodArgumentResolverComposite**
+4. HandlerMethodArgumentResolverComposite
    - 여러 종류의 HandlerMethodArgumentResolver 중 해당 파라미터에 맞는 리졸버 탐색
    - @RequestBody의 경우, RequestResponseBodyMethodProcessor가 선택됨
-5. **RequestResponseBodyMethodProcessor**
+5. RequestResponseBodyMethodProcessor
    - @RequestBody, @ResponseBody를 처리하는 리졸버
    - HandlerMethodArgumentResolver 및 HandlerMethodReturnValueHandler를 모두 구현한 클래스
    - 파라미터에 @RequestBody가 있을 때 → resolveArgument()
    - 반환 타입에 @ResponseBody가 있을 때 → handleReturnvalue()
    - 등록된 **HttpMessageConverter** 구현체 목록을 순회하여, 적절한 컨버터를 선택
-6. **HttpMessageConverter (MappingJackson2HttpMessageConverter)**
+6. HttpMessageConverter (MappingJackson2HttpMessageConverter)
    - 파라미터의 타입과 요청의 Content-Type에 따라 어떤 HttpMessageConverter가 동작할지 결정
    - JSON의 경우 Jackson 기반의 MappingJackson2HttpMessageConverter가 동작
-7. **핸들러 메서드 실행**
+7. 핸들러 메서드 실행
    - 변환된 객체를 인자로 주입하여 핸들러 메서드 호출
 
 ---
 
 ## HttpMessageConverter
 
-Spring MVC에서 <strong>HTTP 요청/응답의 본문(body)</strong>을 자바 객체로 변환하거나 그 반대를 수행하는 핵심 컴포넌트다.
+Spring MVC에서 HTTP 요청/응답의 본문(body)을 자바 객체로 변환하거나 그 반대를 수행하는 핵심 컴포넌트다.
 
 @RequestBody와 @ResponseBody가 동작할 수 있도록 해주는 핵심 메커니즘이다.
 

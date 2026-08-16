@@ -10,9 +10,9 @@ tags: []
 
 이전의 순수 JPA 리포지토리는 JdbcTemplate이나 MyBatis에 비해 많은 발전을 이루었지만,
 
-여전히 개발자는 각 엔티티마다 em.persist(), em.find() 등 **기본적인 CRUD 코드를 반복적으로 작성**해야 한다.
+여전히 개발자는 각 엔티티마다 em.persist(), em.find() 등 기본적인 CRUD 코드를 반복적으로 작성해야 한다.
 
-**스프링 데이터 JPA**는 이러한 **반복적인 리포지토리 구현을 제거**하기 위해 등장한, JPA를 더욱 편리하게 사용하도록 도와주는 기술이다.
+**스프링 데이터 JPA**는 이러한 반복적인 리포지토리 구현을 제거하기 위해 등장한, JPA를 더욱 편리하게 사용하도록 도와주는 기술이다.
 
 따라서 개발자는 더 이상 리포지토리의 구현 클래스를 작성할 필요가 없다.
 
@@ -33,11 +33,11 @@ public interface SpringDataJpaItemRepository extends JpaRepository<Item, Long> {
 
 **동작 원리**:
 
-1. 애플리케이션이 실행될 때, 스프링 데이터 JPA는 **JpaRepository를 상속받은 인터페이스를 찾는다.**
-2. **프록시 기술**을 사용해 **구현 클래스를 동적으로 생성**한다.
-3. 생성한 클래스의 인스턴스를 **스프링 빈으로 등록**한다.
+1. 애플리케이션이 실행될 때, 스프링 데이터 JPA는 JpaRepository를 상속받은 인터페이스를 찾는다.
+2. **프록시 기술**을 사용해 구현 클래스를 동적으로 생성한다.
+3. 생성한 클래스의 인스턴스를 스프링 빈으로 등록한다.
 
-이 덕분에 개발자는 **인터페이스**만 정의하면, 어떤 구현 코드도 없이 **기본적인 CRUD 기능**을 모두 사용할 수 있게 된다.
+이 덕분에 개발자는 인터페이스만 정의하면, 어떤 구현 코드도 없이 기본적인 CRUD 기능을 모두 사용할 수 있게 된다.
 
 ---
 
@@ -57,22 +57,22 @@ public interface SpringDataJpaItemRepository extends JpaRepository<Item, Long> {
 }
 ```
 
-이 덕분에 간단한 조회 쿼리는 **메서드 선언**만으로 해결할 수 있어, JPQL을 직접 작성하는 수고를 덜 수 있다.
+이 덕분에 간단한 조회 쿼리는 메서드 선언만으로 해결할 수 있어, JPQL을 직접 작성하는 수고를 덜 수 있다.
 
 **쿼리 메서드명 규칙** ([공식 메뉴얼](https://docs.spring.io/spring-data/jpa/reference/jpa/query-methods.html)):
 
-- **조회**: find…By, read…By, query…By, get…By
+- 조회: find…By, read…By, query…By, get…By
   - 예:) findHelloBy 처럼 ...에 식별하기 위한 내용(설명)이 들어가도 된다.
-- **COUNT**: count…By
-  - 반환 타입: **long**
-- **EXISTS**: exists…By
+- COUNT: count…By
+  - 반환 타입: long
+- EXISTS: exists…By
   - 반환 타입: boolean
-- **삭제**: delete…By, remove…By
-  - 반환 타입: **long**
-- **DISTINCT**: findDistinct, findMemberDistinctBy
-- **LIMIT**: findFirst3, findFirst, findTop, findTop3
+- 삭제: delete…By, remove…By
+  - 반환 타입: long
+- DISTINCT: findDistinct, findMemberDistinctBy
+- LIMIT: findFirst3, findFirst, findTop, findTop3
 
-메서드 이름이 너무 길어지거나, 조인 등 **복잡한 쿼리**가 필요한 경우에는 **@Query** 애노테이션을 사용하여 인터페이스 메서드에 직접 **JPQL을 작성**할 수 있다. 이 경우 메서드 이름은 쿼리 생성에 영향을 주지 않는다.
+메서드 이름이 너무 길어지거나, 조인 등 복잡한 쿼리가 필요한 경우에는 **@Query** 애노테이션을 사용하여 인터페이스 메서드에 직접 JPQL을 작성할 수 있다. 이 경우 메서드 이름은 쿼리 생성에 영향을 주지 않는다.
 
 ```java
 @Query("select i from Item i where i.itemName like :itemName and i.price <= :price")

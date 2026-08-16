@@ -51,12 +51,16 @@ const hasHeader = headerHtml.trim() !== '';
 
     <div class="shell">
       <Topbar label={label ?? head.title} crumbs={crumbs} />
-      <main id="main" class={hasToc ? 'with-toc' : undefined}>
+      {/*
+        목차 레일은 목차가 없어도 자리를 지킨다. 있을 때만 만들면 본문 열이
+        페이지마다 좌우로 움직여서, 글을 넘길 때마다 글줄이 옮겨 다닌다.
+      */}
+      <main id="main">
         {hasHeader && <div class="post-header" set:html={headerHtml} />}
         <div class="column">
           <slot />
         </div>
-        {hasToc && <div class="toc-rail" set:html={tocHtml} />}
+        <div class="toc-rail" set:html={tocHtml} />
       </main>
     </div>
 
@@ -107,22 +111,25 @@ const hasHeader = headerHtml.trim() !== '';
          * 2행 그리드. 1행은 글 헤더(본문 열 폭 전체), 2행은 본문 + 목차 레일.
          * 레일이 2행에서 시작하므로 목차 첫 항목이 본문 첫 줄과 자동으로 맞는다.
          * 제목이 몇 줄이든, 태그가 있든 없든 1행 높이가 알아서 달라진다.
+         *
+         * 목차 유무와 상관없이 모든 페이지가 같은 격자를 쓴다 — 본문 열의
+         * 가로 위치가 페이지마다 달라지지 않아야 한다.
          */
-        .with-toc {
+        main {
           display: grid;
           grid-template-columns: minmax(0, var(--measure)) var(--toc-w);
           column-gap: var(--space-10);
           justify-content: center;
         }
 
-        .with-toc .post-header {
+        .post-header {
           grid-column: 1;
           grid-row: 1;
           max-width: none;
           margin: 0;
         }
 
-        .with-toc .column {
+        .column {
           grid-column: 1;
           grid-row: 2;
           min-width: 0;
@@ -134,7 +141,7 @@ const hasHeader = headerHtml.trim() !== '';
          * 레일은 2행 높이(=본문 높이)만큼 늘어난다 — 안쪽 sticky가 움직일 공간이 된다.
          * align-items를 start로 주면 레일이 납작해져 sticky가 죽으니 stretch(기본)를 유지한다.
          */
-        .with-toc .toc-rail {
+        .toc-rail {
           display: block;
           grid-column: 2;
           grid-row: 2;
