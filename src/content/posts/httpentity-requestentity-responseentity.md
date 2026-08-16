@@ -6,11 +6,11 @@ category: "스프링/MVC"
 tags: []
 ---
 
-Spring MVC는 **HTTP 요청/응답 메시지**를 직접 다루는 대신, 이를 **추상화된 객체**로 표현하여 제공한다.
+Spring MVC는 HTTP 요청/응답 메시지를 직접 다루는 대신, 이를 **추상화된 객체**로 표현하여 제공한다.
 
-이는 **서블릿 API에 종속적이지 않고**, 보다 **객체 지향적인 HTTP 메시지 처리**를 가능하게 한다.
+이는 서블릿 API에 종속적이지 않고, 보다 객체 지향적인 HTTP 메시지 처리를 가능하게 한다.
 
-즉, HttpEntity와 이를 상속한 RequestEntity와 ResponseEntity는 **HTTP 요청 및 응답 메시지를 추상화**하여 개발자가 손쉽게 요청과 응답을 처리하도록 도와주는 객체다.
+즉, HttpEntity와 이를 상속한 RequestEntity와 ResponseEntity는 HTTP 요청 및 응답 메시지를 추상화하여 개발자가 손쉽게 요청과 응답을 처리하도록 도와주는 객체다.
 
 ---
 
@@ -28,8 +28,8 @@ public class HttpEntity<T> {
 }
 ```
 
-- HTTP 요청 또는 응답의 **헤더와 바디를 캡슐화**하는 클래스
-- **RestTemplate**과 함께 사용되거나, @Controller 메서드의 **파라미터 또는 반환 값**으로 사용됨
+- HTTP 요청 또는 응답의 헤더와 바디를 캡슐화하는 클래스
+- **RestTemplate**과 함께 사용되거나, @Controller 메서드의 파라미터 또는 반환 값으로 사용됨
   - 단, 상태 코드 설정은 불가능 (상태 코드가 필요하면 ResponseEntity 사용)
 
 예시:
@@ -76,8 +76,8 @@ public class RequestEntity<T> extends HttpEntity<T> {
 }
 ```
 
-- HttpEntity를 상속하면서, **HTTP 메서드와 요청 URL**도 포함한 클래스
-- 주로 **RestTemplate이나 WebClient를 통한 외부 API 호출** 시 사용
+- HttpEntity를 상속하면서, HTTP 메서드와 요청 URL도 포함한 클래스
+- 주로 RestTemplate이나 WebClient를 통한 외부 API 호출 시 사용
   - 즉, 클라이언트 역할에서 요청을 구성할 때 사용
   - 물론 @Controller 메서드에서 사용도 가능
 
@@ -117,12 +117,12 @@ public class ResponseEntity<T> extends HttpEntity<T> {
 }
 ```
 
-- HttpEntity를 상속하면서, HTTP 응답의 **상태 코드**를 명시할 수 있는 클래스
+- HttpEntity를 상속하면서, HTTP 응답의 상태 코드를 명시할 수 있는 클래스
 - RestTemplate과 @Controller 메서드에서 사용됨
   - RestTemplate에서 이 클래스는 getForEntity()와 exchange()에서 반환됨
-  - Spring MVC에서 @Controller 메서드의 **반환 값**으로도 사용 가능 (정적 메서드를 통해 접근 가능한 **빌더**로도 사용 가능)
-- 실무에서 **표준화된 API 응답 형식**을 만들 때 가장 많이 사용
-- @ResponseBody와 유사하게 동작하지만 **헤더와 상태 코드 제어가 더 자유로움**
+  - Spring MVC에서 @Controller 메서드의 반환 값으로도 사용 가능 (정적 메서드를 통해 접근 가능한 빌더로도 사용 가능)
+- 실무에서 표준화된 API 응답 형식을 만들 때 가장 많이 사용
+- @ResponseBody와 유사하게 동작하지만 헤더와 상태 코드 제어가 더 자유로움
 - 응답 DTO와 에러 응답이 일관된 포맷을 갖도록 ResponseEntity&lt;ApiResponse>로 감싸는 패턴이 흔함
 
 예시:
@@ -158,11 +158,11 @@ public ResponseEntity<String> handle() {
 
 ## HttpEntityMethodProcessor
 
-이전에 **@RequestBody, @ResponseBody**는 내부적으로 **RequestResponseBodyMethodProcessor**가 처리한다고 했었다.
+이전에 @RequestBody, @ResponseBody는 내부적으로 **RequestResponseBodyMethodProcessor**가 처리한다고 했었다.
 
-마찬가지로 **HttpEntity**(RequestEntity, ResponseEntity)는 **HttpEntityMethodProcessor**가 내부적으로 처리한다.
+마찬가지로 HttpEntity(RequestEntity, ResponseEntity)는 **HttpEntityMethodProcessor**가 내부적으로 처리한다.
 
 두 메서드 프로세서의 공통점:
 
-- HandlerMethod**ArgumentResolver**와 HandlerMethod**ReturnValueHandler**를 둘 다 상속
+- HandlerMethodArgumentResolver와 HandlerMethodReturnValueHandler를 둘 다 상속
 - 내부에서 **HttpMessageConverter**를 사용하여 바디 정보를 변환 (예: JSON ↔ User)

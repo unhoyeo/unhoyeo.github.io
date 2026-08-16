@@ -8,9 +8,9 @@ tags: []
 
 ## @RequestMapping이란?
 
-Spring MVC에서 **HTTP 요청을 특정 컨트롤러 메서드에 매핑**하기 위해 사용하는 애노테이션이다.
+Spring MVC에서 HTTP 요청을 특정 컨트롤러 메서드에 매핑하기 위해 사용하는 애노테이션이다.
 
-**요청 URL, HTTP 메서드, 파라미터 조건, 헤더 조건, 미디어 타입 조건** 등을 조합하여 요청을 정교하게 매핑할 수 있다.
+요청 URL, HTTP 메서드, 파라미터 조건, 헤더 조건, 미디어 타입 조건 등을 조합하여 요청을 정교하게 매핑할 수 있다.
 
 예시:
 
@@ -74,8 +74,8 @@ find()는 GET /api/users 요청에 매핑되고, join()은 POST /api/users/join 
 
 ## name
 
-- **매핑에 이름을 부여**하여 다른 곳(예: MvcUriComponentsBuilder)에서 참조할 수 있도록 한다.
-- 클래스 레벨과 메서드 레벨에 모두 설정하면 **클래스명#메서드명** 형태로 조합된다.
+- 매핑에 이름을 부여하여 다른 곳(예: MvcUriComponentsBuilder)에서 참조할 수 있도록 한다.
+- 클래스 레벨과 메서드 레벨에 모두 설정하면 클래스명#메서드명 형태로 조합된다.
 - URI 빌더에서 명명 기반 매핑 검색 시 사용된다.
 
 ```java
@@ -86,9 +86,9 @@ find()는 GET /api/users 요청에 매핑되고, join()은 POST /api/users/join 
 
 ## value (=path)
 
-- **매핑할 요청 URL 경로**를 지정한다.
+- 매핑할 요청 URL 경로를 지정한다.
 - <strong>Ant 스타일 경로 패턴</strong>(예: /profile/\*\*)이나 <strong>경로 변수</strong>(예: /{profile\_path})를 사용할 수 있다.
-- 메서드 레벨에서는 **상대 경로**(예: edit)가 클래스 레벨에서 표현된 기본 매핑 내에서 지원된다.
+- 메서드 레벨에서는 상대 경로(예: edit)가 클래스 레벨에서 표현된 기본 매핑 내에서 지원된다.
 - 클래스 레벨에서 사용하면 모든 메서드 레벨 매핑이 이 기본 매핑을 상속받아 특정 핸들러 메서드에 맞게 범위를 좁힌다.
 - 명시적으로 경로에 매핑되지 않은 핸들러 메서드는 빈 경로에 매핑된다.
 
@@ -101,7 +101,7 @@ find()는 GET /api/users 요청에 매핑되고, join()은 POST /api/users/join 
 
 ## method
 
-- **매핑할 HTTP 메서드**(GET, POST, HEAD, OPTIONS, PUT, PATCH, DELETE, TRACE)를 지정한다.
+- 매핑할 HTTP 메서드(GET, POST, HEAD, OPTIONS, PUT, PATCH, DELETE, TRACE)를 지정한다.
 - 지정하지 않으면 모든 HTTP 메서드를 허용한다.
 - 실무에선 명확성을 위해 @GetMapping, @PostMapping 등 축약형 애노테이션을 사용한다.
 
@@ -113,10 +113,10 @@ find()는 GET /api/users 요청에 매핑되고, join()은 POST /api/users/join 
 
 ## params
 
-- 요청에 **특정 파라미터가 존재하거나, 특정 값을 가질 때만** 매핑하도록 제한한다.
-- **"myParam=myValue"** → 해당 파라미터가 지정된 값을 가져야 함 (**!=** 연산자도 가능)
-- **"myParam"** → 해당 파라미터가 요청에 존재해야 함 (**!** 연산자도 가능)
-- 실무에서는 **기능 분기** 용도로 활용된다.
+- 요청에 특정 파라미터가 존재하거나, 특정 값을 가질 때만 매핑하도록 제한한다.
+- "myParam=myValue" → 해당 파라미터가 지정된 값을 가져야 함 (!= 연산자도 가능)
+- "myParam" → 해당 파라미터가 요청에 존재해야 함 (! 연산자도 가능)
+- 실무에서는 기능 분기 용도로 활용된다.
 
 ```java
 params = "mode"         // mode 파라미터가 존재해야 함
@@ -129,7 +129,7 @@ params = "mode!=debug"  // mode 파라미터가 debug가 아니어야 함
 
 ## headers
 
-- 요청에 **특정 헤더가 존재하거나, 특정 값을 가질 때만** 매핑하도록 제한한다.
+- 요청에 특정 헤더가 존재하거나, 특정 값을 가질 때만 매핑하도록 제한한다.
 - Accept, Content-Type 같은 헤더에 <strong>미디어 타입 와일드카드(\*)</strong>도 지원
 - 예: "Content-Type=text/\*" → text/plain, text/html 등 모두 매칭
 
@@ -143,7 +143,7 @@ headers = "X-API-VERSION=1" // API 버전 관리를 위해 커스텀 헤더 조�
 
 ## consumes
 
-- 핸들러가 **소비할 수 있는 요청의 미디어 타입**을 지정한다.
+- 핸들러가 소비할 수 있는 요청의 미디어 타입을 지정한다.
 - 즉, 클라이언트가 보내는 요청의 **Content-Type**을 매핑한다.
 
 ```java
@@ -155,7 +155,7 @@ consumes = MediaType.APPLICATION_JSON_VALUE // 위와 동일
 
 ## produces
 
-- 핸들러가 **생산할 수 있는 응답의 미디어 타입**을 지정한다.
+- 핸들러가 생산할 수 있는 응답의 미디어 타입을 지정한다.
 - 즉, 클라이언트의 **Accept 헤더**와 비교하여 **콘텐츠 협상**(Content Negotiation)을 통해 매핑된다.
 
 ```java
@@ -202,6 +202,6 @@ public class UserController {
 
 **정리**
 
-- @RequestMapping은 단순한 경로 매핑 이상의 역할을 수행하며, HTTP 요청을 **복합 조건 기반으로 정교하게 처리**할 수 있다.
+- @RequestMapping은 단순한 경로 매핑 이상의 역할을 수행하며, HTTP 요청을 복합 조건 기반으로 정교하게 처리할 수 있다.
 - 속성으로는 name, value(=path), method, params, headers, consumes, produces가 있다.
-- 이를 조합하여 **복잡한 요청 조건 분기, API 버전 관리** 등을 유연하게 수행할 수 있으며, 신뢰성과 유지보수성 있는 설계를 할 수 있다.
+- 이를 조합하여 복잡한 요청 조건 분기, API 버전 관리 등을 유연하게 수행할 수 있으며, 신뢰성과 유지보수성 있는 설계를 할 수 있다.

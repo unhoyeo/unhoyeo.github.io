@@ -21,6 +21,15 @@ const currentPost = posts.find((post) => path === `/posts/${post.id}/`);
 const pinnedPaths = currentPost
   ? categoryAncestors(parseCategory(currentPost.data.category))
   : [];
+
+/*
+ * 네비게이션 옆 개수. 주제 트리와 같은 방식으로 규모를 먼저 보여준다.
+ * 홈은 셀 대상이 없으므로 비운다.
+ */
+const navCounts: Record<string, number> = {
+  '/posts/': posts.length,
+  '/tags/': new Set(posts.flatMap((post) => post.data.tags)).size,
+};
 ---
 
 <aside id="sidebar" class="sidebar" data-open="false">
@@ -49,6 +58,10 @@ const pinnedPaths = currentPost
             <li>
               <a href={link.href} aria-current={isActive(link.href) ? 'page' : undefined}>
                 {link.label}
+                {/* 0은 굳이 보여주지 않는다 — 없다는 뜻인데 고장난 것처럼 읽힌다 */}
+                {navCounts[link.href] > 0 && (
+                  <span class="nav__count">{navCounts[link.href]}</span>
+                )}
               </a>
             </li>
           ))
@@ -289,18 +302,11 @@ const pinnedPaths = currentPost
     /* 패딩이 위아래 대칭이어야 글자 중심이 상단바 기준선과 맞는다 */
     padding: var(--space-2);
     /*
-     * 폭을 최소로 줄이면 블로그 이름이 두 줄로 접히면서 상단 높이가 늘어난다.
-     * 접지 말고 넘치는 만큼만 잘라낸다 — 높이가 흔들리지 않아야 접기 버튼과
-     * 상단바 아이콘의 중심선이 유지된다.
+     * 블로그 이름은 어떤 폭에서도 온전히 보여야 한다 — 두 줄로 접히지도,
+     * 말줄임으로 잘리지도 않는다. 대신 사이드바의 최소 너비를 이 이름이
+     * 들어갈 만큼으로 잡는다(스크립트의 MIN_W).
      */
-    min-width: 0;
     white-space: nowrap;
-    overflow: hidden;
-  }
-
-  .brand__name {
-    overflow: hidden;
-    text-overflow: ellipsis;
   }
 
   /*
@@ -370,6 +376,22 @@ const pinnedPaths = currentPost
     padding: 0;
   }
 
+  /*
+   * 주제 트리의 개수 표시와 같은 모양·같은 자리.
+   * 아래 목록 규칙이 display:block을 주므로 한 단계 더 구체적으로 적는다.
+   */
+  .sidebar__nav li > a {
+    display: flex;
+    align-items: center;
+  }
+
+  .nav__count {
+    margin-left: auto;
+    padding-left: var(--space-2);
+    color: var(--sidebar-fg-label);
+    font-size: var(--text-xs);
+  }
+
   /* 목록 항목은 ChatGPT 사이드바처럼 한 줄로 자르고 라운드 하이라이트 */
   .sidebar__nav a,
   .sidebar__recent a {
@@ -405,6 +427,12 @@ const pinnedPaths = currentPost
     flex: 1;
     min-height: 0;
     overflow-y: auto;
+    /*
+     * 세로만 auto로 두면 가로축도 auto가 되어(한쪽이 visible이 아니면 나머지도
+     * visible일 수 없다) 주제·최근이 좌우로 밀린다. 명시적으로 막는다.
+     * 긴 제목은 각 항목이 알아서 말줄임하므로 잘려서 안 보이는 내용은 없다.
+     */
+    overflow-x: hidden;
     /* 끝까지 내렸을 때 본문으로 스크롤이 번지지 않게 */
     overscroll-behavior: contain;
     scrollbar-width: thin;
@@ -539,15 +567,33 @@ const pinnedPaths = currentPost
    * 복원은 <head>의 is:inline 스크립트가 첫 페인트 전에 한다(깜빡임 방지).
    */
   const WIDTH_KEY = 'sidebar:width';
-  const MIN_W = 180;
+  /*
+   * 최소 너비는 블로그 이름 + 접기 버튼이 온전히 들어가는 폭이다.
+   * 이름이 잘리거나 접히지 않아야 하므로 상수로 박지 않고 실제로 재서 정한다
+   * (이름을 바꾸면 최소 너비도 따라온다).
+   */
   const MAX_W = 480;
+  const FALLBACK_MIN_W = 220;
 
   const root = document.documentElement;
   const resizer = document.querySelector<HTMLElement>('.sidebar__resizer');
   const aside = document.querySelector<HTMLElement>('.sidebar');
 
   if (resizer && aside) {
-    /** 화면 밖으로 나가거나 본문이 사라질 만큼은 못 끌게 막는다 */
+    /* 이름과 버튼이 실제로 차지하는 폭 + 좌우 여백. 잘릴 일이 없는 하한선이다 */
+    const measureMin = () => {
+      const top = aside.querySelector<HTMLElement>('.sidebar__top');
+      const brand = aside.querySelector<HTMLElement>('.brand');
+      const button = aside.querySelector<HTMLElement>('.sidebar__collapse');
+      if (!top || !brand) return FALLBACK_MIN_W;
+      const inner = aside.querySelector<HTMLElement>('.sidebar__inner');
+      const pad = inner ? parseFloat(getComputedStyle(inner).paddingLeft) * 2 : 0;
+      const gap = parseFloat(getComputedStyle(top).columnGap) || 0;
+      return Math.ceil(brand.scrollWidth + (button?.offsetWidth ?? 0) + gap + pad);
+    };
+    const MIN_W = Math.max(FALLBACK_MIN_W, measureMin());
+
+    /** 화면 밖으로 나가거나 이름이 잘릴 만큼은 못 끌게 막는다 */
     const applyWidth = (px: number) => {
       const w = Math.round(Math.min(MAX_W, Math.max(MIN_W, px)));
       root.style.setProperty('--sidebar-w', `${w}px`);
@@ -561,6 +607,13 @@ const pinnedPaths = currentPost
         /* 저장 실패는 무시한다 — 이번 세션 동안은 그대로 쓰인다 */
       }
     };
+
+    /*
+     * <head>에서 복원한 값은 하한을 재기 전이라 지금 기준보다 좁을 수 있다.
+     * (이름이 길어지면 하한도 올라간다) 여기서 한 번 다시 조인다.
+     */
+    const stored = Number(localStorage.getItem(WIDTH_KEY));
+    if (stored) applyWidth(stored);
 
     resizer.addEventListener('pointerdown', (event) => {
       // 기본 동작(글자 선택, 드래그 시작)을 막아야 커서가 매끄럽게 따라온다
@@ -637,8 +690,19 @@ const pinnedPaths = currentPost
   if (marqueeRoot && !slowMotion) {
     const PX_PER_SEC = 90; // 읽을 수 있을 만큼만 천천히
 
+    /*
+     * 글자가 실제로 차지하는 폭을 Range로 잰다.
+     * scrollWidth는 오른쪽 패딩을 넘치는 영역에 넣어주지 않아서, 그걸로 계산하면
+     * 패딩만큼 덜 밀려 제목 끝이 잘린 채로 멈춘다.
+     */
     const reveal = (link: HTMLElement) => {
-      const hidden = link.scrollWidth - link.clientWidth;
+      const style = getComputedStyle(link);
+      const range = document.createRange();
+      range.selectNodeContents(link);
+      const textWidth = range.getBoundingClientRect().width;
+      const inner =
+        link.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
+      const hidden = Math.ceil(textWidth - inner);
       if (hidden <= 0) return; // 안 잘린 제목은 건드리지 않는다
       link.style.transition = `text-indent ${Math.round((hidden / PX_PER_SEC) * 1000)}ms linear`;
       link.style.textIndent = `-${hidden}px`;
