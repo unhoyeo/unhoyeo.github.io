@@ -20,7 +20,7 @@ tags: []
 - 트랜잭션 처리를 위한 커넥션 동기화
 - SQLException 발생 시 스프링 예외 변환기 실행
 
-? 이 덕분에 개발자는 **SQL 작성**과 **결과 매핑**이라는 핵심 작업에 더 집중할 수 있다.
+이 덕분에 개발자는 **SQL 작성**과 **결과 매핑**이라는 핵심 작업에 더 집중할 수 있다.
 
 > JdbcTemplate의 자세한 사용법은 스프링의 [공식 메뉴얼](https://docs.spring.io/spring-framework/reference/data-access/jdbc/core.html#jdbc-JdbcTemplate)을 참고하자.
 
@@ -188,7 +188,7 @@ template.update(sql,
 );
 ```
 
-이를 해결하기 위해 스프링은 **? 대신 :itemName처럼 이름으로 파라미터를 바인딩**하는 NamedParameterJdbcTemplate을 제공한다.
+이를 해결하기 위해 스프링은 **대신 :itemName처럼 이름으로 파라미터를 바인딩**하는 NamedParameterJdbcTemplate을 제공한다.
 
 이때 NamedParameterJdbcTemplate의 파라미터는 다음을 통해 전달할 수 있다.
 

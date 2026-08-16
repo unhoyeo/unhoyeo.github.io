@@ -18,7 +18,7 @@ tags: []
 
 ## 기존 서블릿 컨테이너의 예외 처리 메커니즘을 이용
 
-WAS에 **예외가 전파**되거나, **response.sendError(statusCode, message)**를 통해 오류가 전달되면,
+WAS에 <strong>예외가 전파</strong>되거나, <strong>response.sendError(statusCode, message)</strong>를 통해 오류가 전달되면,
 
 해당 오류에 대해 등록된 **오류 페이지**가 있는지 확인한다.
 
@@ -90,7 +90,7 @@ public class ErrorPageController {
 - 요청 시 Accept 헤더가 **application/json**인 경우 errorApi500() 메서드가 호출된다.
 - 즉, 클라이언트가 받고 싶은 미디어 타입이 JSON인 경우 호출된다.
 
-따라서 요청 시 Accept 헤더가 application/json이 아니면 **오류 페이지(HTML)**를 받을 수 있고,
+따라서 요청 시 Accept 헤더가 application/json이 아니면 <strong>오류 페이지(HTML)</strong>를 받을 수 있고,
 
 Accept 헤더가 **application/json**이면 다음과 같은 **JSON 응답**을 받을 수 있다.
 
@@ -144,7 +144,7 @@ public class BasicErrorController extends AbstractErrorController {
 - **error()**:
   - 그 외 모든 경우에 호출되어, **ResponseEntity**를 반환함
 
-따라서 WebServerCustomizer 코드를 주석 처리하고, 요청 시 Accept 헤더가 **text/html**이면 **오류 페이지(HTML)**를 받을 수 있고,
+따라서 WebServerCustomizer 코드를 주석 처리하고, 요청 시 Accept 헤더가 <strong>text/html</strong>이면 <strong>오류 페이지(HTML)</strong>를 받을 수 있고,
 
 Accept 헤더가 text/html이 아니면 다음과 같은 **JSON 응답**을 받을 수 있다.
 
@@ -197,7 +197,7 @@ public interface HandlerExceptionResolver {
 2. DispatcherServlet은 등록된 **ExceptionResolver**들을 순서대로 호출하며, 이 예외를 처리할 수 있는지 확인
    - 해당 ExceptionResolver가 처리할 수 없어 **null**이 반환되면, 다음 ExceptionResolver가 호출됨
 3. ExceptionResolver가 예외를 처리하여 **ModelAndView** 객체를 반환하면, **예외 흐름은 거기서 정상적인 흐름으로 종결됨**
-   - 즉, WAS 입장에서는 예외가 발생하지 않고 **"정상 처리"**된 것처럼 보이게 됨
+   - 즉, WAS 입장에서는 예외가 발생하지 않고 <strong>"정상 처리"</strong>된 것처럼 보이게 됨
    - 만약 처리할 수 있는 ExceptionResolver가 없어 **null**이 반환되면, 다음 ExceptionResolver가 호출됨
 4. 만약 아무도 처리하지 못하면, 예외는 서블릿 컨테이너(WAS)로 전달됨
 
@@ -381,7 +381,7 @@ public class ApiExceptionController {
 }
 ```
 
-해당 메서드는 **지정된 예외(또는 그 자식 예외)**가 발생했을 때만 호출된다.
+해당 메서드는 <strong>지정된 예외(또는 그 자식 예외)</strong>가 발생했을 때만 호출된다.
 
 메서드의 **파라미터**나 **반환 타입**이 일반 컨트롤러처럼 유연하기 때문에 상태 코드, 헤더, 본문을 완벽하게 제어할 수 있다. ([자세한 내용](https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-controller/ann-exceptionhandler.html#mvc-ann-exceptionhandler-args))
 
@@ -410,7 +410,7 @@ throw new ResponseStatusException(
 );
 ```
 
-이 Resolver는 내부적으로 **response.sendError()**를 호출하므로, 결국 서블릿의 /error 경로를 다시 요청하는 방식으로 동작한다.
+이 Resolver는 내부적으로 <strong>response.sendError()</strong>를 호출하므로, 결국 서블릿의 /error 경로를 다시 요청하는 방식으로 동작한다.
 
 ---
 
@@ -422,7 +422,7 @@ throw new ResponseStatusException(
 
 500 오류가 아닌 **400(Bad Request)** 오류로 변환해 준다.
 
-이 Resolver 또한 내부적으로 **response.sendError()**를 호출한다.
+이 Resolver 또한 내부적으로 <strong>response.sendError()</strong>를 호출한다.
 
 ---
 

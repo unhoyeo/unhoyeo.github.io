@@ -20,9 +20,9 @@ JdbcTemplate이나 MyBatis와 같은 **SQL Mapper** 기술은 JDBC의 반복 작
 
 ORM은 이름 그대로 애플리케이션의 **객체**와 관계형 데이터베이스의 **테이블**을 자동으로 매핑해주는 기술이다.
 
-**JPA(Java Persistence API)**는 이러한 ORM 기술에 대한 **자바 표준 사양(API)**이며,
+<strong>JPA(Java Persistence API)</strong>는 이러한 ORM 기술에 대한 <strong>자바 표준 사양(API)</strong>이며,
 
-**하이버네이트(Hibernate)**는 이 JPA 표준을 구현한 가장 널리 사용되는 **구현체**다.
+<strong>하이버네이트(Hibernate)</strong>는 이 JPA 표준을 구현한 가장 널리 사용되는 <strong>구현체</strong>다.
 
 이제 개발자는 더 이상 SQL을 작성하지 않아도 된다.
 
@@ -137,7 +137,7 @@ public class JpaItemRepositoryV1 implements ItemRepository {
 - **EntityManager**:
   - 엔티티를 관리하는 JPA의 핵심 인터페이스다.
   - 스프링을 통해 리포지토리에 주입받아 사용한다.
-  - **persist()**를 통해 데이터를 저장하고, **find()**를 통해 조회하며, **createQuery()**를 통해 JPQL을 실행할 수 있다.
+  - <strong>persist()</strong>를 통해 데이터를 저장하고, <strong>find()</strong>를 통해 조회하며, <strong>createQuery()</strong>를 통해 JPQL을 실행할 수 있다.
 - **@Transactional**:
   - JPA에서 **모든 데이터 변경(저장, 수정, 삭제) 작업은 반드시 트랜잭션 내에서 이루어져야 한다.**
   - 조회 작업은 조회 전용 트랜잭션을 걸거나, 아예 트랜잭션이 없어도 가능하다.

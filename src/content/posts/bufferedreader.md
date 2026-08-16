@@ -54,7 +54,7 @@ StringTokenizer st = new StringTokenizer(br.readLine());
 ```
 
 - **System.in**은 표준 입력(키보드 입력)을 의미하며, 이를 **InputStreamReader**를 통해 문자 스트림으로 변환한 후, **BufferedReader**를 사용하여 성능을 향상한다.
-- **br.readLine()**을 통해 **한 줄**의 문자열을 입력받는다.
+- <strong>br.readLine()</strong>을 통해 <strong>한 줄</strong>의 문자열을 입력받는다.
 - **StringTokenizer**를 사용하여 입력받은 문자열을 **공백**을 기준으로 나눈다. 기준을 지정하려면 두 번째 파라미터에 넣어주면 된다.
 
 ## 4. 입력값을 정수로 변환

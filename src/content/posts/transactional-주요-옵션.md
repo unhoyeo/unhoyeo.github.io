@@ -64,7 +64,7 @@ public @interface Transactional {
 | **NEVER** | 트랜잭션이 있으면 예외 발생 | 트랜잭션 환경에서 실행되면 안 되는 작업 |
 | **NESTED** | 부모 트랜잭션 안에서 독립적인 세이브포인트 생성 | 부분 롤백 처리 (JDBC에서 savepoint 지원 필요) |
 
-> ? 대부분의 경우 **REQUIRED**와 **REQUIRES\_NEW** 조합만으로도 충분하다.
+> 대부분의 경우 **REQUIRED**와 **REQUIRES\_NEW** 조합만으로도 충분하다.
 
 ---
 
@@ -82,7 +82,7 @@ public @interface Transactional {
 | **REPEATABLE\_READ** | 한 트랜잭션 내 같은 쿼리 결과 동일 보장 | Non-repeatable Read 방지 |
 | **SERIALIZABLE** | 가장 엄격, 완전한 순차 실행 | Phantom Read 방지, 성능 저하 |
 
-> ? 실무에서는 **READ\_COMMITTED**(기본값)이면 충분하다.
+> 실무에서는 **READ\_COMMITTED**(기본값)이면 충분하다.
 > 정합성이 매우 중요한 금융 로직 등에서만 REPEATABLE\_READ 이상을 고려하면 된다.
 
 ---
@@ -102,7 +102,7 @@ public void processOrder() throws IOException {
 }
 ```
 
-> ? 보통 특정 체크 예외를 롤백하고 싶을 때 사용한다.
+> 보통 특정 체크 예외를 롤백하고 싶을 때 사용한다.
 
 ---
 
@@ -116,7 +116,7 @@ public void processOrder() throws IOException {
 public void longRunningTask() { ... }
 ```
 
-> ? 대용량 배치 처리나 외부 I/O 연동 시 유용하다.
+> 대용량 배치 처리나 외부 I/O 연동 시 유용하다.
 
 ---
 
@@ -133,4 +133,4 @@ public void longRunningTask() { ... }
 public List<User> findAllUsers() { ... }
 ```
 
-> ? **조회 전용 서비스 메서드**에 반드시 지정하는 것이 권장된다.
+> **조회 전용 서비스 메서드**에 반드시 지정하는 것이 권장된다.

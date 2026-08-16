@@ -1,5 +1,5 @@
 ---
-title: "5430﻿번 AC - 구현, Deque(덱)"
+title: "5430번 AC - 구현, Deque(덱)"
 description: "선영이는 주말에 할 일이 없어서 새로운 언어 AC를 만들었다. AC는 정수 배열에 연산을 하기 위해 만든 언어이다. 이 언어에는 두 가지 함수 R(뒤집기)과 D(버리기)가 있다."
 pubDate: 2025-03-20T18:28:32+09:00
 category: "알고리즘/백준"
@@ -57,8 +57,8 @@ error
 ## 아이디어
 
 - **R(뒤집기)** 연산을 할 때 실제로 배열(리스트)을 뒤집으면 **시간이 오래 걸림 → O(N)**
-- 대신 **“뒤집힘 여부”**를 체크하여 **D(버리기)** 연산 시 **앞에서 제거할지, 뒤에서 제거할지** 결정
-- **Deque&lt;Integer>**를 사용하여 **앞/뒤에서 빠르게 원소를 제거 가능 (O(1))**
+- 대신 <strong>“뒤집힘 여부”</strong>를 체크하여 <strong>D(버리기)</strong> 연산 시 <strong>앞에서 제거할지, 뒤에서 제거할지</strong> 결정
+- <strong>Deque&lt;Integer></strong>를 사용하여 <strong>앞/뒤에서 빠르게 원소를 제거 가능 (O(1))</strong>
 - **R 연산 시 실제로 뒤집지 않고 boolean reverse 플래그 사용**
 - **D 연산 시 reverse 값에 따라 pollFirst() 또는 pollLast() 실행**
 - 최종 결과 출력 시 reverse 값에 따라 순서 출력
@@ -197,10 +197,10 @@ class Main {
 **1. ArrayList.remove(0)** 연산의 시간 복잡도가 **O(N)**
 
 - ArrayList에서 remove(0)을 하면 **첫 번째 원소가 삭제된 후, 남은 원소들을 전부 한 칸씩 앞으로 이동**해야 한다.
-- 이 연산은 **O(N)**의 시간이 걸린다.
-- 즉, D 명령이 여러 번 실행되면 최악의 경우 **O(N²)**이 된다.
+- 이 연산은 <strong>O(N)</strong>의 시간이 걸린다.
+- 즉, D 명령이 여러 번 실행되면 최악의 경우 <strong>O(N²)</strong>이 된다.
 
 **2. Collections.reverse(list)** 연산도 **O(N)**
 
-- R 연산을 할 때마다 Collections.reverse(list)를 실행하는데, 이 연산은 **O(N)**의 시간이 걸린다.
+- R 연산을 할 때마다 Collections.reverse(list)를 실행하는데, 이 연산은 <strong>O(N)</strong>의 시간이 걸린다.
 - R 명령이 여러 번 나오면 전체 수행 시간이 **O(N²)** 에 가까워질 수 있다.

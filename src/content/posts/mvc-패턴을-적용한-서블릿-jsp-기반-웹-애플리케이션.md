@@ -6,7 +6,7 @@ category: "스프링/MVC"
 tags: []
 ---
 
-웹 애플리케이션의 구조를 명확하게 분리하기 위해 **MVC 패턴(Model-View-Controller)**을 적용해 보자.
+웹 애플리케이션의 구조를 명확하게 분리하기 위해 <strong>MVC 패턴(Model-View-Controller)</strong>을 적용해 보자.
 
 - Controller → **서블릿**
   - 클라이언트의 요청을 받아서 처리하고, View로 제어를 전달하는 역할
@@ -14,9 +14,9 @@ tags: []
   - 단순히 데이터를 받아서 화면을 그리는 역할만 수행
   - 화면에 필요한 데이터는 컨트롤러가 준비하고 JSP는 순수하게 출력만 담당
 - Model → **HttpServletRequest**
-  - HttpServletRequest는 내부에 **데이터 저장소(속성 맵)**를 가지고 있다.
-  - **request.setAttribute(key, value)**를 통해 데이터를 저장하고,
-  - **request.getAttribute(key)**를 통해 데이터를 조회할 수 있다.
+  - HttpServletRequest는 내부에 <strong>데이터 저장소(속성 맵)</strong>를 가지고 있다.
+  - <strong>request.setAttribute(key, value)</strong>를 통해 데이터를 저장하고,
+  - <strong>request.getAttribute(key)</strong>를 통해 데이터를 조회할 수 있다.
   - 이 방식을 사용하면 컨트롤러에서 만든 데이터를 JSP로 전달할 수 있다.
   - 단, 해당 데이터는 **요청 범위(request scope)** 내에서만 유효하다. (다른 요청에서 사용 불가)
   - 따라서 일회성 데이터 전달에 적합하다.
@@ -77,7 +77,7 @@ public class MemberFormServlet extends HttpServlet {
 | 데이터 전달 방식 | 쿼리 파라미터, 세션 | request.setAttribute() |
 | 예시 | PRG(Post-Redirect-Get) 패턴 | View 렌더링 |
 
-> PRG 패턴에 대해서는 ? [여기](https://uh1205.tistory.com/81)
+> PRG 패턴에 대해서는 ? [여기](/posts/http-상태-코드/)
 
 ---
 
@@ -113,7 +113,7 @@ public class MemberFormServlet extends HttpServlet {
 
 - JSP나 **여러 URL 경로가 나뉘는 구조**에서 각 컨트롤러 URL 밑에 **일관된 하위 경로**를 연결하기 위해서
 - 테스트 환경, 배포 환경에서 context path가 바뀌더라도 상대 경로를 사용하면 문제가 발생하지 않음
-- 다만, URL이 바뀔 수 있는 SPA 구조나 리다이렉션이 많은 경우에는 **절대 경로(/save)**를 쓰는 것이 유지보수에 유리할 수 있다.
+- 다만, URL이 바뀔 수 있는 SPA 구조나 리다이렉션이 많은 경우에는 <strong>절대 경로(/save)</strong>를 쓰는 것이 유지보수에 유리할 수 있다.
 
 ---
 

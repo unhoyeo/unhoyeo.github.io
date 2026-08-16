@@ -6,11 +6,11 @@ category: "스프링/MVC"
 tags: []
 ---
 
-? **@RequestBody란?**
+**@RequestBody란?**
 
-스프링 MVC에서 **HTTP 요청 본문(body)**을 **자바 객체로 변환**하여 핸들러 메서드 파라미터에 바인딩할 때 사용하는 애노테이션이다.
+스프링 MVC에서 <strong>HTTP 요청 본문(body)</strong>을 <strong>자바 객체로 변환</strong>하여 핸들러 메서드 파라미터에 바인딩할 때 사용하는 애노테이션이다.
 
-@ModelAttribute는 주로 **폼 데이터(application/x-www-form-urlencoded)**를 자바 객체로 받을 때 사용한다면,
+@ModelAttribute는 주로 <strong>폼 데이터(application/x-www-form-urlencoded)</strong>를 자바 객체로 받을 때 사용한다면,
 
 @RequestBody는 주로 XML, **JSON(application/json)** 등 구조화된 데이터를 자바 객체로 받을 때 사용한다.
 
@@ -31,7 +31,7 @@ Content-Type: application/json
 public String saveUser(@RequestBody UserDto user) { ... }
 ```
 
-? 요청 body의 JSON → **UserDto 객체**로 자동 변환
+요청 body의 JSON → **UserDto 객체**로 자동 변환
 
 ---
 
@@ -86,7 +86,7 @@ HttpMessageConverter (e.g. MappingJackson2HttpMessageConverter)
 
 ## HttpMessageConverter
 
-Spring MVC에서 **HTTP 요청/응답의 본문(body)**을 자바 객체로 변환하거나 그 반대를 수행하는 핵심 컴포넌트다.
+Spring MVC에서 <strong>HTTP 요청/응답의 본문(body)</strong>을 자바 객체로 변환하거나 그 반대를 수행하는 핵심 컴포넌트다.
 
 @RequestBody와 @ResponseBody가 동작할 수 있도록 해주는 핵심 메커니즘이다.
 

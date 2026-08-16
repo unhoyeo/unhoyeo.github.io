@@ -14,7 +14,7 @@ SQL은 이를 위해 다양한 연산자와 내장 함수를 제공한다.
 
 ## 산술 연산: SQL로 직접 계산하기
 
-SELECT 문 안에서 **숫자 타입의 열(Column)**에 사칙연산(+, -, \*, /)을 직접 적용하여 새로운 값을 계산할 수 있다.
+SELECT 문 안에서 <strong>숫자 타입의 열(Column)</strong>에 사칙연산(+, -, \*, /)을 직접 적용하여 새로운 값을 계산할 수 있다.
 
 이를 통해 애플리케이션에서 별도로 계산할 필요 없이 데이터베이스 단에서 원하는 정보를 바로 얻을 수 있다.
 
@@ -53,7 +53,7 @@ FROM
 SELECT
     CONCAT_WS(' - ', customer_id, name, email) AS customer_data
 FROM
-    customers;​
+    customers;
 ```
 
 > CONCAT\_WS()는 MySQL 전용 함수이며, WS는 "With Separator"의 약자다.

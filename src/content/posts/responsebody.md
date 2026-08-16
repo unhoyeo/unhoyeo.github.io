@@ -34,7 +34,7 @@ Content-Type: application/json
 }
 ```
 
-? 반환된 UserDto 객체는 MappingJackson2HttpMessageConverter를 통해 JSON으로 직렬화되어, HTTP 응답 본문에 포함됨
+반환된 UserDto 객체는 MappingJackson2HttpMessageConverter를 통해 JSON으로 직렬화되어, HTTP 응답 본문에 포함됨
 
 ---
 

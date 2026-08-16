@@ -31,17 +31,17 @@ tags: []
 
 JDBC(Java Database Connectivity)는 **자바 애플리케이션이 데이터베이스와 통신하기 위한 표준 API**다.
 
-JDBC는 **자바 표준 라이브러리(java.sql, javax.sql)**에 포함되어,
+JDBC는 <strong>자바 표준 라이브러리(java.sql, javax.sql)</strong>에 포함되어,
 
-데이터베이스의 종류에 상관없이 동일한 방식으로 접근 가능하게 하는 **추상화 계층(표준 인터페이스)**을 제공한다.
+데이터베이스의 종류에 상관없이 동일한 방식으로 접근 가능하게 하는 <strong>추상화 계층(표준 인터페이스)</strong>을 제공한다.
 
-? 대표적인 JDBC 표준 인터페이스:
+대표적인 JDBC 표준 인터페이스:
 
 - java.sql.**Connection** → 데이터베이스 연결을 담당
 - java.sql.**Statement** → SQL을 담아 전달하는 역할
 - java.sql.**ResultSet** → SQL 실행 결과를 받는 역할
 
-? 이제 개발자는 **JDBC가 제공하는 표준 인터페이스에만 의존**하여 코드를 작성하면 된다. 해당 인터페이스의 구현체는 각 데이터베이스 벤더(회사)가 자신들의 데이터베이스에 맞게 구현하여 **JDBC 드라이버**라는 라이브러리로 제공하기 때문이다.
+이제 개발자는 **JDBC가 제공하는 표준 인터페이스에만 의존**하여 코드를 작성하면 된다. 해당 인터페이스의 구현체는 각 데이터베이스 벤더(회사)가 자신들의 데이터베이스에 맞게 구현하여 **JDBC 드라이버**라는 라이브러리로 제공하기 때문이다.
 
 ```sql
 애플리케이션 코드 → JDBC 표준 인터페이스
@@ -55,7 +55,7 @@ JDBC는 **자바 표준 라이브러리(java.sql, javax.sql)**에 포함되어,
 이 덕분에 데이터베이스를 변경하더라도, 애플리케이션 코드를 수정할 필요 없이 **JDBC 드라이버만 교체**하면 된다.
 
 > JDBC는 **최소한의 공통 기능만 표준화**한다. 각 DBMS마다 **고유한 SQL 방언**이 있으므로, SQL은 변경해야 할 수도 있다.
-> 이런 문제점은 **JPA (Java Persistence API)**를 사용하면 대부분 해결할 수 있다.
+> 이런 문제점은 <strong>JPA (Java Persistence API)</strong>를 사용하면 대부분 해결할 수 있다.
 
 ---
 
@@ -64,7 +64,7 @@ JDBC는 **자바 표준 라이브러리(java.sql, javax.sql)**에 포함되어,
 JDBC를 사용하여 데이터를 관리하는 과정은 다음과 같은 흐름을 따른다.
 
 1. **커넥션 획득**:
-   - **DriverManager.getConnection()**을 사용해 데이터베이스와의 **커넥션**을 확보한다.
+   - <strong>DriverManager.getConnection()</strong>을 사용해 데이터베이스와의 <strong>커넥션</strong>을 확보한다.
      - DriverManager는 라이브러리에 등록된 JDBC 드라이버 중에서 적합한 드라이버를 찾고,
      - 해당 드라이버가 구현한 Connection 객체를 반환한다. (예: H2의 경우 org.h2.jdbc.JdbcConnection)
 2. **SQL 준비 및 전달**:
@@ -78,7 +78,7 @@ JDBC를 사용하여 데이터를 관리하는 과정은 다음과 같은 흐름
      - 이 메서드는 쿼리의 결과를 **ResultSet** 객체에 담아 반환한다.
 4. **ResultSet 처리 (조회 시)**:
    - ResultSet은 쿼리의 실행 결과 데이터를 담고 있는 테이블과 유사한 구조다.
-   - **rs.next()**를 호출하여 **데이터 행을 한 줄씩 이동**하며,
+   - <strong>rs.next()</strong>를 호출하여 <strong>데이터 행을 한 줄씩 이동</strong>하며,
    - rs.getString(), rs.getInt() 등으로 각 열의 데이터를 꺼낸다.
 5. **리소스 정리**:
    - 사용한 Connection, PreparedStatement, ResultSet 객체는 반드시 **역순으로** 닫아주어야 한다.

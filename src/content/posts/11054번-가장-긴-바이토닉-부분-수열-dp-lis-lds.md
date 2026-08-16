@@ -30,10 +30,10 @@ draft: true
 
 ---
 
-? **아이디어**
+**아이디어**
 
-- 바이토닉 수열은 **"증가했다가 감소하는 수열"**이다.
-- 이를 위해 **LIS(Longest Increasing Subsequence)**와 **LDS(Longest Decreasing Subsequence)** 두 개를 구한다.
+- 바이토닉 수열은 <strong>"증가했다가 감소하는 수열"</strong>이다.
+- 이를 위해 <strong>LIS(Longest Increasing Subsequence)</strong>와 <strong>LDS(Longest Decreasing Subsequence)</strong> 두 개를 구한다.
 - i번째 원소를 기준으로
   - 왼쪽에서부터 i까지의 LIS (증가)
   - 오른쪽에서부터 i까지의 LDS (감소)
@@ -50,7 +50,7 @@ draft: true
 
 ---
 
-? **자바 코드**
+**자바 코드**
 
 ```java
 import java.io.*;

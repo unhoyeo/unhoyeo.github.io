@@ -30,7 +30,7 @@ tags: []
 개발자는 다음 세 가지 명령어로 트랜잭션을 직접 제어할 수 있다.
 
 - **START TRANSACTION**: "지금부터 트랜잭션을 시작한다"고 데이터베이스에 선언한다.
-- **COMMIT**: 트랜잭션 내의 모든 작업이 성공적으로 완료되었을 때, 변경 사항을 데이터베이스에 **영구적으로 저장(반영)**한다.
+- <strong>COMMIT</strong>: 트랜잭션 내의 모든 작업이 성공적으로 완료되었을 때, 변경 사항을 데이터베이스에 <strong>영구적으로 저장(반영)</strong>한다.
 - **ROLLBACK**: 작업 중 문제가 발생했을 때, 트랜잭션 내에서 실행한 모든 변경 사항을 **완전히 취소하고 시작 전 상태로 되돌린다.**
 
 > MySQL은 기본적으로 모든 SQL 문 하나하나를 **각각의 트랜잭션**으로 간주하여, 성공하는 즉시 COMMIT하는 **autocommit 모드**가 활성화되어 있다. 따라서 여러 작업을 하나의 트랜잭션으로 묶으려면 반드시 **START TRANSACTION**을 명시적으로 사용해야 한다.
@@ -114,7 +114,7 @@ tags: []
      - Non-Repeatable Read ❌
      - Phantom Read ⭕
    - 실무 사용: **MySQL(InnoDB) 기본 설정**
-   - MySQL InnoDB 엔진은 **MVCC(다중 버전 동시성 제어)**와 **Gap Lock**을 통해 대부분의 **팬텀 리드도 방지**해줌
+   - MySQL InnoDB 엔진은 <strong>MVCC(다중 버전 동시성 제어)</strong>와 <strong>Gap Lock</strong>을 통해 대부분의 <strong>팬텀 리드도 방지</strong>해줌
 4. **SERIALIZABLE (직렬화 가능)**
    - 특징: 트랜잭션들을 **직렬(순차) 실행**하는 것과 동일한 효과 → **완전한 격리성** 보장
      - 발생 가능한 문제:

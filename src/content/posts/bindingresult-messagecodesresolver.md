@@ -6,12 +6,12 @@ category: "스프링/MVC"
 tags: []
 ---
 
-? **BindingResult란?**
+**BindingResult란?**
 
 - **폼 바인딩/검증 과정에서 발생한 모든 오류**를 담는 객체
   - 요청 파라미터 → 객체 변환 중 발생한 **바인딩 오류**(타입 불일치, 값 범위 초과 등)
   - Bean Validation(@Valid, @Validated) 또는 비즈니스 검증 수행 중 발생한 **검증 오류**
-- ⚠️ 항상 **"검증할 파라미터 바로 뒤"**에 선언해야 연결됨
+- ⚠️ 항상 <strong>"검증할 파라미터 바로 뒤"</strong>에 선언해야 연결됨
   - 예: public String saveItem(@ModelAttribute Item **item**, BindingResult **bindingResult**) { ... }
   - 순서가 어긋나면 BindException이 발생하거나, 다른 객체와 연결될 수도 있음
 - BindingResult 인터페이스는 **Errors** 인터페이스를 상속함
@@ -95,7 +95,7 @@ public ObjectError(
 
 ## BindingResult 적용 예시
 
-> BindingResult 적용 전 코드는 [여기](https://uh1205.tistory.com/203)
+> BindingResult 적용 전 코드는 [여기](/posts/검증-클라이언트-검증-vs-서버-검증/)
 
 ```java
 @PostMapping("/save")
@@ -438,7 +438,7 @@ MessageCodesResolver의 기본 구현체 DefaultMessageCodesResolver의 메시�
 4 - errorCode
 ```
 
-예를 들어, **bindingResult.rejectValue("name", "required")**가 호출되면, 다음과 같은 메시지 코드들이 순서대로 생성된다.
+예를 들어, <strong>bindingResult.rejectValue("name", "required")</strong>가 호출되면, 다음과 같은 메시지 코드들이 순서대로 생성된다.
 
 1. required.item.name (가장 구체적)
 2. required.name

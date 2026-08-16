@@ -8,13 +8,11 @@ tags: []
 
 쿼리를 작성할 때 **정렬(ORDER BY)** 단계에서 주의해야 할 점이 있다. 다음 문제를 보자.
 
-<https://school.programmers.co.kr/learn/courses/30/lessons/284531>
-
 [프로그래머스](https://school.programmers.co.kr/learn/courses/30/lessons/284531)
 
 ---
 
-이 문제는 데이터를 노선(ROUTE)별로 그룹화하여 **합계**와 **평균**을 구하는 집계 능력, 그리고 숫자 데이터에 **반올림**과 **단위(km)**를 붙이는 가공 능력을 동시에 요구한다.
+이 문제는 데이터를 노선(ROUTE)별로 그룹화하여 <strong>합계</strong>와 <strong>평균</strong>을 구하는 집계 능력, 그리고 숫자 데이터에 <strong>반올림</strong>과 <strong>단위(km)</strong>를 붙이는 가공 능력을 동시에 요구한다.
 
 이때 컬럼에 **'km'라는 문자를 붙여버리면** 컴퓨터는 이를 숫자가 아닌 **문자열**로 인식하여 정렬 결과가 꼬일 수 있다.
 
@@ -35,7 +33,7 @@ ORDER BY
 
 이렇게 별칭을 기준으로 정렬을 하게 되면 데이터베이스는 **문자열 정렬 기준**에 따라 '10km'보다 '9km'가 크다고 판단할 수 있다.
 
-따라서 **문자가 붙기 전의 순수한 합계 수치인 SUM(D\_BETWEEN\_DIST)**를 기준으로 정렬해야 정확한 결과를 얻을 수 있다.
+따라서 <strong>문자가 붙기 전의 순수한 합계 수치인 SUM(D\_BETWEEN\_DIST)</strong>를 기준으로 정렬해야 정확한 결과를 얻을 수 있다.
 
 ```sql
 SELECT

@@ -35,11 +35,11 @@ USE my_shop;
 
 ## 테이블 설계 (DDL)
 
-데이터베이스라는 창고를 지었다면, 이제 데이터를 체계적으로 정리할 **선반**, 즉 **테이블(Table)**을 만들어야 한다.
+데이터베이스라는 창고를 지었다면, 이제 데이터를 체계적으로 정리할 <strong>선반</strong>, 즉 <strong>테이블(Table)</strong>을 만들어야 한다.
 
 - **CREATE TABLE**:
   - 테이블의 구조(설계도)를 정의하고 생성하는 명령어다.
-  - 테이블을 구성할 **열(Column)들의 이름**과 각 열에 저장될 **데이터의 종류(타입)**를 지정해야 한다.
+  - 테이블을 구성할 <strong>열(Column)들의 이름</strong>과 각 열에 저장될 <strong>데이터의 종류(타입)</strong>를 지정해야 한다.
 
 ```sql
 CREATE TABLE customers (
@@ -96,8 +96,8 @@ REFERENCES parent_table (parent_column)
 [ON UPDATE action];
 ```
 
-- 한 테이블(자식 테이블)의 컬럼이 다른 테이블(부모 테이블)의 **기본 키(PK)**나 **고유 키(UNIQUE)**를 참조하도록 강제하는 제약 조건
-- 이를 통해 데이터 간 **참조 무결성(Referential Integrity)**을 보장한다.
+- 한 테이블(자식 테이블)의 컬럼이 다른 테이블(부모 테이블)의 <strong>기본 키(PK)</strong>나 <strong>고유 키(UNIQUE)</strong>를 참조하도록 강제하는 제약 조건
+- 이를 통해 데이터 간 <strong>참조 무결성(Referential Integrity)</strong>을 보장한다.
 
 - **ALTER TABLE**: 이미 생성된 테이블의 구조를 변경할 때 사용한다.
   - **ADD COLUMN**: 새로운 열을 추가한다.
@@ -124,7 +124,7 @@ SHOW DATABASES;
 SHOW TABLES;
 ```
 
-- **DESCRIBE** (또는 DESC): **테이블의 구조(열, 타입, 제약조건 등)**를 확인한다.
+- <strong>DESCRIBE</strong> (또는 DESC): <strong>테이블의 구조(열, 타입, 제약조건 등)</strong>를 확인한다.
 
 ```
 DESCRIBE products; -- 또는 DESC products;
@@ -153,11 +153,11 @@ DROP DATABASE my_shop;
 
 이제 실제 데이터를 넣고, 읽고, 수정하고, 삭제하는 **CRUD (Create, Read, Update, Delete)** 작업을 수행해 보자.
 
-이는 SQL의 **DML (데이터 조작어)**에 해당한다.
+이는 SQL의 <strong>DML (데이터 조작어)</strong>에 해당한다.
 
-- **INSERT INTO ... VALUES ...**: 테이블에 **새로운 행(데이터)**을 추가한다.
+- <strong>INSERT INTO ... VALUES ...</strong>: 테이블에 <strong>새로운 행(데이터)</strong>을 추가한다.
   - 열 목록을 생략할 경우, 모든 열에 대한 값을 지정해야 한다.
-  - 문자열이나 날짜의 경우 **작은따옴표(')**로 감싸주어야 한다.
+  - 문자열이나 날짜의 경우 <strong>작은따옴표(')</strong>로 감싸주어야 한다.
 
 ```sql
 -- 단일 행 삽입

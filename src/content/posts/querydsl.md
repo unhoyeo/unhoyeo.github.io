@@ -28,7 +28,7 @@ Querydsl의 핵심 아이디어는 **SQL(또는 JPQL)을 문자열이 아닌 자
 ## 동작 원리
 
 1. **Q-Type 생성**:
-   - 프로젝트를 컴파일하면, Querydsl은 Annotation Processor를 이용해 **JPA 엔티티(@Entity)**를 분석하여,
+   - 프로젝트를 컴파일하면, Querydsl은 Annotation Processor를 이용해 <strong>JPA 엔티티(@Entity)</strong>를 분석하여,
    - 해당 엔티티의 메타 정보를 담은 **Q-Type 클래스**(예: Item → QItem)를 자동으로 생성한다.
 2. **자바 코드로 쿼리 작성**:
    - 개발자는 이 Q-Type 클래스를 사용하여 **자바 코드로 쿼리를 작성**한다.
@@ -71,7 +71,7 @@ clean {
 
 ---
 
-? **Querydsl 적용 예시**
+**Querydsl 적용 예시**
 
 ```java
 import static hello.itemservice.domain.QItem.item;

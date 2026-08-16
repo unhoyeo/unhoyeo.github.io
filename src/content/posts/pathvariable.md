@@ -6,9 +6,9 @@ category: "스프링/MVC"
 tags: []
 ---
 
-? **@PathVariable이란?**
+**@PathVariable이란?**
 
-스프링 MVC에서 **URI 템플릿 변수(경로 변수)**를 핸들러 메서드 파라미터에 바인딩하기 위해 사용하는 애노테이션이다.
+스프링 MVC에서 <strong>URI 템플릿 변수(경로 변수)</strong>를 핸들러 메서드 파라미터에 바인딩하기 위해 사용하는 애노테이션이다.
 
 @RequestParam이나 @ModelAttribute와는 달리, **URL 경로 자체에 포함된 값**을 추출하는 데 사용되며,
 
@@ -21,11 +21,11 @@ tags: []
 public String getUser(@PathVariable("id") Long userId) { ... }
 ```
 
-? {id}에 해당하는 값인 2가 userId에 바인딩된다.
+{id}에 해당하는 값인 2가 userId에 바인딩된다.
 
 ---
 
-? **왜 사용하는가?**
+**왜 사용하는가?**
 
 과거에는 대부분의 데이터 전달이 ?key=value 형태의 **쿼리 파라미터**를 통해 이루어졌다.
 
@@ -36,7 +36,7 @@ public String getUser(@PathVariable("id") Long userId) { ... }
 
 ---
 
-? **속성 정리**
+**속성 정리**
 
 |  |  |
 | --- | --- |
@@ -44,7 +44,7 @@ public String getUser(@PathVariable("id") Long userId) { ... }
 | value (=name) | 바인딩할 경로 변수의 이름 (**생략 시 변수명과 동일**하게 처리됨) |
 | required | 경로 변수의 필수 여부 (**기본값: true**) |
 
-value 생략 시, required 사용 시 주의 사항은 [여기서](https://uh1205.tistory.com/170) 참고하자.
+value 생략 시, required 사용 시 주의 사항은 [여기서](/posts/애노테이션-기반-컨트롤러의-주요-파라미터-바인딩-required-옵션-주의점-value/) 참고하자.
 
 ---
 
@@ -58,7 +58,7 @@ public String showComment(@PathVariable Map<String, String> pathVars) {
 ```
 
 - 요청: GET /users/1/comments/2
-- ? pathVars = {commentId=2, userId=1}
+- pathVars = {commentId=2, userId=1}
 
 모든 경로 변수를 Map&lt;String, String>으로도 받을 수 있지만, 무조건 **String**으로 받기 때문에 **타입 안정성이 없다.**
 

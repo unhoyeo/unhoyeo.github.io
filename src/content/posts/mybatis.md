@@ -19,7 +19,7 @@ MyBatis는 JdbcTemplate과 같이 SQL을 직접 다루는 **SQL Mapper** 기술�
   - **MyBatis**: SQL을 별도의 **XML 파일**에 작성하므로, SQL 자체에만 집중할 수 있고 가독성이 높다.
 - **동적 쿼리 작성**:
   - **JdbcTemplate**: 자바 코드에서 **수많은 if 문과 문자열을 조립**해야 하므로, 복잡하고 오류가 발생하기 쉽다.
-  - **MyBatis**: 동적 쿼리를 **XML 태그(&lt;if>, &lt;where> 등)**를 통해 매우 간결하고 직관적으로 작성할 수 있다.
+  - <strong>MyBatis</strong>: 동적 쿼리를 <strong>XML 태그(&lt;if>, &lt;where> 등)</strong>를 통해 매우 간결하고 직관적으로 작성할 수 있다.
 
 > 언제 사용할까?
 >
@@ -116,7 +116,7 @@ public interface ItemMapper {
 - **&lt;if>**: test 조건이 참일 경우에만 내부의 SQL 조각을 포함시킨다.
 - **&lt;where>**: &lt;if> 조건이 하나라도 참이면 WHERE 절을 자동으로 추가하고, **가장 앞에 오는 and나 or를 제거**해 준다.
   - 이 덕분에 개발자는 WHERE와 AND를 붙이는 복잡한 로직을 고민할 필요가 없다.
-- ⚠️ 데이터 영역에서 **<, >, &** 같은 특수 문자는 **&lt;, &gt;, &amp;**와 같이 **HTML 엔티티**로 나타내야 한다.
+- ⚠️ 데이터 영역에서 <strong><, >, &</strong> 같은 특수 문자는 <strong>&lt;, &gt;, &amp;</strong>와 같이 <strong>HTML 엔티티</strong>로 나타내야 한다.
 
 > application.properties에 **mybatis.type-aliases-package={패키지명}** 설정을 추가하면 타입 정보를 사용할 때 패키지명을 생략할 수 있으며, **mybatis.configuration.map-underscore-to-camel-case=true** 설정을 추가하면, item\_name과 같은 snake\_case 컬럼을 itemName 같은 camelCase 프로퍼티에 자동으로 매핑해 준다.
 
@@ -160,7 +160,7 @@ public class MyBatisItemRepository implements ItemRepository {
 2. Mapper 인터페이스를 찾으면, **동적 프록시 기술**을 통해 해당 인터페이스의 **구현체를 생성**한다.
 3. 생성한 구현체를 **스프링 빈으로 등록**한다.
 
-? 따라서 개발자는 **인터페이스**만 만들면 되며, 자동 생성된 구현체가 **XML에 정의된 SQL을 실행**하는 역할을 한다.
+따라서 개발자는 **인터페이스**만 만들면 되며, 자동 생성된 구현체가 **XML에 정의된 SQL을 실행**하는 역할을 한다.
 
 > 자세한 내용은 공식 메뉴얼을 참고하자.
 >

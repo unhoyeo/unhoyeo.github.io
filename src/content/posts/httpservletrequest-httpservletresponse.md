@@ -12,7 +12,7 @@ HTTP 요청과 응답은 웹의 기본이다. 개발자가 클라이언트와 �
 
 ---
 
-? **HttpServletRequest란 무엇인가?**
+**HttpServletRequest란 무엇인가?**
 
 서블릿 컨테이너가 **클라이언트 요청 정보를 캡슐화**하여 제공하는 객체
 
@@ -23,7 +23,7 @@ HTTP 요청과 응답은 웹의 기본이다. 개발자가 클라이언트와 �
 
 ---
 
-? **HttpServletResponse란 무엇인가?**
+**HttpServletResponse란 무엇인가?**
 
 클라이언트에게 **응답을 생성**하고 **전송**하는 데 사용되는 객체
 
@@ -32,7 +32,7 @@ HTTP 요청과 응답은 웹의 기본이다. 개발자가 클라이언트와 �
 - 실제 응답을 출력하는 getWriter()나 getOutputStream()을 통해 **텍스트 또는 바이너리 데이터를 스트리밍**할 수 있다.
 - HTTP 명세에 따라 **Content-Type, Charset, Cache-Control** 등을 정확히 지정해야 정상적인 동작을 보장할 수 있다.
 
-> **? HttpServletRequest의 주요 기능**
+> **HttpServletRequest의 주요 기능**
 
 ✅ 요청 라인
 
@@ -126,7 +126,7 @@ for (Cookie cookie : cookies) {
 
 > 세션은 사용자 로그인 정보 등 인증 및 상태 유지에 유용하며, 요청 스코프 저장소는 필터 → 컨트롤러 → 뷰 사이에서 데이터를 임시 전달할 때 유용하다.
 
-> **? HttpServletResponse의 주요 기능**
+> **HttpServletResponse의 주요 기능**
 
 ✅ HTTP 상태 코드
 
@@ -222,7 +222,7 @@ response.addCookie(cookie);
 
 ---
 
-? **마무리 요약**
+**마무리 요약**
 
 - HttpServletRequest는 **요청 데이터 조회**를 위해, HttpServletResponse는 **응답 생성**을 위해 사용된다.
 - 웹 애플리케이션 개발의 기반이 되는 개념으로, Spring MVC에서도 동일한 객체가 내부적으로 사용된다.

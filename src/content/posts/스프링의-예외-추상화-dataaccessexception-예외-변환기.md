@@ -106,9 +106,9 @@ public void save(Member member) { // ✅ throws SQLException 제거!
 
 예를 들어, **회원 ID가 중복**되면 뒤에 **임의의 숫자를 붙여서 새로운 ID를 생성**한다고 가정하자.
 
-- 서비스 계층에서는 예외 복구를 위해 **"키 중복 오류"**를 구분할 수 있어야 한다.
+- 서비스 계층에서는 예외 복구를 위해 <strong>"키 중복 오류"</strong>를 구분할 수 있어야 한다.
 - **H2 데이터베이스**의 경우 키가 중복되면 **23505**라는 에러 코드를 반환한다.
-- 따라서 SQLException의 errorCode가 23505면, 해당 예외를 **"키 중복 예외"**로 전환하여 던지면 된다.
+- 따라서 SQLException의 errorCode가 23505면, 해당 예외를 <strong>"키 중복 예외"</strong>로 전환하여 던지면 된다.
 
 이를 이용한 예시 코드는 다음과 같다.
 
@@ -187,7 +187,7 @@ class ExceptionTranslatorTest {
 ```
 
 - Repository에서는 **SQLException**을 잡아서,
-  - 만약 **errorCode가 23505(중복 키 오류)**라면 → **MyDuplicateKeyException**으로 전환하여 던진다.
+  - 만약 <strong>errorCode가 23505(중복 키 오류)</strong>라면 → <strong>MyDuplicateKeyException</strong>으로 전환하여 던진다.
   - 그 외의 경우에는 → **MyDBException**으로 전환하여 던진다.
 - Service에서는 Repository 호출 시,
   - **MyDuplicateKeyException**이 발생하면 → 해당 예외를 잡아서 **복구한다.**
@@ -226,7 +226,7 @@ class ExceptionTranslatorTest {
 
 그리고 스프링은 데이터베이스마다 다른 오류 코드를 분석하여, **각 상황에 맞는 DataAccessException로 변환**해주는 예외 변환기인 **SQLExceptionTranslator**를 제공한다.
 
-SQLExceptionTranslator의 translate() 메서드의 파라미터로 **(설명, 실행한 SQL, 발생한 SQLException)**을 전달하면, 스프링의 표준 예외로 변환해 준다.
+SQLExceptionTranslator의 translate() 메서드의 파라미터로 <strong>(설명, 실행한 SQL, 발생한 SQLException)</strong>을 전달하면, 스프링의 표준 예외로 변환해 준다.
 
 ```java
 class SpringSQLExceptionTranslatorTest {
@@ -281,7 +281,7 @@ class SpringSQLExceptionTranslatorTest {
 
 ## ✅ 스프링의 해결책2: 반복 코드 제거 (JdbcTemplate)
 
-리포지토리에서 **JDBC**를 사용함으로써 **반복적으로 나타나는 부분(리소스 연결 및 정리, 예외 처리 등)**을 해결하기 위해 스프링은 **JdbcTemplate**이라는 클래스를 제공한다.
+리포지토리에서 <strong>JDBC</strong>를 사용함으로써 <strong>반복적으로 나타나는 부분(리소스 연결 및 정리, 예외 처리 등)</strong>을 해결하기 위해 스프링은 <strong>JdbcTemplate</strong>이라는 클래스를 제공한다.
 
 JdbcTemplate은 **템플릿 콜백 패턴**을 사용하여 JDBC의 반복적인 작업을 대신 처리해 준다.
 

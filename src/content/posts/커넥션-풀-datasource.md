@@ -6,7 +6,7 @@ category: "스프링/DB"
 tags: []
 ---
 
-애플리케이션이 데이터베이스와 통신하려면 먼저 연결 통로인 **커넥션(Connection)**을 획득해야 한다.
+애플리케이션이 데이터베이스와 통신하려면 먼저 연결 통로인 <strong>커넥션(Connection)</strong>을 획득해야 한다.
 
 하지만 사용자의 모든 요청에 대해 **매번 새로운 커넥션을 생성**하는 방식은 비효율적이며, 서비스 성능에 심각한 영향을 미칠 수 있다.
 
@@ -33,11 +33,11 @@ tags: []
 4. 데이터베이스는 내부에 **세션**을 생성하고, 연결이 완료되었음을 **응답**한다.
 5. DB 드라이버는 이 정보를 바탕으로 **커넥션 객체**를 생성하여 반환한다.
 
-? 사용자 요청이 있을 때마다 위 과정을 반복하면 응답 속도가 느려질 수밖에 없다.
+사용자 요청이 있을 때마다 위 과정을 반복하면 응답 속도가 느려질 수밖에 없다.
 
-이 문제를 해결하기 위한 아이디어가 바로 **커넥션 풀(Connection Pool)**이다.
+이 문제를 해결하기 위한 아이디어가 바로 <strong>커넥션 풀(Connection Pool)</strong>이다.
 
-? 커넥션 풀은 이름 그대로 **커넥션을 관리하는 풀**(Pool)이다.
+커넥션 풀은 이름 그대로 **커넥션을 관리하는 풀**(Pool)이다.
 
 - 애플리케이션 시작 시점에, 필요한 만큼의 **커넥션을 미리 생성해서 풀에 보관**해 둔다.
 - 애플리케이션 로직은 필요할 때마다 이 풀에서 이미 생성된 커넥션을 **빌려 쓰고**,
@@ -58,7 +58,7 @@ tags: []
                       { 커넥션 풀 }
 ```
 
-? 이 방식은 매번 커넥션을 새로 만드는 비용을 없애주어 **애플리케이션 성능을 획기적으로 향상**시키고,
+이 방식은 매번 커넥션을 새로 만드는 비용을 없애주어 **애플리케이션 성능을 획기적으로 향상**시키고,
 
 서버가 감당할 수 있는 **최대 커넥션 수**를 제한하여 **데이터베이스를 보호**하는 효과도 있다.
 
@@ -70,15 +70,15 @@ tags: []
 
 과거에는 **DriverManager**를 통해 직접 커넥션을 얻었지만, 지금은 HikariCP와 같은 **커넥션 풀**을 사용한다.
 
-? 만약 DriverManager를 사용하던 코드에서 HikariCP를 사용하도록 변경하면,
+만약 DriverManager를 사용하던 코드에서 HikariCP를 사용하도록 변경하면,
 
 기존의 **커넥션을 얻는 코드 전체를 수정**해야 하는 문제가 발생한다.
 
-? 이러한 의존성 문제를 해결하기 위해 자바는 **DataSource**라는 표준 인터페이스를 제공한다.
+이러한 의존성 문제를 해결하기 위해 자바는 **DataSource**라는 표준 인터페이스를 제공한다.
 
 DataSource는 **커넥션을 획득하는 방법을 추상화**하는 인터페이스다.
 
-이 인터페이스의 핵심 기능은 **getConnection()**이라는 단 하나의 메서드다.
+이 인터페이스의 핵심 기능은 <strong>getConnection()</strong>이라는 단 하나의 메서드다.
 
 ```java
 // javax.sql.DataSource
@@ -92,7 +92,7 @@ public interface DataSource  extends CommonDataSource, Wrapper {
 }
 ```
 
-? HikariCP와 같은 대부분의 커넥션 풀은 이미 **DataSource 인터페이스를 구현**해두었다. (예: HikariDataSource)
+HikariCP와 같은 대부분의 커넥션 풀은 이미 **DataSource 인터페이스를 구현**해두었다. (예: HikariDataSource)
 
 스프링은 DriverManager조차도 DataSource를 통해 사용할 수 있도록 **DriverManagerDataSource**라는 구현 클래스를 제공한다.
 
@@ -102,7 +102,7 @@ public interface DataSource  extends CommonDataSource, Wrapper {
                HikariDataSource      DriverManagerDataSource
 ```
 
-? 이제 애플리케이션 로직은 DriverManager나 HikariDataSource 같은 구체적인 클래스에 의존하는 대신,
+이제 애플리케이션 로직은 DriverManager나 HikariDataSource 같은 구체적인 클래스에 의존하는 대신,
 
 **DataSource라는 표준 인터페이스에만 의존**하면 된다.
 
@@ -110,7 +110,7 @@ public interface DataSource  extends CommonDataSource, Wrapper {
 
 **DataSource 인터페이스**를 사용하는 애플리케이션 로직은 **단 한 줄도 변경할 필요가 없다.**
 
-? 또한 DataSource를 사용하면 다음과 같이 **설정과 사용의 책임이 명확하게 분리**되는 큰 장점이 있다.
+또한 DataSource를 사용하면 다음과 같이 **설정과 사용의 책임이 명확하게 분리**되는 큰 장점이 있다.
 
 - **설정**: DataSource 객체를 생성할 때, **DB 접속 정보**(URL, USERNAME, PASSWORD)나 **커넥션 풀 속성**(최대 풀 크기 등)을 **한 곳**에서 설정한다.
 - **사용**: DataSource를 사용하는 코드(예: Repository)는 이러한 구체적인 설정 정보를 전혀 알 필요 없이, 그저 주입받은 DataSource의 **getConnection()** 메서드만 호출하면 된다.

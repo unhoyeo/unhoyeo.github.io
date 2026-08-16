@@ -8,7 +8,7 @@ tags: []
 
 ## ViewResolver란?
 
-Spring MVC에서 **컨트롤러(핸들러)**는 뷰 자체가 아니라 단순히 **논리 뷰 이름**을 반환한다.
+Spring MVC에서 <strong>컨트롤러(핸들러)</strong>는 뷰 자체가 아니라 단순히 <strong>논리 뷰 이름</strong>을 반환한다.
 
 하지만 뷰가 렌더링되려면 실제 물리 경로가 필요하다.
 
@@ -67,11 +67,11 @@ public class OldController implements Controller {
 
 ---
 
-? **InternalResourceView란?**
+**InternalResourceView란?**
 
 Spring MVC에서 **JSP와 같은 서버 내부 리소스를 forward 방식으로 렌더링**하기 위한 View 구현체다.
 
-이전의 "[프론트 컨트롤러 패턴의 점진적 도입](https://uh1205.tistory.com/108)"이라는 글에서 FrontControllerServletV5의 코드를 보자.
+이전의 "[프론트 컨트롤러 패턴의 점진적 도입](/posts/프론트-컨트롤러-패턴의-점진적-도입/)"이라는 글에서 FrontControllerServletV5의 코드를 보자.
 
 ```
 ModelView mv = adapter.handle(request, response, handler);
@@ -80,7 +80,7 @@ MyView view = viewResolver(mv.getViewName());
 view.render(mv.getModel(), request, response);
 ```
 
-위와 같이 뷰 리졸버가 MyView 객체를 반환하여, **MyView.render()**를 통해 뷰를 렌더링하는 것을 볼 수 있다.
+위와 같이 뷰 리졸버가 MyView 객체를 반환하여, <strong>MyView.render()</strong>를 통해 뷰를 렌더링하는 것을 볼 수 있다.
 
 ```java
 public void render(Map<String, Object> model,
@@ -136,7 +136,7 @@ spring.thymeleaf.suffix=.html
 
 ---
 
-? **Spring MVC 요청 처리 흐름 요약**
+**Spring MVC 요청 처리 흐름 요약**
 
 ```
 HTTP 요청
@@ -158,7 +158,7 @@ HTML 응답 반환
 
 ---
 
-? **정리**
+**정리**
 
 - ViewResolver는 컨트롤러가 반환한 **논리 뷰 이름을 실제 물리 뷰로 반환**하는 핵심 구성 요소이다.
 - 특히, **InternalResourceViewResolver는 JSP를 forward 방식으로 실행**함으로써, 서블릿 기반 아키텍처와의 호환을 보장한다.

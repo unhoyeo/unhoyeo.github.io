@@ -8,9 +8,9 @@ tags: []
 
 HTTP 메시지는 클라이언트와 서버 간의 데이터 교환 형식으로, 크게 **요청(Request) 메시지**와 **응답(Response) 메시지**로 구분된다.
 
-또한, 각 메시지는 **시작 라인(Start Line)**, **헤더(Header)**, **본문(Body)**으로 구성된다.
+또한, 각 메시지는 <strong>시작 라인(Start Line)</strong>, <strong>헤더(Header)</strong>, <strong>본문(Body)</strong>으로 구성된다.
 
-> 요청 메시지의 시작 라인은 **요청 라인(Request Line)**, 응답 메시지의 시작 라인은 **상태 라인(Status Line)**이라 한다.
+> 요청 메시지의 시작 라인은 <strong>요청 라인(Request Line)</strong>, 응답 메시지의 시작 라인은 <strong>상태 라인(Status Line)</strong>이라 한다.
 
 ---
 

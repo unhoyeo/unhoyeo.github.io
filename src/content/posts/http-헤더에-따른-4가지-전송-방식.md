@@ -68,7 +68,7 @@ Content-Encoding: gzip
 
 ## ✅ 3. 분할 전송: Transfer-Encoding: chunked
 
-서버가 응답 본문을 미리 다 구성하지 않고, **여러 조각(chunk)**으로 나누어 **스트리밍처럼** 전송하는 방식
+서버가 응답 본문을 미리 다 구성하지 않고, <strong>여러 조각(chunk)</strong>으로 나누어 <strong>스트리밍처럼</strong> 전송하는 방식
 
 서버는 **전체 Content-Length를 모를 경우**, 데이터를 여러 **청크**로 나누어 보낸다.
 

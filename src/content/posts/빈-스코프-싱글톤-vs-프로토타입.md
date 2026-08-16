@@ -238,7 +238,7 @@ static class ClientBean {
 }
 ```
 
-실행해보면 ac.getBean()을 통해 항상 새로운 프로토타입 빈이 생성되는 것을 확인할 수 있다. 이렇게 의존관계를 외부에서 주입(DI) 받는 것이 아니라, **필요한 의존관계를 직접 찾는 것**을 **Dependency Lookup(DL), 의존관계 조회(탐색)**이라 한다.
+실행해보면 ac.getBean()을 통해 항상 새로운 프로토타입 빈이 생성되는 것을 확인할 수 있다. 이렇게 의존관계를 외부에서 주입(DI) 받는 것이 아니라, <strong>필요한 의존관계를 직접 찾는 것</strong>을 <strong>Dependency Lookup(DL), 의존관계 조회(탐색)</strong>이라 한다.
 
 그런데 이렇게 되면 스프링 컨테이너에 종속적인 코드가 되고, 단위 테스트도 어려워진다.
 
@@ -265,7 +265,7 @@ static class ClientBean {
 
 실행해보면 prototypeBeanProvider.getObject()를 통해 항상 새로운 프로토타입 빈이 생성되는 것을 확인할 수 있다.
 
-ObjectProvider의 **getObject()**를 호출하면 내부에서는 **스프링 컨테이너를 통해 해당 빈을 찾아서 반환**한다. (DL)
+ObjectProvider의 <strong>getObject()</strong>를 호출하면 내부에서는 <strong>스프링 컨테이너를 통해 해당 빈을 찾아서 반환</strong>한다. (DL)
 
 스프링이 제공하는 기능을 사용하지만, 기능이 단순하므로 단위 테스트를 만들거나 mock 코드를 만들기는 훨씬 쉬워진다.
 
@@ -287,7 +287,7 @@ implementation 'javax.inject:javax.inject:1'
 implementation 'jakarta.inject:jakarta.inject-api:2.0.1'
 ```
 
-기존 코드에서 ObjectProvider 대신 **Provider**를, getObject() 대신 **get()**을 사용하면 된다.
+기존 코드에서 ObjectProvider 대신 <strong>Provider</strong>를, getObject() 대신 <strong>get()</strong>을 사용하면 된다.
 
 ```java
 @Scope("singleton")
@@ -306,7 +306,7 @@ static class ClientBean {
 
 실행해보면 prototypeBeanProvider.get()을 통해 항상 새로운 프로토타입 빈이 생성되는 것을 확인할 수 있다.
 
-Provider의 **get()**을 호출하면 내부에서는 **스프링 컨테이너를 통해 해당 빈을 찾아서 반환**한다. (DL)
+Provider의 <strong>get()</strong>을 호출하면 내부에서는 <strong>스프링 컨테이너를 통해 해당 빈을 찾아서 반환</strong>한다. (DL)
 
 - 기능이 단순하므로 단위테스트를 만들거나 mock 코드를 만들기는 훨씬 쉬워진다.
 - **자바 표준**이므로 스프링이 아닌 다른 컨테이너에서도 사용할 수 있다.

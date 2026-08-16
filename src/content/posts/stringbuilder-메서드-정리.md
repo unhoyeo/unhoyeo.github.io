@@ -18,7 +18,7 @@ tags: []
 - **+ 연산자를 여러 번 사용할 경우보다 성능이 좋다.**
 - ✅ **시간 복잡도**: O(1)
 
-? **예제**
+**예제**
 
 ```java
 StringBuilder sb = new StringBuilder("Hello");
@@ -34,7 +34,7 @@ System.out.println(sb); // "Hello World!"
 - 기존 문자는 뒤로 밀린다.
 - ✅ **시간 복잡도**: O(N)
 
-? **예제**
+**예제**
 
 ```java
 StringBuilder sb = new StringBuilder("Hello!");
@@ -49,7 +49,7 @@ System.out.println(sb); // "Hello World!"
 - **start 부터 end - 1 까지의 문자열을 삭제**한다.
 - ✅ **시간 복잡도**: O(N)
 
-? **예제**
+**예제**
 
 ```java
 StringBuilder sb = new StringBuilder("Hello World!");
@@ -64,7 +64,7 @@ System.out.println(sb); // "Hello!"
 - **index에 해당하는 문자 하나만 삭제**한다.
 - ✅ **시간 복잡도**: O(N)
 
-? **예제**
+**예제**
 
 ```java
 StringBuilder sb = new StringBuilder("Hello!");
@@ -79,7 +79,7 @@ System.out.println(sb); // "Hello"
 - **start 부터 end - 1 까지의 문자열을 s로 변경**한다.
 - ✅ **시간 복잡도**: O(N)
 
-? **예제**
+**예제**
 
 ```java
 StringBuilder sb = new StringBuilder("Hello World!");
@@ -94,7 +94,7 @@ System.out.println(sb); // "Hello Java!"
 - **문자열을 뒤집는다.**
 - ✅ **시간 복잡도**: O(N)
 
-? **예제**
+**예제**
 
 ```pgsql
 StringBuilder sb = new StringBuilder("abc");
@@ -109,7 +109,7 @@ System.out.println(sb); // "cba"
 - **index 위치의 문자를 c로 변경**한다.
 - ✅ **시간 복잡도**: O(1)
 
-? **예제**
+**예제**
 
 ```java
 StringBuilder sb = new StringBuilder("Java");
@@ -126,7 +126,7 @@ System.out.println(sb); // "Kava"
   - 길이를 **늘리면, 남은 부분은 \0 (null 문자)로 채워진다.**
 - ✅ **시간 복잡도**: O(1)
 
-? **예제**
+**예제**
 
 ```java
 StringBuilder sb = new StringBuilder("Hello World!");
@@ -141,7 +141,7 @@ System.out.println(sb); // "Hello"
 - StringBuilder 객체를 일반적인 **String으로 변환**한다.
 - ✅ **시간 복잡도**: O(N)
 
-? **예제**
+**예제**
 
 ```java
 StringBuilder sb = new StringBuilder("Hello");

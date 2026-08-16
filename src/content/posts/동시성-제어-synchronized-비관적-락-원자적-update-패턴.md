@@ -350,7 +350,7 @@ couponService.downloadCoupon()에 synchronized를 적용할 경우에는 조금 
 
 synchronized를 이용한 락은 "자바 객체 인스턴스 단위"이므로 "DB 레코드 단위"의 충돌을 막을 수 없었다.
 
-이번에는 **비관적 락 (Pessimistic Lock)**을 이용하여 DB에서 직접 동시 수정 자체를 제어해 보자.
+이번에는 <strong>비관적 락 (Pessimistic Lock)</strong>을 이용하여 DB에서 직접 동시 수정 자체를 제어해 보자.
 
 ```java
 package com.example.coupon.repository;
@@ -414,7 +414,7 @@ public class CouponService {
 
 비관적 락은 트랜잭션이 특정 행을 읽을 때 **DB가 그 행에 배타적(또는 공유) 락을 걸어** 다른 트랜잭션의 변경을 막는다.
 
-- 트랜잭션이 **SELECT ... FOR UPDATE** 로 행을 읽으면, DB는 해당 행에 대한 **배타적 락(exclusive lock)**을 획득한다.
+- 트랜잭션이 <strong>SELECT ... FOR UPDATE</strong> 로 행을 읽으면, DB는 해당 행에 대한 <strong>배타적 락(exclusive lock)</strong>을 획득한다.
 - 락은 **그 트랜잭션이 커밋하거나 롤백할 때까지 유지**된다.
 - 다른 트랜잭션이 동일 행을 SELECT ... FOR UPDATE 하거나 UPDATE하려고 하면, **락이 해제될 때까지 대기**한다.
 - 락 타임아웃이 초과되면 예외가 발생한다.
@@ -566,12 +566,12 @@ public void downloadCoupon(Long couponId) {
 
 - 다음과 같이 **발급 전/후 따로 findById()를 호출**해도 똑같은 문제가 발생한다.
 - 이는 **이전에 엔티티를 읽은 것이 나중에 읽은 것을 오염**시켰기 때문이다.
-  - findById()가 호출되면 JPA는 먼저 **1차 캐시(EntityManager 내부 Map)**를 확인한다.
+  - findById()가 호출되면 JPA는 먼저 <strong>1차 캐시(EntityManager 내부 Map)</strong>를 확인한다.
   - 없으면 DB에서 가져와서 1차 캐시에 저장하고, 있으면 **DB를 조회하지 않고 캐시에서 반환한다.**
   - 그래서 캐시에서 **stale(낡은) 데이터**를 반환한 것이다.
 - 이를 해결하려면 **업데이트 전에 em.clear()를 호출하여 기존 캐시를 모두 지움으로써, DB를 다시 조회하도록 유도하면 된다.**
   - **@Modifying(clearAutomatically = true)** 옵션을 통해 쿼리 실행 후 캐시를 자동으로 비울 수도 있다.
-- 또는 업데이트 후 **em.refresh(before)**를 하여 DB에서 해당 엔티티만 다시 읽어와 캐시 최신화를 할 수 있다.
+- 또는 업데이트 후 <strong>em.refresh(before)</strong>를 하여 DB에서 해당 엔티티만 다시 읽어와 캐시 최신화를 할 수 있다.
 
 ```java
 @Transactional

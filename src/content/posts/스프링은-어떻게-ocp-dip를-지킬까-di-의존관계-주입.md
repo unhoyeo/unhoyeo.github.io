@@ -36,7 +36,7 @@ public class MemberServiceImpl implements MemberService {
 }
 ```
 
-또한 MemberServiceImpl은 **MemberRepository 인터페이스(추상화)** 뿐만 아니라 **구현 클래스 MemoryMemberRepository와 JdbcMemberRepository(구체화)**에도 함께 의존하고 있다. (**DIP 위반!**)
+또한 MemberServiceImpl은 <strong>MemberRepository 인터페이스(추상화)</strong> 뿐만 아니라 <strong>구현 클래스 MemoryMemberRepository와 JdbcMemberRepository(구체화)</strong>에도 함께 의존하고 있다. (<strong>DIP 위반!</strong>)
 
 > 어떻게 해결할 수 있을까?
 
@@ -55,7 +55,7 @@ public class MemberServiceImpl implements MemberService {
 
 애플리케이션을 **공연**으로, 인터페이스를 **배역**이라고 생각해 보자. **배역은 누가 정할까? 배우가 직접 정할까? NO!** 이전 코드는 마치 로미오 역할의 디카프리오가 줄리엣 역할의 여자 주인공을 직접 정하는 것과 같다. 다시 말해, 디카프리오는 공연도 해야 하고 여자 주인공도 직접 초빙해야 하는 **다양한 책임**을 가지고 있는 것이다.
 
-배우는 본인의 역할인 배역을 수행하는 것에만 집중해야 한다. 디카프리오는 어떤 여자 주인공이 선택되더라도 똑같이 공연을 할 수 있어야 한다. 공연을 구성하고 역할에 맞는 배우를 지정하는 책임은 **별도의 사람(감독)**이 담당해야 한다. 지금의 **MemberServiceImpl는 구현 객체를 생성, 연결, 실행하는 다양한 책임**을 가지고 있다. **(SRP 위반!**)
+배우는 본인의 역할인 배역을 수행하는 것에만 집중해야 한다. 디카프리오는 어떤 여자 주인공이 선택되더라도 똑같이 공연을 할 수 있어야 한다. 공연을 구성하고 역할에 맞는 배우를 지정하는 책임은 <strong>별도의 사람(감독)</strong>이 담당해야 한다. 지금의 <strong>MemberServiceImpl는 구현 객체를 생성, 연결, 실행하는 다양한 책임</strong>을 가지고 있다. <strong>(SRP 위반!</strong>)
 
 > **책임을 분리하자!**
 
@@ -81,7 +81,7 @@ AppConfig는 다음과 같은 책임을 가진다.
 - MemberServiceImpl
 - MemoryMemberRepository
 
-2. **객체 연결**: 생성한 객체 인스턴스의 참조(레퍼런스)를 **생성자를 통해서 주입(연결)**해준다.
+2. <strong>객체 연결</strong>: 생성한 객체 인스턴스의 참조(레퍼런스)를 <strong>생성자를 통해서 주입(연결)</strong>해준다.
 
 - MemberServiceImpl **←** MemoryMemberRepository
 
@@ -122,9 +122,9 @@ public class AppConfig {
 
 ---
 
-우리는 이렇게 애플리케이션을 설계함으로써 **SRP, OCP, DIP**를 지킬 수 있게 되었다. **구현 객체를 생성, 연결하는 책임**을 AppConfig가 담당함으로써 **SRP**를, 클라이언트 코드를 **인터페이스에만 의존**하도록 바꾸고 AppConfig가 **의존관계 주입(DI)**을 해줌으로써 **OCP, DIP**를 지켰다. 여기서 다음 개념들을 함께 가져가자.
+우리는 이렇게 애플리케이션을 설계함으로써 <strong>SRP, OCP, DIP</strong>를 지킬 수 있게 되었다. <strong>구현 객체를 생성, 연결하는 책임</strong>을 AppConfig가 담당함으로써 <strong>SRP</strong>를, 클라이언트 코드를 <strong>인터페이스에만 의존</strong>하도록 바꾸고 AppConfig가 <strong>의존관계 주입(DI)</strong>을 해줌으로써 <strong>OCP, DIP</strong>를 지켰다. 여기서 다음 개념들을 함께 가져가자.
 
-> **IoC (Inversion of Control)**제어의 역전
+> <strong>IoC (Inversion of Control)</strong>제어의 역전
 
 기존에는 **클라이언트 구현 객체**가 스스로 필요한 **서버 구현 객체를 생성하고, 연결하고, 실행**했다. 한마디로 **구현 객체가 프로그램의 제어 흐름을 스스로 조종**했다.
 
@@ -132,8 +132,8 @@ public class AppConfig {
 
 이렇게 **프로그램의 제어 흐름을 직접 제어하는 것이 아니라, 외부에서 관리하는 것**을 제어의 역전(IoC)이라 한다.
 
-> **클래스 의존관계, 객체 의존관계,
-> DI (Dependency Injection)**의존관계 주입
+> <strong>클래스 의존관계, 객체 의존관계,
+> DI (Dependency Injection)</strong>의존관계 주입
 
 의존관계는 **정적**인 **클래스 의존관계**와, 실행 시점에 결정되는 **동적**인 **객체 의존관계**로 분리해서 생각해야 한다.
 
@@ -145,4 +145,4 @@ public class AppConfig {
 
 > **DI 컨테이너**또는 IoC 컨테이너
 
-AppConfig처럼 **"객체 생성, 관리, 의존관계 연결"**해 주는 것을 DI 컨테이너 또는 IoC 컨테이너라 한다.
+AppConfig처럼 <strong>"객체 생성, 관리, 의존관계 연결"</strong>해 주는 것을 DI 컨테이너 또는 IoC 컨테이너라 한다.

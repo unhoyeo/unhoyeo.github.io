@@ -6,7 +6,7 @@ category: "HTTP"
 tags: []
 ---
 
-HTTP 캐시는 서버의 응답을 **클라이언트(브라우저)**나 **중간 프록시 서버**에 저장하여, **같은 요청이 반복될 때 재사용**할 수 있도록 함으로써 **불필요한 데이터 전송을 줄이고, 응답 속도를 높이는 기술**이다.
+HTTP 캐시는 서버의 응답을 <strong>클라이언트(브라우저)</strong>나 <strong>중간 프록시 서버</strong>에 저장하여, <strong>같은 요청이 반복될 때 재사용</strong>할 수 있도록 함으로써 <strong>불필요한 데이터 전송을 줄이고, 응답 속도를 높이는 기술</strong>이다.
 
 ---
 
@@ -47,7 +47,7 @@ Cache-Control: private, max-age=3600
 
 ## ✅ 2. 중간 캐시 (Shared Cache, Proxy Cache)
 
-- **기업 네트워크, ISP(인터넷 서비스 제공업체), CDN(Content Delivery Network)**이 여러 사람을 위해 저장하는 캐시
+- <strong>기업 네트워크, ISP(인터넷 서비스 제공업체), CDN(Content Delivery Network)</strong>이 여러 사람을 위해 저장하는 캐시
 - **중간 서버**(프록시, ISP 프록시, CDN 등)에 저장됨
 - 여러 사용자에게 같은 응답을 재사용함
 - 예: Cloudflare, Akamai, AWS CloudFront, Fastly
@@ -69,7 +69,7 @@ Cache-Control: public, s-maxage=600
 - CDN 없이도 원(Origin) 서버 부하 감소
 - 예: NGINX, Spring Cloud Gateway, Varnish
 
-> ? 서버 앞단에서 직접 응답 주고 서버는 쉬게 함
+> 서버 앞단에서 직접 응답 주고 서버는 쉬게 함
 
 ---
 
@@ -90,7 +90,7 @@ HTTP 캐시 제어를 위한 주요 헤더에는 크게 **캐시 제어 헤더**
 | must-revalidate | **캐시 만료 후,** 반드시 Origin 서버에 **재검증 필요** |
 | public | 인증된 응답도 **공유 캐시에 저장 가능** |
 | private | 오직 **개인 캐시에만 저장 허용** |
-| s-maxage=<초> | **공유 캐시(프록시, CDN)**에서만 적용되는 max-age |
+| s-maxage=<초> | <strong>공유 캐시(프록시, CDN)</strong>에서만 적용되는 max-age |
 
 ```java
 Cache-Control: public, max-age=600
@@ -186,13 +186,13 @@ GET /image.jpg HTTP/1.1
 If-None-Match: "abc123"
 ```
 
-변경되지 않았다면 **"304 Not Modified"**로 응답하고 **본문은 생략**
+변경되지 않았다면 <strong>"304 Not Modified"</strong>로 응답하고 <strong>본문은 생략</strong>
 
 ```http
 HTTP/1.1 304 Not Modified
 ```
 
-변경되었다면 **"200 OK"**로 응답하고 **새로운 ETag**를 부여하고, **새로운 데이터**를 반환
+변경되었다면 <strong>"200 OK"</strong>로 응답하고 <strong>새로운 ETag</strong>를 부여하고, <strong>새로운 데이터</strong>를 반환
 
 ```java
 HTTP/1.1 200 OK
@@ -213,13 +213,13 @@ GET /image.jpg HTTP/1.1
 If-Modified-Since: Wed, 08 Jun 2025 10:18:14 GMT
 ```
 
-변경되지 않았다면 **"304 Not Modified"**로 응답하고 **본문은 생략**
+변경되지 않았다면 <strong>"304 Not Modified"</strong>로 응답하고 <strong>본문은 생략</strong>
 
 ```http
 HTTP/1.1 304 Not Modified
 ```
 
-변경되었다면 **"200 OK"**로 응답하고 **새로운 Last-Modified**를 부여하고, **새로운 데이터**를 반환
+변경되었다면 <strong>"200 OK"</strong>로 응답하고 <strong>새로운 Last-Modified</strong>를 부여하고, <strong>새로운 데이터</strong>를 반환
 
 ```java
 HTTP/1.1 200 OK

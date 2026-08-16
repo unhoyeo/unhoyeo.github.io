@@ -48,7 +48,7 @@ DispatcherServlet → FrameworkServlet → HttpServletBean → HttpServlet
 
 스프링 부트는 내부적으로 DispatcherServletAutoConfiguration 클래스를 통해 DispatcherServlet을 **스프링 빈으로 등록**한다.
 
-이후 DispatcherServletRegistrationBean을 통해 **서블릿 컨테이너에 등록**되며, 기본적으로 **urlPatterns="/"**으로 매핑된다.
+이후 DispatcherServletRegistrationBean을 통해 <strong>서블릿 컨테이너에 등록</strong>되며, 기본적으로 <strong>urlPatterns="/"</strong>으로 매핑된다.
 
 따라서 **모든 요청을 가로채는 것이 가능한 것이다.**
 
@@ -126,7 +126,7 @@ protected void doDispatch(HttpServletRequest request, HttpServletResponse respon
 
 ## ✅ 스프링 MVC의 강력한 확장성
 
-스프링 MVC는 **"인터페이스 기반 설계"**를 통해 DispatcherServlet 코드 수정 없이 기능을 변경하거나 확장할 수 있다.
+스프링 MVC는 <strong>"인터페이스 기반 설계"</strong>를 통해 DispatcherServlet 코드 수정 없이 기능을 변경하거나 확장할 수 있다.
 
 다음 인터페이스들을 구현하여 등록하기만 하면 기능을 자유롭게 확장할 수 있다.
 

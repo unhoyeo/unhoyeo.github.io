@@ -154,7 +154,7 @@ public String saveItem(@ModelAttribute Item item,
 
 그런데 ItemValidator를 그냥 단순한 유틸 클래스로 할 수도 있는데, 굳이 **스프링 빈으로 등록하고 사용하는 이유는 뭘까?**
 
-**@InitBinder**와 **@Validated** 애노테이션을 통한 **"자동 검증"**을 할 수 있기 때문!
+<strong>@InitBinder</strong>와 <strong>@Validated</strong> 애노테이션을 통한 <strong>"자동 검증"</strong>을 할 수 있기 때문!
 
 ---
 
@@ -216,4 +216,4 @@ public String saveItem(@Validated @ModelAttribute Item item, // @Validated 추�
 implementation 'org.springframework.boot:spring-boot-starter-validation'
 ```
 
-@Validated는 @Valid와 달리 [**groups 기능**](https://uh1205.tistory.com/210)을 지원한다.
+@Validated는 @Valid와 달리 [**groups 기능**](/posts/bean-validation/)을 지원한다.

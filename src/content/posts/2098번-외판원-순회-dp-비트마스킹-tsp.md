@@ -85,7 +85,7 @@ dp[current][visited] = min(W[current][next] + dp[next][visited | (1 << next)])
         - 이미 방문한 경우(**(visited & (1 << next)) != 0**) 패스
         - 현재 도시에서 다음 도시로 가는 경로가 없는 경우(**W[current][next] == 0**) 패스
       - 이동 비용 + 나머지 경로 비용 = **W[current][next] + tsp(next, visited | (1 << next))**
-        - **visited | (1 << next)**를 통해 방문 상태 갱신
+        - <strong>visited | (1 << next)</strong>를 통해 방문 상태 갱신
     - dp[current][visited]에 저장 후 반환 → 다른 경로에서도 재활용 가능
 
 ---

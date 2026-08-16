@@ -75,10 +75,10 @@ while (!pq.isEmpty()) {
 
 ## 1. 아이디어
 
-- **간선(Edge)**을 **인접 리스트(List&lt;List>)** 형태로 저장한다.
-- **힙(PriorityQueue)**에 **시작 정점**(1번 정점)를 넣는다.
+- <strong>간선(Edge)</strong>을 <strong>인접 리스트(List&lt;List>)</strong> 형태로 저장한다.
+- <strong>힙(PriorityQueue)</strong>에 <strong>시작 정점</strong>(1번 정점)를 넣는다.
 - 힙이 빌 때까지 다음 과정을 반복한다.
-- **힙의 최솟값(가장 가중치가 작은 간선)**을 꺼낸다.
+- <strong>힙의 최솟값(가장 가중치가 작은 간선)</strong>을 꺼낸다.
 - 해당 정점이 방문하지 않은 곳일 경우 → **방문 처리, 해당 가중치 더하기, 연결된 간선들 힙에 추가!**
 
 ## 2. 시간복잡도

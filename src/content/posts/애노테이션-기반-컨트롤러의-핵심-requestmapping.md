@@ -21,7 +21,7 @@ public String hello() {
 }
 ```
 
-? /hello 경로로 들어온 모든 요청을 해당 메서드로 처리
+/hello 경로로 들어온 모든 요청을 해당 메서드로 처리
 
 ---
 
@@ -51,7 +51,7 @@ public class UserController {
 }
 ```
 
-? find()는 GET /api/users 요청에 매핑되고, join()은 POST /api/users/join 요청에 매핑된다.
+find()는 GET /api/users 요청에 매핑되고, join()은 POST /api/users/join 요청에 매핑된다.
 
 ---
 
@@ -87,7 +87,7 @@ public class UserController {
 ## ✔ value (=path)
 
 - **매핑할 요청 URL 경로**를 지정한다.
-- **Ant 스타일 경로 패턴**(예: /profile/\*\*)이나 **경로 변수**(예: /{profile\_path})를 사용할 수 있다.
+- <strong>Ant 스타일 경로 패턴</strong>(예: /profile/\*\*)이나 <strong>경로 변수</strong>(예: /{profile\_path})를 사용할 수 있다.
 - 메서드 레벨에서는 **상대 경로**(예: edit)가 클래스 레벨에서 표현된 기본 매핑 내에서 지원된다.
 - 클래스 레벨에서 사용하면 모든 메서드 레벨 매핑이 이 기본 매핑을 상속받아 특정 핸들러 메서드에 맞게 범위를 좁힌다.
 - 명시적으로 경로에 매핑되지 않은 핸들러 메서드는 빈 경로에 매핑된다.
@@ -130,7 +130,7 @@ params = "mode!=debug"  // mode 파라미터가 debug가 아니어야 함
 ## ✔ headers
 
 - 요청에 **특정 헤더가 존재하거나, 특정 값을 가질 때만** 매핑하도록 제한한다.
-- Accept, Content-Type 같은 헤더에 **미디어 타입 와일드카드(\*)**도 지원
+- Accept, Content-Type 같은 헤더에 <strong>미디어 타입 와일드카드(\*)</strong>도 지원
 - 예: "Content-Type=text/\*" → text/plain, text/html 등 모두 매칭
 
 ```java
@@ -192,7 +192,7 @@ public class UserController {
 
 ---
 
-? **왜 이렇게 다양한 옵션이 필요할까?**
+**왜 이렇게 다양한 옵션이 필요할까?**
 
 - RESTful 설계 원칙에 따라 URL과 HTTP 메서드를 명확히 구분해야 함
 - 같은 URL이라도, 특정 조건에 따라 다른 핸들러가 필요할 수 있음 (예: 헤더 기반 버전 관리)
@@ -200,7 +200,7 @@ public class UserController {
 
 ---
 
-? **정리**
+**정리**
 
 - @RequestMapping은 단순한 경로 매핑 이상의 역할을 수행하며, HTTP 요청을 **복합 조건 기반으로 정교하게 처리**할 수 있다.
 - 속성으로는 name, value(=path), method, params, headers, consumes, produces가 있다.

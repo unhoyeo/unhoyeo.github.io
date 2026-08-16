@@ -30,7 +30,7 @@ public class AppConfig {
 }
 ```
 
-memberService 빈과 orderService 빈을 만드는 코드를 보면 둘 다 memberRepository() 메서드를 호출한다. 이 메서드를 호출하면 **new MemoryMemberRepository()**를 호출하는데, 이는 결과적으로 **서로 다른 MemoryMemberRepository 2개가 생성**되면서 싱글톤이 깨지는 것처럼 보인다. 스프링 컨테이너는 이 문제를 어떻게 해결할까?
+memberService 빈과 orderService 빈을 만드는 코드를 보면 둘 다 memberRepository() 메서드를 호출한다. 이 메서드를 호출하면 <strong>new MemoryMemberRepository()</strong>를 호출하는데, 이는 결과적으로 <strong>서로 다른 MemoryMemberRepository 2개가 생성</strong>되면서 싱글톤이 깨지는 것처럼 보인다. 스프링 컨테이너는 이 문제를 어떻게 해결할까?
 
 일단 두 인스턴스가 서로 다른 인스턴스인지 테스트해 보자.
 
@@ -118,7 +118,7 @@ AppConfig.memberRepository // orderService()에서 호출
 AppConfig.memberRepository // memberRepository()에서 호출
 ```
 
-그런데 실제로는 **"1번"**만 호출된다.
+그런데 실제로는 <strong>"1번"</strong>만 호출된다.
 
 ```java
 AppConfig.memberService
@@ -130,7 +130,7 @@ AppConfig.orderService
 
 > **마법의 바이트코드 조작 라이브러리 - CGLIB**
 
-스프링 컨테이너는 싱글톤 레지스트리다. 따라서 스프링 빈이 싱글톤이 되도록 보장해주어야 한다. 그런데 스프링이 자바 코드까지 어떻게 하기는 어렵다. **저 코드만 보면 3번 호출되어야 하는 것이 맞다**. 그래서 스프링은 **클래스의 바이트코드를 조작하는 라이브러리**를 사용한다. 모든 비밀은 **"@Configuration"**을 적용한 **AppConfig**에 있다.
+스프링 컨테이너는 싱글톤 레지스트리다. 따라서 스프링 빈이 싱글톤이 되도록 보장해주어야 한다. 그런데 스프링이 자바 코드까지 어떻게 하기는 어렵다. <strong>저 코드만 보면 3번 호출되어야 하는 것이 맞다</strong>. 그래서 스프링은 <strong>클래스의 바이트코드를 조작하는 라이브러리</strong>를 사용한다. 모든 비밀은 <strong>"@Configuration"</strong>을 적용한 <strong>AppConfig</strong>에 있다.
 
 **AppConfig 스프링 빈**을 조회해서 **클래스 정보**를 출력해 보자.
 
@@ -146,7 +146,7 @@ void test() {
 }
 ```
 
-일반 클래스라면 **"class com.spring.study.AppConfig"** 여기 까지만 출력되어야 하지만, 실제 AppConfig 클래스는 여기에 추가로 **"SpringCGLIB"**이 붙으면서 복잡해진 것을 볼 수 있다.
+일반 클래스라면 <strong>"class com.spring.study.AppConfig"</strong> 여기 까지만 출력되어야 하지만, 실제 AppConfig 클래스는 여기에 추가로 <strong>"SpringCGLIB"</strong>이 붙으면서 복잡해진 것을 볼 수 있다.
 
 ```html
 class com.spring.study.AppConfig$$SpringCGLIB$$0
@@ -156,7 +156,7 @@ class com.spring.study.AppConfig$$SpringCGLIB$$0
 
 **그 프록시 클래스를 스프링 빈으로 등록**한 것이다!
 
-> 위에서 AppConfig.class 타입으로 조회가 되었던 이유도 AppConfig 클래스를 **"상속"**받은 자식 클래스이기 때문이다.
+> 위에서 AppConfig.class 타입으로 조회가 되었던 이유도 AppConfig 클래스를 <strong>"상속"</strong>받은 자식 클래스이기 때문이다.
 
 아마도 그 임의의 클래스는 다음과 같이 바이트코드를 조작해서 작성되어 있을 것이다.
 

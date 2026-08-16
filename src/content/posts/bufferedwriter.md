@@ -6,7 +6,7 @@ category: "자바"
 tags: []
 ---
 
-기본적으로 자바에서 출력할 때는 **System.out.println()**으로도 충분하다. 하지만 출력할 일이 많을 때는 시간이 오래 걸린다.
+기본적으로 자바에서 출력할 때는 <strong>System.out.println()</strong>으로도 충분하다. 하지만 출력할 일이 많을 때는 시간이 오래 걸린다.
 
 그럴 때 사용하기 좋은 것이 바로 **BufferedWriter**이다.
 
@@ -33,7 +33,7 @@ class Main {
 }
 ```
 
-> 반복문 안의 변수를 반복문 밖에서 선언할 수도 있지만, **반복문에서만 사용하는 변수는 반복문 안에서만 사용하는 것이 더 바람직하다.**다음 글에서 알아보자.
+> 반복문 안의 변수를 반복문 밖에서 선언할 수도 있지만, <strong>반복문에서만 사용하는 변수는 반복문 안에서만 사용하는 것이 더 바람직하다.</strong>다음 글에서 알아보자.
 
 ## 1. 입출력 관련 패키지
 
@@ -114,10 +114,10 @@ bw.newLine();
 - **bw.write(String str)** : 문자열을 **버퍼에 저장**한다.
 - **bw.newLine()** → **줄바꿈**(개행 문자)을 버퍼에 저장한다.
 
-> **bw.write(Integer.toString(A + B))**는 **bw.write(A + B + "")**로 대체 가능하다.
+> <strong>bw.write(Integer.toString(A + B))</strong>는 <strong>bw.write(A + B + "")</strong>로 대체 가능하다.
 > 자바에서 + 연산자는 두 가지 기능을 가지고 있는데, 피연산자가 **모두 숫자**일 경우에는 **덧셈** 연산을 수행하고, 피연산자 중 하나가 **문자열**일 경우에는 나머지 피연산자도 **문자열로 자동 변환**되어 문자열 결합 연산을 수행한다. 또한, 연산식에서 + 연산자가 연이어 나오면 **앞에서부터 순차적으로 연산을 수행**한다. 먼저 수행된 연산식이 덧셈이라면 덧셈 결과를 가지고 그다음 + 연산을 수행하고, 먼저 수행된 연산이 문자열 결합이라면 이후 + 연산은 결합 연산이 수행된다.
 >
-> 예를 들어, **System.out.println(1 + 2 + "?" + 3 + 4)**인 경우, 출력 결과는 **3?34**가 된다.
+> 예를 들어, <strong>System.out.println(1 + 2 + "?" + 3 + 4)</strong>인 경우, 출력 결과는 <strong>3?34</strong>가 된다.
 >
 > 여기서 주의할 점은 **큰따옴표**("")이어야 문자열 결합 연산을 수행한다. 작은따옴표('')의 경우 아스키 코드를 덧셈 연산하게 된다.
 
@@ -127,13 +127,13 @@ bw.newLine();
 bw.flush();
 ```
 
-- 버퍼를 잡아 놓았기 때문에 반드시 사용한 후에 **flush()** 또는 **close()**를 해주어야 한다.
-- **close()**는 출력 스트림을 아예 닫아버리기 때문에, 다른 것도 출력하고자 한다면 **flush()**를 사용하면 된다.
+- 버퍼를 잡아 놓았기 때문에 반드시 사용한 후에 <strong>flush()</strong> 또는 <strong>close()</strong>를 해주어야 한다.
+- <strong>close()</strong>는 출력 스트림을 아예 닫아버리기 때문에, 다른 것도 출력하고자 한다면 <strong>flush()</strong>를 사용하면 된다.
 
 ---
 
 ## 정리
 
-- 출력할 땐 **bw.write(str)**을 이용하자.
-- 줄바꿈을 넣을 땐 **bw.newLine()** 또는 **bw.write("\n")**을 이용하자.
-- 정수를 문자열로 변환할 때는 **Integer.toString(i)** 또는 **String.valueOf(i)**를 이용하자.
+- 출력할 땐 <strong>bw.write(str)</strong>을 이용하자.
+- 줄바꿈을 넣을 땐 <strong>bw.newLine()</strong> 또는 <strong>bw.write("\n")</strong>을 이용하자.
+- 정수를 문자열로 변환할 때는 <strong>Integer.toString(i)</strong> 또는 <strong>String.valueOf(i)</strong>를 이용하자.

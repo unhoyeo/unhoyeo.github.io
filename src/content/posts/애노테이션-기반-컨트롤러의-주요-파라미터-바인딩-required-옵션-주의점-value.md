@@ -78,7 +78,7 @@ public String saveUser(@RequestBody UserDto userDto) { ... }
 
 위 애노테이션들은 모두 required 옵션을 가지고 있다. 해당 옵션과 파라미터 타입에 따라 다음 두 상황에서 문제가 발생할 수 있다.
 
-? 요청에 해당 파라미터가 **없는 경우** (예: /api):
+요청에 해당 파라미터가 **없는 경우** (예: /api):
 
 1. **문자열 (String):**
    - required = true → **❌** MissingServletRequestParameterException 발생, **400** 에러
@@ -90,7 +90,7 @@ public String saveUser(@RequestBody UserDto userDto) { ... }
    - required = true → **❌** MissingServletRequestParameterException 발생, **400** 에러
    - required = false → **❌ 기본형에 null 저장 불가**, IllegalStateException 발생, **500** 에러 **?**
 
-? 요청에 해당 파라미터가 있으나 **값이 없는 경우** (예: /api?key=):
+요청에 해당 파라미터가 있으나 **값이 없는 경우** (예: /api?key=):
 
 1. **문자열 (String):**
    - required = true → ✅ **빈 문자열 ""** 저장 (**⚠️ 주의!**)
@@ -105,7 +105,7 @@ public String saveUser(@RequestBody UserDto userDto) { ... }
 
 ## ☑️ 결론
 
-- 파라미터는 **항상 객체형(Integer, Long, String 등)**으로 선언
+- 파라미터는 <strong>항상 객체형(Integer, Long, String 등)</strong>으로 선언
 - 예외 처리를 위해 **defaultValue** 속성 사용도 고려 (required = true일 때 ""가 들어와도 defaultValue가 저장됨)
 - 내부 로직에서 **null과 빈 문자열 ""을 명확하게 구분**하는 것이 중요!
 
@@ -179,7 +179,7 @@ public String form(@Valid @ModelAttribute MemberForm form, BindingResult result)
 
 ---
 
-? **기타 지원 타입 (Spring이 자동 주입)**
+**기타 지원 타입 (Spring이 자동 주입)**
 
 - Locale
 - TimeZone
@@ -192,7 +192,7 @@ public String form(@Valid @ModelAttribute MemberForm form, BindingResult result)
 
 ---
 
-? **정리**
+**정리**
 
 |  |  |  |
 | --- | --- | --- |
@@ -225,4 +225,4 @@ Settings → Build, Execution, Deployment → Build Tools → Gradle
 → Gradle Projects → Build and Run → Build and run using:
 ```
 
-해당 옵션을 **"Gradle"**로 설정하면, 코드나 컴파일러 변경 없이 name 속성을 생략할 수 있다.
+해당 옵션을 <strong>"Gradle"</strong>로 설정하면, 코드나 컴파일러 변경 없이 name 속성을 생략할 수 있다.

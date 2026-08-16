@@ -169,7 +169,7 @@ Content-Type: application/json
 ## ⚠️ PATCH 요청 시 주의사항
 
 - 요청 데이터에서 변경할 필드만 포함해야 한다.
-- **JSON Patch 표준(application/json-patch+json)**을 사용할 수도 있다. ([참고](https://ten1010.tistory.com/entry/JSON-Patch))
+- <strong>JSON Patch 표준(application/json-patch+json)</strong>을 사용할 수도 있다. ([참고](https://ten1010.tistory.com/entry/JSON-Patch))
 
 ```json
 [

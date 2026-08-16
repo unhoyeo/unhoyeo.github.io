@@ -37,7 +37,7 @@ public interface SpringDataJpaItemRepository extends JpaRepository<Item, Long> {
 2. **프록시 기술**을 사용해 **구현 클래스를 동적으로 생성**한다.
 3. 생성한 클래스의 인스턴스를 **스프링 빈으로 등록**한다.
 
-? 이 덕분에 개발자는 **인터페이스**만 정의하면, 어떤 구현 코드도 없이 **기본적인 CRUD 기능**을 모두 사용할 수 있게 된다.
+이 덕분에 개발자는 **인터페이스**만 정의하면, 어떤 구현 코드도 없이 **기본적인 CRUD 기능**을 모두 사용할 수 있게 된다.
 
 ---
 
@@ -57,7 +57,7 @@ public interface SpringDataJpaItemRepository extends JpaRepository<Item, Long> {
 }
 ```
 
-? 이 덕분에 간단한 조회 쿼리는 **메서드 선언**만으로 해결할 수 있어, JPQL을 직접 작성하는 수고를 덜 수 있다.
+이 덕분에 간단한 조회 쿼리는 **메서드 선언**만으로 해결할 수 있어, JPQL을 직접 작성하는 수고를 덜 수 있다.
 
 **쿼리 메서드명 규칙** ([공식 메뉴얼](https://docs.spring.io/spring-data/jpa/reference/jpa/query-methods.html)):
 

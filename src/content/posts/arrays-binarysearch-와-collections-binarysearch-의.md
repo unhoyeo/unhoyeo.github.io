@@ -12,7 +12,7 @@ Java의 Arrays.binarySearch()와 Collections.binarySearch()는 **이진 탐색(b
 
 ## 공통점
 
-- **이진 탐색 기반**으로, 시간 복잡도가 **O(log N)**이다.
+- <strong>이진 탐색 기반</strong>으로, 시간 복잡도가 <strong>O(log N)</strong>이다.
 - **반드시 정렬된 상태**의 배열/컬렉션에서만 정상적으로 동작한다.
 - **탐색 실패 시 음수 값을 반환**한다.
   - **-(삽입될 위치) - 1** 형태로 반환된다.
@@ -25,8 +25,8 @@ Java의 Arrays.binarySearch()와 Collections.binarySearch()는 **이진 탐색(b
 | --- | --- | --- |
 | **항목** | **Arrays.binarySearch()** | **Collections.binarySearch()** |
 | **대상 자료형** | **배열** (int[], Object[] 등) | **List&lt;T>** (예: ArrayList) |
-| **제네릭 지원** | 제한적 (**Object[]**만 제네릭) | 완전한 제네릭 지원 |
-| **Comparator 지원 여부** | **Object[]**에 한해 가능 | Comparator&lt;? super T>로 지원 |
+| <strong>제네릭 지원</strong> | 제한적 (<strong>Object[]</strong>만 제네릭) | 완전한 제네릭 지원 |
+| <strong>Comparator 지원 여부</strong> | <strong>Object[]</strong>에 한해 가능 | Comparator&lt;? super T>로 지원 |
 | **내부 구현** | 배열 인덱스를 기준으로 구현 | List의 get()을 반복 호출 |
 | **성능** | 기본형 배열 사용 시 매우 빠름 | ArrayList처럼 get()이 빠른 리스트에 적합 |
 

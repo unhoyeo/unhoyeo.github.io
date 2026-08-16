@@ -6,7 +6,7 @@ category: "스프링/MVC"
 tags: []
 ---
 
-? **@ModelAttribute란?**
+**@ModelAttribute란?**
 
 스프링 MVC에서 **컨트롤러 메서드의 파라미터나 반환 값을 모델(Model)에 바인딩**하거나,
 
@@ -14,9 +14,9 @@ tags: []
 
 즉, 여러 개의 파라미터가 하나의 객체 필드로 대응될 수 있을 때, 그 **객체를 자동으로 생성**하고 **필드에 값을 바인딩**해 준다.
 
-@RequestParam은 요청 파라미터를 **단순 타입(int, Long, String, Enum 등)**의 파라미터로 받을 때 사용한다면,
+@RequestParam은 요청 파라미터를 <strong>단순 타입(int, Long, String, Enum 등)</strong>의 파라미터로 받을 때 사용한다면,
 
-@ModelAttribute는 요청 파라미터를 **복합 타입(UserForm 등)**의 파라미터로 받을 때 사용한다.
+@ModelAttribute는 요청 파라미터를 <strong>복합 타입(UserForm 등)</strong>의 파라미터로 받을 때 사용한다.
 
 예시:
 
@@ -40,15 +40,15 @@ public class UserForm {
 public String join(@ModelAttribute("userForm") UserForm form) { ... }
 ```
 
-? 요청 본문의 **폼 데이터 → UserForm 객체**로 자동 변환됨
+요청 본문의 **폼 데이터 → UserForm 객체**로 자동 변환됨
 
 (자동으로 객체를 생성하고, Setter를 이용하여 name 필드에는 "kim"을, age 필드에는 25를 주입)
 
-? Model에 **"userForm"**이라는 이름으로 위 데이터가 저장됨
+Model에 <strong>"userForm"</strong>이라는 이름으로 위 데이터가 저장됨
 
 ---
 
-? **왜 중요한가?**
+**왜 중요한가?**
 
 - **복잡한 폼 데이터 처리**: 여러 필드를 일일이 @RequestParam으로 받지 않아도 됨
 - **계층형 객체 처리 가능**: 내부 객체나 컬렉션까지 자동 바인딩
@@ -97,7 +97,7 @@ public class SampleController {
 
 ---
 
-? **속성 정리**
+**속성 정리**
 
 |  |  |
 | --- | --- |
@@ -105,7 +105,7 @@ public class SampleController {
 | value (=name) | 바인딩할 모델 속성의 이름 (Model에 저장될 이름) |
 | binding | 바인딩 수행 여부 (**기본값: true**) |
 
-⚠️ value (=name) 속성을 지정하지 않을 경우, **클래스명(메서드 파라미터의 타입 또는 메서드의 반환 타입)**을 camelCase로 하여 지정됨
+⚠️ value (=name) 속성을 지정하지 않을 경우, <strong>클래스명(메서드 파라미터의 타입 또는 메서드의 반환 타입)</strong>을 camelCase로 하여 지정됨
 
 ```java
 @ModelAttribute("hello") UserForm form  // hello로 지정됨
@@ -204,7 +204,7 @@ public String save(@ModelAttribute User user) { ... }
 
 ---
 
-? **실무 적용 팁**
+**실무 적용 팁**
 
 - **폼 바인딩용 DTO와 도메인 엔티티를 분리**
   - View/Form 처리에는 별도의 DTO 클래스를 만들어야 의도치 않은 값 주입을 방지할 수 있다.

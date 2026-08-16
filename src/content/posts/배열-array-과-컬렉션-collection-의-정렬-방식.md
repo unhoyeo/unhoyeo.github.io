@@ -8,7 +8,7 @@ tags: []
 
 ## 1️⃣ 배열(Array) 정렬
 
-- 배열은 java.util.**Arrays** 클래스의 정적 메서드 **sort()**를 이용해 정렬한다.
+- 배열은 java.util.<strong>Arrays</strong> 클래스의 정적 메서드 <strong>sort()</strong>를 이용해 정렬한다.
 - 기본적으로 **오름차순** 정렬이며, **내림차순** 정렬 시에는 **Comparator**를 함께 사용해야 한다.
 
 ## 1. 기본 타입 배열 (int[], double[] 등)
@@ -39,7 +39,7 @@ public class ArraySortExample {
 ```
 
 - Arrays.sort()는 **Dual-Pivot Quicksort**(primitive type) 또는 **TimSort**(object type) 알고리즘을 사용한다.
-- **기본 타입은 Comparator를 적용할 수 없기** 때문에, **박싱(boxing)**을 통해 **Integer[]로 변환**해야 내림차순 정렬이 가능하다.
+- <strong>기본 타입은 Comparator를 적용할 수 없기</strong> 때문에, <strong>박싱(boxing)</strong>을 통해 <strong>Integer[]로 변환</strong>해야 내림차순 정렬이 가능하다.
 
 ## 2. 참조 타입 배열 (String[], Integer[] 등)
 
@@ -63,13 +63,13 @@ public class ObjectArraySort {
 ```
 
 - 객체 배열은 **Comparable 인터페이스를 구현**해야 정렬이 가능하다. (String, Integer 등은 이미 구현됨)
-- **Collections.reverseOrder()**는 내부적으로 Comparator를 반환하여 내림차순 정렬을 수행한다.
+- <strong>Collections.reverseOrder()</strong>는 내부적으로 Comparator를 반환하여 내림차순 정렬을 수행한다.
 
 ---
 
 ## 2️⃣ 컬렉션(Collection) 정렬
 
-- 컬렉션(List, Set 등)은 **Collections.sort()**나 **List.sort()**를 사용한다.
+- 컬렉션(List, Set 등)은 <strong>Collections.sort()</strong>나 <strong>List.sort()</strong>를 사용한다.
 - 단, Set은 순서가 없기 때문에 정렬하려면 List로 변환해야 한다.
 
 ## 1. List 정렬 예시
@@ -112,7 +112,7 @@ public class CustomComparatorExample {
 }
 ```
 
-- Collections.sort()는 내부적으로 **List.sort()**를 호출한다.
+- Collections.sort()는 내부적으로 <strong>List.sort()</strong>를 호출한다.
 - Java 8 이상에서는 List.sort(Comparator)를 바로 사용하는 것이 권장된다.
 - Comparator.comparing(), .reversed(), .thenComparing() 등을 활용하면 다단계 정렬도 가능하다.
 
