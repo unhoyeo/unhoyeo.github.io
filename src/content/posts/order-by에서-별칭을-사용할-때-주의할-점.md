@@ -8,9 +8,7 @@ tags: []
 
 쿼리를 작성할 때 **정렬(ORDER BY)** 단계에서 주의해야 할 점이 있다. 다음 문제를 보자.
 
-[프로그래머스](https://school.programmers.co.kr/learn/courses/30/lessons/284531)
-
----
+<https://school.programmers.co.kr/learn/courses/30/lessons/284531>
 
 이 문제는 데이터를 노선(ROUTE)별로 그룹화하여 합계와 평균을 구하는 집계 능력, 그리고 숫자 데이터에 반올림과 단위(km)를 붙이는 가공 능력을 동시에 요구한다.
 
