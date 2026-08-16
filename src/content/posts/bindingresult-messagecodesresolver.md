@@ -409,7 +409,7 @@ public String saveItem(@ModelAttribute Item item,
 }
 ```
 
-**? 그런데 오류 코드를 입력하는 부분이 기존과 약간 다르다!**
+## 그런데 오류 코드를 입력하는 부분이 기존과 약간 다르다!
 
 - 기존 방식(FieldError, ObjectError 직접 생성): **range.item.price**
 - rejectValue(), reject() 메서드를 사용하는 방식: **range**

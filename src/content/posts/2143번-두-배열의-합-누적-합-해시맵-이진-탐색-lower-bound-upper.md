@@ -314,7 +314,7 @@ public class Main {
 
 ---
 
-**? Collections.binarySearch()를 사용하지 않은 이유?**
+## Collections.binarySearch()를 사용하지 않은 이유?
 
 > **중복된 값의 개수를 직접 계산할 수 없기 때문!**
 

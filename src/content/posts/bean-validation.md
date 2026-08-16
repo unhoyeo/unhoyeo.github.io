@@ -1,6 +1,6 @@
 ---
 title: "Bean Validation"
-description: "이전의 Validator 인터페이스를 직접 구현하는 방식이 검증 로직을 컨트롤러로부터 분리하는 단계였다면, Bean Validation은 검증 로직 자체를 애노테이션 기반으로 표준화하고 자동화하는 기술이다. ?"
+description: "이전의 Validator 인터페이스를 직접 구현하는 방식이 검증 로직을 컨트롤러로부터 분리하는 단계였다면, Bean Validation은 검증 로직 자체를 애노테이션 기반으로 표준화하고 자동화하는 기술이다."
 pubDate: 2025-08-28T19:47:55+09:00
 category: "스프링/MVC"
 tags: []
@@ -12,7 +12,7 @@ Bean Validation은 검증 로직 자체를 **애노테이션 기반으로 표준
 
 ---
 
-**? Bean Validation이란?**
+## Bean Validation이란?
 
 Bean Validation은 **반복적이고 정형화된 검증 로직**(예: 값이 비어있는지, 특정 범위를 만족하는지)을 모든 프로젝트에서 **일관성 있게 처리**할 수 있도록 만든 **자바 표준 기술 사양(JSR-380)**이다.
 

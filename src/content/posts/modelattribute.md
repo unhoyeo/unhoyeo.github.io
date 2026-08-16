@@ -57,7 +57,7 @@ public String join(@ModelAttribute("userForm") UserForm form) { ... }
 
 ---
 
-**? @ModelAttribute를 반환 값에 선언하는 경우?**
+## @ModelAttribute를 반환 값에 선언하는 경우?
 
 @ModelAttribute는 보통 메서드의 **파라미터**에서 사용되지만, 메서드의 **반환 값**에서도 사용이 가능하다.
 

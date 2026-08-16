@@ -24,7 +24,7 @@ tags: []
 
 ---
 
-**? DispatcherServlet이란 무엇인가?**
+## DispatcherServlet이란 무엇인가?
 
 스프링 MVC의 진입점 역할을 수행하는 **프론트 컨트롤러 서블릿**이다.
 
@@ -139,7 +139,7 @@ protected void doDispatch(HttpServletRequest request, HttpServletResponse respon
 
 ---
 
-**? 왜 스프링 MVC의 구조를 이해해야 하는가?**
+## 왜 스프링 MVC의 구조를 이해해야 하는가?
 
 스프링 MVC의 내부 구조는 복잡하게 느껴질 수 있으나, 다음과 같은 실무적 이유로 학습할 가치가 충분하다.
 
@@ -149,7 +149,7 @@ protected void doDispatch(HttpServletRequest request, HttpServletResponse respon
 
 ---
 
-**? 지금은 구조 이해만으로 충분!**
+## 지금은 구조 이해만으로 충분!
 
 초기 학습 단계에서는 DispatcherServlet 중심의 전체 흐름을 파악하는 것으로 충분하다.
 

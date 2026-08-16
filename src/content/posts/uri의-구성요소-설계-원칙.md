@@ -1,12 +1,12 @@
 ---
 title: "URI의 구성요소, 설계 원칙"
-description: "URI란? URI(Uniform Resource Identifier, 통합 자원 식별자)는 인터넷에서 특정 자원을 식별하기 위한 문자열이다. 웹 페이지, 이미지, 동영상, API 등 '모든 인터넷 자원'을 식별하는 역할을 한다."
+description: "URI(Uniform Resource Identifier, 통합 자원 식별자)는 인터넷에서 특정 자원을 식별하기 위한 문자열이다. 웹 페이지, 이미지, 동영상, API 등 '모든 인터넷 자원'을 식별하는 역할을 한다."
 pubDate: 2025-04-01T20:14:19+09:00
 category: "HTTP"
 tags: []
 ---
 
-**URI란?**
+## URI란?
 
 URI(Uniform Resource Identifier, 통합 자원 식별자)는 **인터넷에서 특정 자원을 식별하기 위한 문자열**이다.
 

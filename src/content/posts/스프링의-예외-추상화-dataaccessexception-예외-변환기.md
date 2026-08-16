@@ -271,7 +271,7 @@ class SpringSQLExceptionTranslatorTest {
 }
 ```
 
-**? SQLExceptionTranslator**를 통해 DB별로 다른 SQL 오류 코드를 스프링의 **DataAccessException**으로 변환해 준다.
+**SQLExceptionTranslator**를 통해 DB별로 다른 SQL 오류 코드를 스프링의 **DataAccessException**으로 변환해 준다.
 
 이 덕분에 개발자는 데이터베이스 종류나 데이터베이스 접근 기술(JDBC, JPA 등)에 상관없이, **스프링이 제공하는 일관된 예외**를 사용하여 서비스 계층의 순수성을 유지한 채로 예외를 처리할 수 있게 된다.
 

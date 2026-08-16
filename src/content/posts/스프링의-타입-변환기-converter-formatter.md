@@ -220,7 +220,7 @@ public class WebConfig implements WebMvcConfigurer {
 
 ---
 
-**⚠️ 주의: ConversionService는 HttpMessageConverter와 관계없음!**
+## ⚠️ 주의: ConversionService는 HttpMessageConverter와 관계없음!
 
 한 가지 매우 중요한 점은, **HttpMessageConverter는 ConversionService를 사용하지 않는다**는 것이다.
 

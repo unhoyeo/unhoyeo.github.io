@@ -199,7 +199,7 @@ WHERE product_id = 1;
 
 ---
 
-**? UPDATE / DELETE 수행 시 WHERE 절을 생략한다면?**
+## UPDATE / DELETE 수행 시 WHERE 절을 생략한다면?
 
 WHERE 절을 빠뜨리면 테이블의 **모든 행이 수정되거나 삭제**되는 재앙이 발생하므로 극도로 주의해야 한다.
 

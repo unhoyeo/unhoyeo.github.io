@@ -143,13 +143,13 @@ public class JdbcTemplateItemRepositoryV1 implements ItemRepository {
 }
 ```
 
-**? 데이터 변경 (INSERT, UPDATE, DELETE)**:
+**데이터 변경 (INSERT, UPDATE, DELETE)**:
 
 - **template.update()** 메서드를 사용한다.
 - **SQL**과 함께 ?에 바인딩할 **파라미터**를 순서대로 전달하면 된다.
 - 반환 값은 **쿼리의 영향을 받은 행(row)의 수**다.
 
-**? 데이터 조회 (SELECT)**:
+**데이터 조회 (SELECT)**:
 
 - **template.queryForObject()**: **단 하나의 행**을 조회할 때 사용한다.
   - 결과가 없으면 EmptyResultDataAccessException 예외가 발생한다.

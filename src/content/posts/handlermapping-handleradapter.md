@@ -22,7 +22,7 @@ tags: []
 
 ---
 
-**? 과거 방식의 컨트롤러 – org.springframework.web.servlet.mvc.Controller**
+**과거 방식의 컨트롤러 – org.springframework.web.servlet.mvc.Controller**
 
 초기 스프링 MVC에서는 컨트롤러를 만들기 위해 다음과 같은 **Controller 인터페이스를 직접 구현**했다.
 
@@ -118,7 +118,7 @@ true를 반환하는 첫 번째 어댑터를 선택하여 실행한다.
 
 ---
 
-**? 스프링 MVC는 왜 HandlerMapping과 HandlerAdapter로 분리되어 있는가?**
+## 스프링 MVC는 왜 HandlerMapping과 HandlerAdapter로 분리되어 있는가?
 
 이 구조는 단순히 역할을 나눈 것 이상으로, **프론트 컨트롤러의 유연성과 확장성 확보**를 위한 설계다.
 

@@ -206,7 +206,7 @@ HTTP/1.1 204 No Content
 
 ---
 
-**? HTTP 메서드의 특성 비교** ([참고](https://ko.wikipedia.org/wiki/HTTP#%EC%9A%94%EC%95%BD%ED%91%9C))
+**HTTP 메서드의 특성 비교** ([참고](https://ko.wikipedia.org/wiki/HTTP#%EC%9A%94%EC%95%BD%ED%91%9C))
 
 |  |  |  |  |  |  |
 | --- | --- | --- | --- | --- | --- |

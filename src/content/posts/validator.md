@@ -154,7 +154,7 @@ public String saveItem(@ModelAttribute Item item,
 
 그런데 ItemValidator를 그냥 단순한 유틸 클래스로 할 수도 있는데, 굳이 **스프링 빈으로 등록하고 사용하는 이유는 뭘까?**
 
-**? @InitBinder**와 **@Validated** 애노테이션을 통한 **"자동 검증"**을 할 수 있기 때문!
+**@InitBinder**와 **@Validated** 애노테이션을 통한 **"자동 검증"**을 할 수 있기 때문!
 
 ---
 

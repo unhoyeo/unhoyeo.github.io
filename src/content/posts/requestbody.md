@@ -41,7 +41,7 @@ public String saveUser(@RequestBody UserDto user) { ... }
 
 ---
 
-**? 내부 동작 방식 (RequestResponseBodyMethodProcessor, HttpMessageConverter)**
+**내부 동작 방식 (RequestResponseBodyMethodProcessor, HttpMessageConverter)**
 
 ```java
 DispatcherServlet

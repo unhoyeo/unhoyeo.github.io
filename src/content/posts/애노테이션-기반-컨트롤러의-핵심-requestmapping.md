@@ -1,12 +1,12 @@
 ---
 title: "애노테이션 기반 컨트롤러의 핵심 – @RequestMapping"
-description: "? @RequestMapping이란? Spring MVC에서 HTTP 요청을 특정 컨트롤러 메서드에 매핑하기 위해 사용하는 애노테이션이다."
+description: "Spring MVC에서 HTTP 요청을 특정 컨트롤러 메서드에 매핑하기 위해 사용하는 애노테이션이다. 요청 URL, HTTP 메서드, 파라미터 조건, 헤더 조건, 미디어 타입 조건 등을 조합하여 요청을 정교하게 매핑할 수 있다."
 pubDate: 2025-07-23T22:00:30+09:00
 category: "스프링/MVC"
 tags: []
 ---
 
-**? @RequestMapping이란?**
+## @RequestMapping이란?
 
 Spring MVC에서 **HTTP 요청을 특정 컨트롤러 메서드에 매핑**하기 위해 사용하는 애노테이션이다.
 
@@ -25,7 +25,7 @@ public String hello() {
 
 ---
 
-**? @RequestMapping을 클래스 레벨에 선언 시?**
+## @RequestMapping을 클래스 레벨에 선언 시?
 
 @RequestMapping은 메서드 레벨, 클래스 레벨 모두에서 사용할 수 있다.
 

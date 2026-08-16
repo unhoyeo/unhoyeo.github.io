@@ -165,7 +165,7 @@ SELECT DISTINCT customer_id FROM orders;
 
 ---
 
-**? NULL을 가장 큰 값으로 취급하려면?**
+## NULL을 가장 큰 값으로 취급하려면?
 
 SELECT 절에 **IS NULL 컬럼**을 추가하여, ORDER BY 절에 조건을 추가하는 트릭을 사용하면 된다.
 

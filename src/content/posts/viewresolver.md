@@ -1,12 +1,12 @@
 ---
 title: "ViewResolver"
-description: "? ViewResolver란? Spring MVC에서 컨트롤러(핸들러)는 뷰 자체가 아니라 단순히 논리 뷰 이름을 반환한다. 하지만 뷰가 렌더링되려면 실제 물리 경로가 필요하다."
+description: "Spring MVC에서 컨트롤러(핸들러)는 뷰 자체가 아니라 단순히 논리 뷰 이름을 반환한다. 하지만 뷰가 렌더링되려면 실제 물리 경로가 필요하다."
 pubDate: 2025-04-27T12:38:59+09:00
 category: "스프링/MVC"
 tags: []
 ---
 
-**? ViewResolver란?**
+## ViewResolver란?
 
 Spring MVC에서 **컨트롤러(핸들러)**는 뷰 자체가 아니라 단순히 **논리 뷰 이름**을 반환한다.
 
@@ -106,7 +106,7 @@ JstlView는 InternalResourceView 기능에 더해 JSTL 태그와 국제화(i18n)
 
 ---
 
-**? Thymeleaf는 어떻게 렌더링되는가?**
+## Thymeleaf는 어떻게 렌더링되는가?
 
 Thymeleaf는 JSP와 달리 forward()를 사용하지 않고, **자체적으로 렌더링이 가능한** 템플릿 엔진이다.
 

@@ -1,12 +1,12 @@
 ---
 title: "JPA (Java Persistence API)"
-description: "? ORM과 JPA: 왜 SQL에서 객체로 패러다임이 전환되었나? JdbcTemplate이나 MyBatis와 같은 SQL Mapper 기술은 JDBC의 반복 작업을 줄여주었지만, 여전히 개발자가 SQL을 직접 작성해야 하는 한계가…"
+description: "JdbcTemplate이나 MyBatis와 같은 SQL Mapper 기술은 JDBC의 반복 작업을 줄여주었지만, 여전히 개발자가 SQL을 직접 작성해야 하는 한계가 있다."
 pubDate: 2025-10-03T17:14:15+09:00
 category: "스프링/DB"
 tags: []
 ---
 
-**? ORM과 JPA: 왜 SQL에서 객체로 패러다임이 전환되었나?**
+## ORM과 JPA: 왜 SQL에서 객체로 패러다임이 전환되었나?
 
 JdbcTemplate이나 MyBatis와 같은 **SQL Mapper** 기술은 JDBC의 반복 작업을 줄여주었지만,
 

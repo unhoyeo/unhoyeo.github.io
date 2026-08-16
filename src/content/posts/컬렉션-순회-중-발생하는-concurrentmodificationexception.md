@@ -66,7 +66,7 @@ for (String s : list) {
 list.removeAll(toRemove);
 ```
 
-**? CopyOnWriteArrayList와 같은 fail-safe 컬렉션 사용** (멀티스레드 환경에 적합)
+**CopyOnWriteArrayList와 같은 fail-safe 컬렉션 사용** (멀티스레드 환경에 적합)
 
 ```lasso
 List<String> list = new CopyOnWriteArrayList<>();
