@@ -8,11 +8,11 @@ tags: []
 
 **@ModelAttribute란?**
 
-스프링 MVC에서 **컨트롤러 메서드의 파라미터나 반환 값을 모델(Model)에 바인딩**하거나,
+스프링 MVC에서 컨트롤러 메서드의 파라미터나 반환 값을 모델(Model)에 바인딩하거나,
 
-**HTTP 요청 파라미터를 커맨드 객체로 변환하여 컨트롤러 메서드의 파라미터에 바인딩**할 때 사용하는 애노테이션이다.
+HTTP 요청 파라미터를 커맨드 객체로 변환하여 컨트롤러 메서드의 파라미터에 바인딩할 때 사용하는 애노테이션이다.
 
-즉, 여러 개의 파라미터가 하나의 객체 필드로 대응될 수 있을 때, 그 **객체를 자동으로 생성**하고 **필드에 값을 바인딩**해 준다.
+즉, 여러 개의 파라미터가 하나의 객체 필드로 대응될 수 있을 때, 그 객체를 자동으로 생성하고 필드에 값을 바인딩해 준다.
 
 @RequestParam은 요청 파라미터를 <strong>단순 타입(int, Long, String, Enum 등)</strong>의 파라미터로 받을 때 사용한다면,
 
@@ -40,20 +40,20 @@ public class UserForm {
 public String join(@ModelAttribute("userForm") UserForm form) { ... }
 ```
 
-요청 본문의 **폼 데이터 → UserForm 객체**로 자동 변환됨
+요청 본문의 폼 데이터 → UserForm 객체로 자동 변환됨
 
 (자동으로 객체를 생성하고, Setter를 이용하여 name 필드에는 "kim"을, age 필드에는 25를 주입)
 
-Model에 <strong>"userForm"</strong>이라는 이름으로 위 데이터가 저장됨
+Model에 "userForm"이라는 이름으로 위 데이터가 저장됨
 
 ---
 
 **왜 중요한가?**
 
-- **복잡한 폼 데이터 처리**: 여러 필드를 일일이 @RequestParam으로 받지 않아도 됨
-- **계층형 객체 처리 가능**: 내부 객체나 컬렉션까지 자동 바인딩
-- **뷰 렌더링을 위한 모델 객체 자동 등록**: @ModelAttribute로 받은 객체는 자동으로 Model에 포함됨
-- **유효성 검증과의 자연스러운 통합**: @Valid, BindingResult와 함께 사용
+- 복잡한 폼 데이터 처리: 여러 필드를 일일이 @RequestParam으로 받지 않아도 됨
+- 계층형 객체 처리 가능: 내부 객체나 컬렉션까지 자동 바인딩
+- 뷰 렌더링을 위한 모델 객체 자동 등록: @ModelAttribute로 받은 객체는 자동으로 Model에 포함됨
+- 유효성 검증과의 자연스러운 통합: @Valid, BindingResult와 함께 사용
 
 ---
 
@@ -65,10 +65,10 @@ Model에 <strong>"userForm"</strong>이라는 이름으로 위 데이터가 저�
 
 HandlerMethodArgumentResolver와 HandlerMethodReturnValueHandler를 모두 상속하고 있다.
 
-HandlerAdapter는 **컨트롤러 메서드를 실행하기 전에** 다음 과정을 먼저 거친다.
+HandlerAdapter는 컨트롤러 메서드를 실행하기 전에 다음 과정을 먼저 거친다.
 
-1. **반환 값에 @ModelAttribute가 선언된 메서드**를 먼저 실행
-2. 해당 메서드의 **반환 값을 Model에 저장**
+1. 반환 값에 @ModelAttribute가 선언된 메서드를 먼저 실행
+2. 해당 메서드의 반환 값을 Model에 저장
 
 예시:
 
@@ -93,7 +93,7 @@ public class SampleController {
 - 해당 반환 값이 Model에 "regions"라는 이름으로 자동 등록됨
 - 이후 다른 메서드에서 model 객체로 받거나, 뷰 렌더링 시 사용 가능
 
-따라서 **공통 데이터**(예: 드롭다운 코드 목록)를 등록할 때 유용하다.
+따라서 공통 데이터(예: 드롭다운 코드 목록)를 등록할 때 유용하다.
 
 ---
 
@@ -103,9 +103,9 @@ public class SampleController {
 | --- | --- |
 | **속성명** | **설명** |
 | value (=name) | 바인딩할 모델 속성의 이름 (Model에 저장될 이름) |
-| binding | 바인딩 수행 여부 (**기본값: true**) |
+| binding | 바인딩 수행 여부 (기본값: true) |
 
-⚠️ value (=name) 속성을 지정하지 않을 경우, <strong>클래스명(메서드 파라미터의 타입 또는 메서드의 반환 타입)</strong>을 camelCase로 하여 지정됨
+⚠️ value (=name) 속성을 지정하지 않을 경우, 클래스명(메서드 파라미터의 타입 또는 메서드의 반환 타입)을 camelCase로 하여 지정됨
 
 ```java
 @ModelAttribute("hello") UserForm form  // hello로 지정됨
@@ -134,29 +134,29 @@ ConversionService
 핸들러 메서드 실행
 ```
 
-1. **DispatcherServlet**
+1. DispatcherServlet
    - 모든 HTTP 요청의 진입점이며, Spring MVC의 프론트 컨트롤러
    - 요청을 HandlerMapping에 위임하여 어떤 핸들러를 호출할지 결정
-2. **HandlerMapping (RequestMappingHandlerMapping)**
+2. HandlerMapping (RequestMappingHandlerMapping)
    - 요청 URL, HTTP 메서드 등을 기반으로 호출할 핸들러(핸들러 메서드)를 찾음
-3. **HandlerAdapter (RequestMappingHandlerAdapter)**
-   - 핸들러 메서드의 **파라미터를 바인딩**하여, 핸들러 메서드를 실행함
+3. HandlerAdapter (RequestMappingHandlerAdapter)
+   - 핸들러 메서드의 파라미터를 바인딩하여, 핸들러 메서드를 실행함
    - 각각의 파라미터를 어떻게 바인딩할지 결정하기 위해 다음 단계로 위임
-4. **HandlerMethodArgumentResolverComposite**
+4. HandlerMethodArgumentResolverComposite
    - 핸들러 메서드의 각 파라미터에 대해 어떤 ArgumentResolver가 처리할 수 있는지 판단
-   - 등록된 여러 **HandlerMethodArgumentResolver 구현체**들을 순차적으로 탐색하여 적절한 것을 선택함
+   - 등록된 여러 HandlerMethodArgumentResolver 구현체들을 순차적으로 탐색하여 적절한 것을 선택함
    - @ModelAttribute가 붙은 파라미터의 경우, ModelAttributeMethodProcessor가 선택됨
-5. **ModelAttributeMethodProcessor**
+5. ModelAttributeMethodProcessor
    - 실제로 @ModelAttribute를 처리하는 전담 Resolver
-   - 내부적으로 파라미터 타입의 **기본 생성자**를 호출하여 **객체를 생성함**
-6. **WebDataBinderFactory**
-   - 바인딩을 위한 **WebDataBinder** 객체 생성
-   - 내부적으로 **Setter**를 통해 각 **필드에 값을 바인딩함**
-7. **ConversionService (GenericConversionService)**
-   - 바인딩 시 각 필드 타입에 맞게 **타입 변환** 수행
+   - 내부적으로 파라미터 타입의 기본 생성자를 호출하여 객체를 생성함
+6. WebDataBinderFactory
+   - 바인딩을 위한 WebDataBinder 객체 생성
+   - 내부적으로 Setter를 통해 각 필드에 값을 바인딩함
+7. ConversionService (GenericConversionService)
+   - 바인딩 시 각 필드 타입에 맞게 타입 변환 수행
    - 예: "25" → int 25 로 변환
    - 커스텀 Converter가 등록되어 있다면 여기서 활용됨
-8. **핸들러 메서드 실행**
+8. 핸들러 메서드 실행
    - 모든 파라미터가 바인딩되면, 컨트롤러의 핸들러 메서드가 실행됨
 
 예시: name=kim&age=25
@@ -176,21 +176,21 @@ public String save(@ModelAttribute User user) { ... }
 ## @ModelAttribute 주의 사항
 
 - **@ModelAttribute 생략 시**: Spring MVC의 HandlerMethodArgumentResolver 전략에 기반하여 다음과 같이 처리됨
-  - **단순 타입 ? @RequestParam**
+  - 단순 타입 ? @RequestParam
     - int, boolean, Integer, String, LocalDate, Date, Enum 등
-  - 그 외 **복합 타입** ? **@ModelAttribute**
+  - 그 외 복합 타입 ? @ModelAttribute
     - 자바 빈 규약을 따르는 객체, DTO 클래스, 컬렉션이 아닌 복합 구조 등
-    - **예외: ArgumentResolver로 처리되는 타입**
-      - HttpServletRequest, Model, BindingResult 등은 각각의 **전용 리졸버**가 처리한다.
+    - 예외: ArgumentResolver로 처리되는 타입
+      - HttpServletRequest, Model, BindingResult 등은 각각의 전용 리졸버가 처리한다.
 - **기본 생성자 + Setter 필수**: 내부적으로 객체를 생성하고, 값을 주입하려면 필수
   - 기본 생성자는 클래스에 생성자가 하나도 선언되어 있지 않다면, 자바 컴파일러가 자동으로 만들어 준다.
-  - Setter 대신 **AllArgsConstructor**를 사용해도 값이 주입된다.
-    - 단, **생성자의 파라미터 이름**이 요청 파라미터 이름과 일치해야 하고,
-    - 자바 컴파일러에 **-parameters** 옵션을 넣어주어야 한다. (Build and run using: Gradle 설정으로도 가능)
+  - Setter 대신 AllArgsConstructor를 사용해도 값이 주입된다.
+    - 단, 생성자의 파라미터 이름이 요청 파라미터 이름과 일치해야 하고,
+    - 자바 컴파일러에 -parameters 옵션을 넣어주어야 한다. (Build and run using: Gradle 설정으로도 가능)
 - **@RequestBody와 혼용 불가**
   - JSON 요청은 @ModelAttribute로 처리할 수 없기 때문에, 이때는 @RequestBody를 사용해야 한다.
 - **파라미터 누락 시 예외가 발생하지 않음**
-  - 파라미터가 누락되면 null이 주입되는 것이 아니라, **빈 객체**가 생성된다.
+  - 파라미터가 누락되면 null이 주입되는 것이 아니라, 빈 객체가 생성된다.
   - 따라서 내부 로직에서 예외 처리를 해야 한다.
 
 - **데이터 바인딩 시, 외부에서 설정되어선 안 되는 필드가 노출될 수 있음**

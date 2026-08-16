@@ -6,7 +6,7 @@ category: "스프링/MVC"
 tags: []
 ---
 
-다음 검증 코드를 보면 **검증 로직이 늘어날수록 컨트롤러 코드가 복잡해진다**는 문제점이 존재한다.
+다음 검증 코드를 보면 검증 로직이 늘어날수록 컨트롤러 코드가 복잡해진다는 문제점이 존재한다.
 
 ```java
 @PostMapping("/save")
@@ -152,15 +152,15 @@ public String saveItem(@ModelAttribute Item item,
 
 검증 로직을 분리함으로써 컨트롤러 코드가 깔끔해졌다.
 
-그런데 ItemValidator를 그냥 단순한 유틸 클래스로 할 수도 있는데, 굳이 **스프링 빈으로 등록하고 사용하는 이유는 뭘까?**
+그런데 ItemValidator를 그냥 단순한 유틸 클래스로 할 수도 있는데, 굳이 스프링 빈으로 등록하고 사용하는 이유는 뭘까?
 
-<strong>@InitBinder</strong>와 <strong>@Validated</strong> 애노테이션을 통한 <strong>"자동 검증"</strong>을 할 수 있기 때문!
+<strong>@InitBinder</strong>와 <strong>@Validated</strong> 애노테이션을 통한 "자동 검증"을 할 수 있기 때문!
 
 ---
 
 ## Validator 검증 자동화
 
-우선 컨트롤러에 **@InitBinder 메서드**를 만들어 **WebDataBinder**에 사용할 Validator를 등록한다.
+우선 컨트롤러에 @InitBinder 메서드를 만들어 **WebDataBinder**에 사용할 Validator를 등록한다.
 
 등록된 Validator는 **해당 컨트롤러 내에서만 사용 가능**하며, 전역으로 사용하려면 별도 설정이 필요하다.
 
@@ -171,7 +171,7 @@ public void init(WebDataBinder dataBinder) {
 }
 ```
 
-그리고 검증이 필요한 모델 객체 앞에 **@Validated** 애노테이션을 붙이면 된다.
+그리고 검증이 필요한 모델 객체 앞에 @Validated 애노테이션을 붙이면 된다.
 
 ```java
 @PostMapping("/save")
@@ -188,16 +188,16 @@ public String saveItem(@Validated @ModelAttribute Item item, // @Validated 추�
 }
 ```
 
-@Validated는 **검증기를 실행**하는 애노테이션이다.
+@Validated는 검증기를 실행하는 애노테이션이다.
 
 스프링은 해당 애노테이션이 붙은 객체에 대해서 다음 과정을 수행한다.
 
 - WebDataBinder에 등록된 Validator 중에서 **supports()** 메서드 호출 결과 true인 것을 찾음
 - 해당 Validator의 **validate()** 메서드를 실행함
 
-이 방식을 통해 컨트롤러는 검증 로직의 구체적인 내용과 **완전히 분리**되어 훨씬 깔끔해진다.
+이 방식을 통해 컨트롤러는 검증 로직의 구체적인 내용과 완전히 분리되어 훨씬 깔끔해진다.
 
-또한 해당 검증기는 다른 곳에서도 **재사용**될 수 있다.
+또한 해당 검증기는 다른 곳에서도 재사용될 수 있다.
 
 ---
 

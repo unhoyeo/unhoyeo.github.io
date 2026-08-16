@@ -26,9 +26,9 @@ tags: []
 
 ## DispatcherServlet이란 무엇인가?
 
-스프링 MVC의 진입점 역할을 수행하는 **프론트 컨트롤러 서블릿**이다.
+스프링 MVC의 진입점 역할을 수행하는 프론트 컨트롤러 서블릿이다.
 
-스프링 프레임워크 내부에서 다음과 같은 **클래스 계층 구조**를 통해 정의되어 있다.
+스프링 프레임워크 내부에서 다음과 같은 클래스 계층 구조를 통해 정의되어 있다.
 
 ```mipsasm
 DispatcherServlet → FrameworkServlet → HttpServletBean → HttpServlet
@@ -46,11 +46,11 @@ DispatcherServlet → FrameworkServlet → HttpServletBean → HttpServlet
 
 스프링 부트에서의 DispatcherServlet은 **자동 등록**된다.
 
-스프링 부트는 내부적으로 DispatcherServletAutoConfiguration 클래스를 통해 DispatcherServlet을 **스프링 빈으로 등록**한다.
+스프링 부트는 내부적으로 DispatcherServletAutoConfiguration 클래스를 통해 DispatcherServlet을 스프링 빈으로 등록한다.
 
-이후 DispatcherServletRegistrationBean을 통해 <strong>서블릿 컨테이너에 등록</strong>되며, 기본적으로 <strong>urlPatterns="/"</strong>으로 매핑된다.
+이후 DispatcherServletRegistrationBean을 통해 서블릿 컨테이너에 등록되며, 기본적으로 <strong>urlPatterns="/"</strong>으로 매핑된다.
 
-따라서 **모든 요청을 가로채는 것이 가능한 것이다.**
+따라서 모든 요청을 가로채는 것이 가능한 것이다.
 
 단, 서블릿 매핑의 우선순위는 **구체적인 경로가 우선**이기 때문에, 명시적으로 등록한 다른 서블릿과도 공존이 가능하다.
 
@@ -71,7 +71,7 @@ DispatcherServlet → FrameworkServlet → HttpServletBean → HttpServlet
 → View 반환 → 뷰 렌더링
 ```
 
-**각 단계는 스프링의 주요 컴포넌트를 통해 독립적으로 구성되어 있어, 유연성과 확장성이 매우 높다.**
+각 단계는 스프링의 주요 컴포넌트를 통해 독립적으로 구성되어 있어, 유연성과 확장성이 매우 높다.
 
 ---
 
@@ -95,7 +95,7 @@ DispatcherServlet → FrameworkServlet → HttpServletBean → HttpServlet
 
 FrameworkServlet.service() 메서드는 내부적으로 DispatcherServlet.doDispatch()를 호출한다.
 
-바로 이 메서드 안에 **실제 요청 처리 로직**이 집중되어 있다.
+바로 이 메서드 안에 실제 요청 처리 로직이 집중되어 있다.
 
 ```java
 protected void doDispatch(HttpServletRequest request, HttpServletResponse response)
@@ -115,12 +115,12 @@ protected void doDispatch(HttpServletRequest request, HttpServletResponse respon
 }
 ```
 
-1. **핸들러 조회**: HandlerMapping을 통해 요청 URL에 매핑된 핸들러를 조회한다.
-2. **핸들러 어댑터 조회**: 해당 핸들러를 실행할 수 있는 HandlerAdapter를 찾는다.
-3. **핸들러 실행**: HandlerAdapter.handle()을 통해 실제 핸들러를 호출한다.
-4. **ModelAndView 반환**: 핸들러의 반환 결과를 ModelAndView로 변환하여 반환한다.
-5. **ViewResolver 호출 및 View 생성**: 논리 뷰 이름을 물리 뷰 이름으로 변환하여 뷰 객체를 생성한다.
-6. **View 렌더링**: 최종적으로 View.render()를 통해 HTML을 생성하고 응답을 반환한다.
+1. 핸들러 조회: HandlerMapping을 통해 요청 URL에 매핑된 핸들러를 조회한다.
+2. 핸들러 어댑터 조회: 해당 핸들러를 실행할 수 있는 HandlerAdapter를 찾는다.
+3. 핸들러 실행: HandlerAdapter.handle()을 통해 실제 핸들러를 호출한다.
+4. ModelAndView 반환: 핸들러의 반환 결과를 ModelAndView로 변환하여 반환한다.
+5. ViewResolver 호출 및 View 생성: 논리 뷰 이름을 물리 뷰 이름으로 변환하여 뷰 객체를 생성한다.
+6. View 렌더링: 최종적으로 View.render()를 통해 HTML을 생성하고 응답을 반환한다.
 
 ---
 
@@ -153,9 +153,9 @@ protected void doDispatch(HttpServletRequest request, HttpServletResponse respon
 
 초기 학습 단계에서는 DispatcherServlet 중심의 전체 흐름을 파악하는 것으로 충분하다.
 
-**커스텀 핸들러나 뷰 리졸버, 인터셉터, 필터** 등은 필요할 때마다 점진적으로 학습하는 것이 효율적이다.
+커스텀 핸들러나 뷰 리졸버, 인터셉터, 필터 등은 필요할 때마다 점진적으로 학습하는 것이 효율적이다.
 
-실무에서 이 구조를 활용해 **직접 확장하거나 커스터마이징해 본 경험**이 쌓일수록, 이 구조에 대한 이해도는 더 단단해질 것이다.
+실무에서 이 구조를 활용해 직접 확장하거나 커스터마이징해 본 경험이 쌓일수록, 이 구조에 대한 이해도는 더 단단해질 것이다.
 
 ---
 

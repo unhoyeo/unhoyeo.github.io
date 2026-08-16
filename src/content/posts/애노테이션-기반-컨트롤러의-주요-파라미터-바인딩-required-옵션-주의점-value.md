@@ -6,7 +6,7 @@ category: "스프링/MVC"
 tags: []
 ---
 
-Spring MVC의 **@RequestMapping 애노테이션 기반 컨트롤러**는 다양한 방식으로 요청 데이터를 핸들러 메서드의 파라미터로 받을 수 있도록 하는 **파라미터 바인딩 기능**을 제공한다.
+Spring MVC의 @RequestMapping 애노테이션 기반 컨트롤러는 다양한 방식으로 요청 데이터를 핸들러 메서드의 파라미터로 받을 수 있도록 하는 **파라미터 바인딩 기능**을 제공한다.
 
 몇가지 주요 애노테이션들과 인터페이스를 알아보자.
 
@@ -20,7 +20,7 @@ public String hello(@RequestParam("name") String name) { ... }
 ```
 
 - GET /hello?name=kim 요청 → name에 "kim"이 바인딩됨
-- **단순 타입**(int, Integer, String 등)일 경우, @RequestParam **생략 가능** (실무에선 명확성 때문에 생략하지 않는 것을 권장)
+- 단순 타입(int, Integer, String 등)일 경우, @RequestParam **생략 가능** (실무에선 명확성 때문에 생략하지 않는 것을 권장)
 - 속성: value (=name), **required (기본값: true)**, defaultValue
 
 ---
@@ -33,7 +33,7 @@ public String getMember(@PathVariable("id") Long id) { ... }
 ```
 
 - GET /members/3 요청 → id에 3이 바인딩됨
-- 속성: value (=name), **required (기본값: true)**
+- 속성: value (=name), required (기본값: true)
 
 ---
 
@@ -45,7 +45,7 @@ public String test(@RequestHeader("User-Agent") String userAgent) { ... }
 ```
 
 - 요청 헤더 값 추출
-- 속성: value (=name), **required (기본값: true)**, defaultValue
+- 속성: value (=name), required (기본값: true), defaultValue
 
 ---
 
@@ -57,7 +57,7 @@ public String cookie(@CookieValue("sessionId") String sessionId) { ... }
 ```
 
 - 쿠키에서 값 추출
-- 속성: value (=name), **required (기본값: true)**, defaultValue
+- 속성: value (=name), required (기본값: true), defaultValue
 
 ---
 
@@ -68,9 +68,9 @@ public String cookie(@CookieValue("sessionId") String sessionId) { ... }
 public String saveUser(@RequestBody UserDto userDto) { ... }
 ```
 
-- **HTTP 메시지 본문**(바디) 전체를 **객체로 변환** (주로 JSON → 객체)
+- **HTTP 메시지 본문**(바디) 전체를 객체로 변환 (주로 JSON → 객체)
 - Jackson 등 메시지 컨버터를 통해 역직렬화
-- 속성: **required (기본값: true)**
+- 속성: required (기본값: true)
 
 ---
 
@@ -81,26 +81,26 @@ public String saveUser(@RequestBody UserDto userDto) { ... }
 요청에 해당 파라미터가 **없는 경우** (예: /api):
 
 1. **문자열 (String):**
-   - required = true → **❌** MissingServletRequestParameterException 발생, **400** 에러
-   - required = false → ✅ **null** 저장
+   - required = true → ❌ MissingServletRequestParameterException 발생, 400 에러
+   - required = false → ✅ null 저장
 2. **객체형 (Integer, Long 등):**
-   - required = true → **❌** MissingServletRequestParameterException 발생, **400** 에러
-   - required = false → ✅ **null** 저장
+   - required = true → ❌ MissingServletRequestParameterException 발생, 400 에러
+   - required = false → ✅ null 저장
 3. **기본형 (int, long 등):**
-   - required = true → **❌** MissingServletRequestParameterException 발생, **400** 에러
-   - required = false → **❌ 기본형에 null 저장 불가**, IllegalStateException 발생, **500** 에러 **?**
+   - required = true → ❌ MissingServletRequestParameterException 발생, 400 에러
+   - required = false → **❌ 기본형에 null 저장 불가**, IllegalStateException 발생, 500 에러 ?
 
 요청에 해당 파라미터가 있으나 **값이 없는 경우** (예: /api?key=):
 
 1. **문자열 (String):**
-   - required = true → ✅ **빈 문자열 ""** 저장 (**⚠️ 주의!**)
-   - required = false → ✅ **빈 문자열 ""** 저장
+   - required = true → ✅ **빈 문자열 ""** 저장 (⚠️ 주의!)
+   - required = false → ✅ 빈 문자열 "" 저장
 2. **객체형 (Integer, Long 등):**
-   - required = true → ❌ MissingServletRequestParameterException 발생, **400** 에러
-   - required = false → ✅ **null** 저장
+   - required = true → ❌ MissingServletRequestParameterException 발생, 400 에러
+   - required = false → ✅ null 저장
 3. **기본형 (int, long 등):**
-   - required = true → ❌ MethodArgumentTypeMismatchException 발생, **400** 에러
-   - required = false → ❌ MethodArgumentTypeMismatchException 발생, **400** 에러
+   - required = true → ❌ MethodArgumentTypeMismatchException 발생, 400 에러
+   - required = false → ❌ MethodArgumentTypeMismatchException 발생, 400 에러
    - → Failed to convert value of type 'java.lang.String' to required type 'int'; For input string: ""
 
 ## 결론
@@ -120,9 +120,9 @@ public String submit(@ModelAttribute MemberForm form) { ... }
 
 - name=value 형식의 파라미터를 객체 필드에 바인딩한다.
 - 단, 해당 파라미터 타입은 **setter가 필수로 존재**해야 한다. (내부적으로 DataBinder를 사용하기 때문에)
-- 속성: name(=value), **binding**(기본값: true)
+- 속성: name(=value), binding(기본값: true)
   - 바인딩에 실패할 경우 MethodArgumentNotValidException(BindException 상속)이 발생한다.
-- @RequestParam과 마찬가지로 **생략이 가능**하다.
+- @RequestParam과 마찬가지로 생략이 가능하다.
   - **단순 타입**일 경우 (String, Long, int 등) → @RequestParam으로 인식
   - **복합 타입**일 경우 (Member 등) → @ModelAttribute로 인식
   - 단, argument resolver로 지정된 타입(HttpServletRequest 등)은 인식하지 않는다.

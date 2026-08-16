@@ -8,25 +8,25 @@ tags: []
 
 웹 애플리케이션에서 파일 업로드를 구현하는 것은 매우 일반적인 요구사항이다.
 
-파일 업로드를 이해하려면 먼저 <strong>HTML 폼(Form)</strong>이 데이터를 서버로 전송하는 <strong>두 가지 주요 방식</strong>의 차이를 알아야 한다.
+파일 업로드를 이해하려면 먼저 HTML 폼(Form)이 데이터를 서버로 전송하는 두 가지 주요 방식의 차이를 알아야 한다.
 
 ---
 
 ## HTML &lt;form> 태그의 enctype 속성
 
-&lt;form> 태그의 enctype 속성은 **폼 데이터를 서버로 전송할 때 어떤 방식(인코딩 타입)으로 전송할지**를 지정하는 속성이다.
+&lt;form> 태그의 enctype 속성은 폼 데이터를 서버로 전송할 때 어떤 방식(인코딩 타입)으로 전송할지를 지정하는 속성이다.
 
 즉, 해당 속성의 값에 따라 다른 방식으로 폼 데이터를 전송할 수 있다.
 
 enctype 속성은 다음과 같은 속성값을 가질 수 있다.
 
 - **application/x-www-form-urlencoded (기본값)**
-  - 모든 문자(키와 값)를 **URL 인코딩**하여 전송 (공백은 +로, 특수문자는 %로 시작하는 16진수 형태로 인코딩)
+  - 모든 문자(키와 값)를 URL 인코딩하여 전송 (공백은 +로, 특수문자는 %로 시작하는 16진수 형태로 인코딩)
 - **multipart/form-data**
-  - 폼 데이터를 **여러 개의 파트(multipart)로 나누어** 전송 (각 파트에 개별 Content-Type과 Content-Disposition 포함)
-  - **파일 업로드 시 필수** (&lt;input type="file"> 사용 시)
+  - 폼 데이터를 여러 개의 파트(multipart)로 나누어 전송 (각 파트에 개별 Content-Type과 Content-Disposition 포함)
+  - 파일 업로드 시 필수 (&lt;input type="file"> 사용 시)
   - 텍스트, 바이너리(이미지, 동영상 등) 모두 전송 가능
-  - **URL 인코딩을 하지 않아** 파일 손상 방지
+  - URL 인코딩을 하지 않아 파일 손상 방지
 - **text/plain**
   - 단순 텍스트 형태로 전송 (공백은 +로 변환하지만, 특수문자는 인코딩하지 않음)
   - 거의 사용되지 않음 (보안 문제, 인코딩 호환성 낮음)
@@ -37,8 +37,8 @@ enctype 속성은 다음과 같은 속성값을 가질 수 있다.
 
 ## application/x-www-form-urlencoded
 
-- HTML 폼의 **기본 전송 방식**
-- 모든 폼 데이터를 **key=value&key2=value2** 형태의 **하나의 긴 문자열**로 만들어 HTTP Body에 담아 전송함
+- HTML 폼의 기본 전송 방식
+- 모든 폼 데이터를 key=value&key2=value2 형태의 하나의 긴 문자열로 만들어 HTTP Body에 담아 전송함
 - 이미지나 동영상 같은 **바이너리(binary) 데이터**는 전송할 수 없음
 
 ```html
@@ -63,10 +63,10 @@ username=kim&age=25
 
 ## multipart/form-data
 
-- **파일 업로드**를 위해 반드시 사용해야 하는 전송 방식
-- 이름에서 알 수 있듯이, 전송 데이터를 <strong>여러 부분(Part)</strong>으로 나눔
-- 각 Part는 **자신만의 헤더**(Content-Disposition, Content-Type 등)와 **데이터**를 가지며, **boundary**라는 고유한 문자열로 구분됨
-- 이를 통해 **문자 데이터**와 **바이너리 데이터**를 하나의 HTTP 요청에 담아 **동시에 전송 가능**
+- 파일 업로드를 위해 반드시 사용해야 하는 전송 방식
+- 이름에서 알 수 있듯이, 전송 데이터를 여러 부분(Part)으로 나눔
+- 각 Part는 자신만의 헤더(Content-Disposition, Content-Type 등)와 데이터를 가지며, **boundary**라는 고유한 문자열로 구분됨
+- 이를 통해 문자 데이터와 바이너리 데이터를 하나의 HTTP 요청에 담아 동시에 전송 가능
 
 ```html
 <form action="/upload" method="post" enctype="multipart/form-data">
@@ -106,7 +106,7 @@ Content-Type: image/jpeg
 
 ## 서블릿의 파일 업로드 – Part
 
-HttpServletRequest의 **getParts()** 메서드를 통해 multipart/form-data 요청의 각 Part를 **Part 객체의 컬렉션**으로 받을 수 있다.
+HttpServletRequest의 **getParts()** 메서드를 통해 multipart/form-data 요청의 각 Part를 Part 객체의 컬렉션으로 받을 수 있다.
 
 ```java
 @Slf4j
@@ -201,13 +201,13 @@ fullPath = /Users/yeounho/Documents/test.jpg
 
 서블릿의 **Part 인터페이스**는 다음과 같은 주요 메서드를 제공한다.
 
-- **getSubmittedFileName()**: 사용자가 업로드한 **원본 파일명**을 가져옴
+- **getSubmittedFileName()**: 사용자가 업로드한 원본 파일명을 가져옴
 - **getInputStream()**: 파일 데이터를 읽을 수 있는 스트림을 반환
 - **write(...)**: 파일 데이터를 서버의 특정 경로에 저장
 
 이 방식은 동작 원리를 이해하는 데는 좋지만,
 
-**HttpServletRequest에 직접 의존**해야 하고, **파일 Part만 골라내는** 등 번거로운 코드가 필요하다.
+HttpServletRequest에 직접 의존해야 하고, 파일 Part만 골라내는 등 번거로운 코드가 필요하다.
 
 > 일반적인 요청의 경우 HttpServletRequest의 구현체는 **RequestFacade**이지만,
 > multipart/form-data 요청이 들어오면, DispatcherServlet은 MultipartResolver를 실행하며,
@@ -251,18 +251,18 @@ public class SpringFileController {
 }
 ```
 
-- ⚠️ **@RequestParam 파라미터**는 HTML &lt;input> 태그의 **name** 속성값과 동일한 이름으로 지정해야 한다.
-  - 예를 들어 &lt;input name="**file**" type="file"/>인 경우,
-  - @RequestParam("**file**") MultipartFile multipartFile
-  - 또는 @RequestParam MultipartFile **file**으로 선언하면,
+- ⚠️ @RequestParam 파라미터는 HTML &lt;input> 태그의 **name** 속성값과 동일한 이름으로 지정해야 한다.
+  - 예를 들어 &lt;input name="file" type="file"/>인 경우,
+  - @RequestParam("file") MultipartFile multipartFile
+  - 또는 @RequestParam MultipartFile file으로 선언하면,
   - 스프링이 자동으로 해당 Part를 MultipartFile 객체로 변환하여 주입해 준다.
 - **@RequestParam**뿐만 아니라, **@ModelAttribute**를 통해서도 MultipartFile 객체를 받을 수 있다.
 
 MultipartFile 인터페이스의 주요 메서드는 다음과 같다.
 
-- **getOriginalFilename()**: 사용자가 업로드한 **원본 파일명**을 가져옴
+- **getOriginalFilename()**: 사용자가 업로드한 원본 파일명을 가져옴
 - **transferTo(new File(path))**: 업로드된 파일을 지정된 대상 파일(new File)로 전송
-  - 파일 시스템에서 파일을 **이동**하거나, **복사**하거나, 메모리에 저장된 내용을 대상 파일에 **저장**할 수 있음
+  - 파일 시스템에서 파일을 이동하거나, 복사하거나, 메모리에 저장된 내용을 대상 파일에 저장할 수 있음
   - 대상 파일이 이미 존재하는 경우 먼저 삭제됨
 
 ---
@@ -272,22 +272,22 @@ MultipartFile 인터페이스의 주요 메서드는 다음과 같다.
 안전하고 효율적인 파일 관리를 위해 다음과 같은 실무 전략을 적용할 수 있다.
 
 - **파일 저장 시 "업로드 파일명"과 "저장 파일명" 분리**
-  - ⚠️ 서로 다른 사용자가 **같은 이름의 파일**을 업로드하면, 서버에서 파일이 **덮어씌워지는 충돌**이 발생할 수 있다.
+  - ⚠️ 서로 다른 사용자가 같은 이름의 파일을 업로드하면, 서버에서 파일이 **덮어씌워지는 충돌**이 발생할 수 있다.
     - 또한 악의적인 사용자가 **Directory traversal** 공격을 할 수도 있다. (특정 디렉토리에 접근하여 파일 읽기/쓰기 가능)
-  - 따라서 서버에 파일을 저장할 때는 **UUID** 등을 이용하여 **절대 겹치지 않는 고유한 파일명을 생성**하여 사용해야 한다.
-    - 사용자가 업로드한 원본 파일명은 **데이터베이스나 별도 객체**에 저장하여, 사용자에게 보여주는 용도로만 사용해야 한다.
+  - 따라서 서버에 파일을 저장할 때는 **UUID** 등을 이용하여 절대 겹치지 않는 고유한 파일명을 생성하여 사용해야 한다.
+    - 사용자가 업로드한 원본 파일명은 데이터베이스나 별도 객체에 저장하여, 사용자에게 보여주는 용도로만 사용해야 한다.
     - 예: new FileData(originalFilename, storedFilename)
 - **파일 다운로드 시**
   - **이미지 표시 (&lt;img> 태그)**:
-    - **UrlResource**를 사용하여 이미지 파일의 **바이너리 데이터를 직접 반환**하면, 웹 브라우저가 &lt;img> 태그를 통해 이미지를 표시할 수 있다.
+    - **UrlResource**를 사용하여 이미지 파일의 바이너리 데이터를 직접 반환하면, 웹 브라우저가 &lt;img> 태그를 통해 이미지를 표시할 수 있다.
   - **첨부 파일 다운로드**:
     - 사용자가 파일을 다운로드하게 하려면, HTTP 응답 헤더에 **Content-Disposition: attachment**를 설정해야 한다.
-      - 예: Content-Disposition: **attachment**; filename="사용자파일명.jpg"
-    - 이 헤더는 브라우저에게 응답 본문을 화면에 표시하지 말고, **지정된 filename으로 다운로드**하라는 신호를 보낸다.
+      - 예: Content-Disposition: attachment; filename="사용자파일명.jpg"
+    - 이 헤더는 브라우저에게 응답 본문을 화면에 표시하지 말고, 지정된 filename으로 다운로드하라는 신호를 보낸다.
     - ⚠️ 파일명에 한글이나 특수문자가 포함될 수 있으므로, **UriUtils.encode()** 등을 사용하여 안전하게 인코딩해야 한다.
 - **다중 파일 업로드 시**
-  - HTML 폼에서 &lt;input type="file" **multiple="multiple"**> 속성을 사용하면 **여러 파일을 한 번에 선택**할 수 있다.
-  - 컨트롤러에서는 **@ModelAttribute**로 받는 폼 객체의 필드를 **List&lt;MultipartFile> files**와 같이 List 타입으로 선언하면,
+  - HTML 폼에서 &lt;input type="file" **multiple="multiple"**> 속성을 사용하면 여러 파일을 한 번에 선택할 수 있다.
+  - 컨트롤러에서는 @ModelAttribute로 받는 폼 객체의 필드를 **List&lt;MultipartFile> files**와 같이 List 타입으로 선언하면,
     여러 개의 업로드된 파일을 한 번에 받을 수 있다.
 
 위 전략을 적용한 예시 코드는 다음과 같다.

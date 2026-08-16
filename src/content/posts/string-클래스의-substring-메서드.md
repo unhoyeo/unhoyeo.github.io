@@ -14,7 +14,7 @@ public String substring(int beginIndex) {
 }
 ```
 
-**지정된 인덱스의 문자부터 문자열의 끝까지 잘라낸다.**
+지정된 인덱스의 문자부터 문자열의 끝까지 잘라낸다.
 
 예를 들어, "unhappy".substring(2)은 "happy"를 반환한다.
 
@@ -31,6 +31,6 @@ public String substring(int beginIndex, int endIndex) {
 }
 ```
 
-**beginIndex 인덱스의 문자부터 endIndex - 1 인덱스의 문자까지 잘라낸다.**
+beginIndex 인덱스의 문자부터 endIndex - 1 인덱스의 문자까지 잘라낸다.
 
 예를 들어, "hamburger".substring(4, 8)은 "urge"를 반환한다.
