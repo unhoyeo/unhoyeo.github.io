@@ -1,6 +1,5 @@
 ---
 title: "HTTP 메서드"
-description: "HTTP 메서드는 클라이언트가 서버에 요청할 때 사용하는 메서드를 정의하는 요소이다. 서버에서 리소스를 조회할 때 사용한다."
 pubDate: 2025-04-06T22:54:19+09:00
 category: "HTTP"
 tags: ["HTTP"]

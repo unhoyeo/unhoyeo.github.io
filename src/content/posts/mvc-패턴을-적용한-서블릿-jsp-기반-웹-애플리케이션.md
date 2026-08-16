@@ -1,6 +1,5 @@
 ---
 title: "MVC 패턴을 적용한 서블릿 + JSP 기반 웹 애플리케이션"
-description: "웹 애플리케이션의 구조를 명확하게 분리하기 위해 MVC 패턴(Model-View-Controller)을 적용해 보자. Controller → 서블릿 클라이언트의 요청을 받아서 처리하고, View로 제어를 전달하는 역할 View →…"
 pubDate: 2025-04-18T16:37:53+09:00
 category: "스프링/MVC"
 tags: ["서블릿", "MVC"]

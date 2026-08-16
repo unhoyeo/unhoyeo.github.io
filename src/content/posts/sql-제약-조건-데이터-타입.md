@@ -1,6 +1,5 @@
 ---
 title: "SQL, 제약 조건, 데이터 타입"
-description: "SQL은 관계형 데이터베이스에서 데이터를 정의(DDL), 조작(DML), 제어(DCL)하는 국제 표준 언어다. 따라서 대부분의 RDBMS에서 거의 동일하게 사용할 수 있다."
 pubDate: 2025-09-16T20:41:17+09:00
 category: "데이터베이스"
 tags: ["SQL"]

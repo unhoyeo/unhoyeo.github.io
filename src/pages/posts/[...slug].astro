@@ -125,14 +125,21 @@ const editUrl = `${REPO_URL}/edit/${REPO_BRANCH}/${filePath}`;
     font-size: var(--text-sm);
   }
 
-  /* 날짜 줄 오른쪽 끝에 붙는다 — 눈에 띄지 않다가 필요할 때만 찾으면 되는 장치다 */
+  /*
+   * 나 말고 다른 사람에게는 보일 이유가 없다. 기본은 숨김이고,
+   * BaseHead가 html[data-owner]를 달아 준 브라우저에서만 나타난다(?owner=1).
+   */
   .edit {
-    display: inline-flex;
+    display: none;
     align-items: center;
     gap: var(--space-1);
     margin-left: auto;
     color: var(--fg-faint);
     text-decoration: none;
+  }
+
+  :global(html[data-owner]) .edit {
+    display: inline-flex;
   }
 
   .edit:hover {

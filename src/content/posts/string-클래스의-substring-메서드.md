@@ -1,6 +1,5 @@
 ---
 title: "String 클래스의 substring() 메서드"
-description: "String 클래스의 substring() 메서드에는 2가지의 종류가 있다. 지정된 인덱스의 문자부터 문자열의 끝까지 잘라낸다. 예를 들어, \"unhappy\".substring(2)은 \"happy\"를 반환한다."
 pubDate: 2025-02-19T17:42:14+09:00
 category: "자바"
 tags: ["문자열"]

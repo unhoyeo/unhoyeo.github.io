@@ -1,6 +1,5 @@
 ---
 title: "11054번 가장 긴 바이토닉 부분 수열 - DP (LIS + LDS)"
-description: "수열 S가 어떤 수 Sk를 기준으로 S1 < S2 < ... Sk-1 < Sk Sk+1 ... SN-1 SN을 만족한다면, 그 수열을 바이토닉 수열이라고 한다."
 pubDate: 2025-05-01T19:51:04+09:00
 category: "알고리즘/백준"
 tags: []

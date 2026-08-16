@@ -1,6 +1,5 @@
 ---
 title: "서블릿(Servlet)"
-description: "? 서블릿이란? 서블릿은 Java 기반의 웹 요청-응답 처리를 위한 WAS(Web Application Server)의 핵심 구성 요소다."
 pubDate: 2025-04-14T21:02:03+09:00
 category: "스프링/MVC"
 tags: ["서블릿", "WAS"]

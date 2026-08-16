@@ -1,6 +1,5 @@
 ---
 title: "2098번 외판원 순회 – DP + 비트마스킹 (TSP)"
-description: "외판원 순회 문제는 영어로 Traveling Salesman problem (TSP) 라고 불리는 문제로 computer science 분야에서 가장 중요하게 취급되는 문제 중 하나이다."
 pubDate: 2025-08-14T17:52:17+09:00
 category: "알고리즘/백준"
 tags: []

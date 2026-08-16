@@ -1,6 +1,5 @@
 ---
 title: "@Transactional – 주요 옵션"
-description: "@Transactional은 단순히 \"트랜잭션을 걸어준다\"는 의미 이상으로, 여러 속성(옵션)을 통해 트랜잭션의 전파, 격리, 롤백 동작 등을 정교하게 제어할 수 있다. 1. propagation (전파 수준) 2."
 pubDate: 2025-10-14T13:33:56+09:00
 category: "스프링/DB"
 tags: ["트랜잭션"]

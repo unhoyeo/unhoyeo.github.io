@@ -1,6 +1,5 @@
 ---
 title: "DP"
-description: "DP(Dynamic Programming) 이전의 값을 재활용하는 방법 예시) 1 ~ 10 숫자 중, 각 숫자와 이전 값들을 더한 값 구하기 1은 1, 2는 1+2=3, 3은 1+2+3=6 ..."
 pubDate: 2025-03-06T15:13:20+09:00
 category: "알고리즘/개념"
 tags: []

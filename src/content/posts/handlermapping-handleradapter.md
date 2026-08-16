@@ -1,6 +1,5 @@
 ---
 title: "HandlerMapping, HandlerAdapter"
-description: "스프링 MVC는 다양한 형태의 컨트롤러(핸들러)를 하나의 일관된 구조 내에서 처리할 수 있도록 설계되어 있다. 이 유연함의 핵심은 바로 HandlerMapping과 HandlerAdapter 두 인터페이스 컴포넌트에 있다."
 pubDate: 2025-04-26T22:05:14+09:00
 category: "스프링/MVC"
 tags: ["MVC"]

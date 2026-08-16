@@ -1,6 +1,5 @@
 ---
 title: "타임리프 폼 데이터 바인딩 – th:object, th:field"
-description: "타임리프는 스프링 환경에서 HTML 폼 요소와 서버 측 객체 간의 데이터 바인딩을 매우 직관적으로 처리할 수 있는 기능을 제공한다."
 pubDate: 2025-08-12T23:09:27+09:00
 category: "스프링/MVC"
 tags: ["타임리프"]

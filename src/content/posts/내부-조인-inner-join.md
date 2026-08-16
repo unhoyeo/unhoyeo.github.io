@@ -1,6 +1,5 @@
 ---
 title: "내부 조인 (INNER JOIN)"
-description: "데이터베이스를 잘 설계하려면 데이터의 중복을 막고 일관성을 지키기 위해 정규화(Normalization) 과정을 거쳐서 데이터를 여러 테이블로 나누어 저장해야 한다."
 pubDate: 2025-09-17T21:47:08+09:00
 category: "데이터베이스"
 tags: ["SQL"]

@@ -1,6 +1,5 @@
 ---
 title: "BFS, DFS"
-description: "BFS(Breadth First Search, 너비 우선 탐색) DFS(Depth First Search, 깊이 우선 탐색) BFS, DFS는 그래프 탐색의 한 방법이다."
 pubDate: 2025-03-05T01:06:10+09:00
 category: "알고리즘/개념"
 tags: []

@@ -1,6 +1,5 @@
 ---
 title: "List ↔ int[] 변환 방법"
-description: "✅ Java 8 이상 – Stream API 사용 (권장) list.stream() → 스트림 생성 .mapToInt(Integer::intValue) → Integer를 int로 언박싱 .toArray() → 배열로 변환…"
 pubDate: 2025-10-08T17:27:40+09:00
 category: "자바"
 tags: ["컬렉션"]

@@ -1,6 +1,5 @@
 ---
 title: "MyBatis"
-description: "MyBatis는 JdbcTemplate과 같이 SQL을 직접 다루는 SQL Mapper 기술이다. 하지만 JdbcTemplate보다 더 많은 편의 기능, 특히 동적 쿼리 작성과 SQL의 분리 측면에서 강력한 장점을 가진다."
 pubDate: 2025-10-03T15:56:44+09:00
 category: "스프링/DB"
 tags: ["MyBatis", "SQL"]

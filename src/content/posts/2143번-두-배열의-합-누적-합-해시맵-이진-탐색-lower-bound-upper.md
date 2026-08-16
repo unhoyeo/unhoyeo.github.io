@@ -1,6 +1,5 @@
 ---
 title: "2143번 두 배열의 합 - 누적 합, 해시맵, 이진 탐색 (Lower Bound / Upper Bound)"
-description: "한 배열 A[1], A[2], …, A[n]에 대해서, 부 배열은 A[i], A[i+1], …, A[j-1], A[j] (단, 1 ≤ i ≤ j ≤ n)을 말한다. 이러한 부 배열의 합은 A[i]+…+A[j]를 의미한다."
 pubDate: 2025-06-01T23:28:29+09:00
 category: "알고리즘/백준"
 tags: []

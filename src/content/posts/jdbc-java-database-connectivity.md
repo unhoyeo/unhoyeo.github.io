@@ -1,6 +1,5 @@
 ---
 title: "JDBC (Java Database Connectivity)"
-description: "애플리케이션 서버가 데이터베이스와 연동하기 위해서는 일반적으로 다음 3단계를 거친다. 1. 커넥션 연결: 데이터베이스에 접속한다. 2. SQL 전달: 애플리케이션이 필요한 SQL을 데이터베이스에 보낸다. 3."
 pubDate: 2025-09-22T17:25:12+09:00
 category: "스프링/DB"
 tags: ["JDBC"]

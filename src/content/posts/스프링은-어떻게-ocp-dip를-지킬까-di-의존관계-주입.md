@@ -1,6 +1,5 @@
 ---
 title: "스프링은 어떻게 OCP, DIP를 지킬까? - DI(의존관계 주입)"
-description: "결론부터 말하자면, 스프링은 다음 기술로 다형성과 OCP, DIP를 가능하게 해 준다. DI(Dependency Injection): 의존관계 주입 DI 컨테이너: 자바 객체들의 의존관계 연결, 주입 이 기술들을 통해 클라이언트…"
 pubDate: 2025-01-05T19:40:15+09:00
 category: "스프링/기본"
 tags: ["DI"]

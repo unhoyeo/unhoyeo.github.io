@@ -1,6 +1,5 @@
 ---
 title: "@ModelAttribute"
-description: "? @ModelAttribute란? 스프링 MVC에서 컨트롤러 메서드의 파라미터나 반환 값을 모델(Model)에 바인딩하거나, HTTP 요청 파라미터를 커맨드 객체로 변환하여 컨트롤러 메서드의 파라미터에 바인딩할 때 사용하는…"
 pubDate: 2025-07-29T22:42:24+09:00
 category: "스프링/MVC"
 tags: ["타입 변환"]

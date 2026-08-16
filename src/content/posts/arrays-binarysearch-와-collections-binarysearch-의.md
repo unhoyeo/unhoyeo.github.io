@@ -1,6 +1,5 @@
 ---
 title: "Arrays.binarySearch()와 Collections.binarySearch()의 차이"
-description: "Java의 Arrays.binarySearch()와 Collections.binarySearch()는 이진 탐색(binary search) 알고리즘을 기반으로 하는 대표적인 메서드로, 정렬된 데이터에서 특정 값을 빠르게 탐색하는 데…"
 pubDate: 2025-06-21T01:08:10+09:00
 category: "자바"
 tags: ["이진 탐색"]

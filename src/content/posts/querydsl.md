@@ -1,6 +1,5 @@
 ---
 title: "Querydsl"
-description: "JdbcTemplate, MyBatis, JPA(JPQL)와 같은 기존 데이터 접근 기술들은 다음과 같은 공통적인 약점을 가지고 있다. 동적 쿼리 작성의 어려움: 검색 조건이 다양하게 조합되는 동적 쿼리를 작성하기가 매우 복잡하다."
 pubDate: 2025-10-04T14:19:53+09:00
 category: "스프링/DB"
 tags: ["Querydsl", "문자열"]

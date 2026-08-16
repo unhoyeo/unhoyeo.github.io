@@ -1,6 +1,5 @@
 ---
 title: "BufferedReader"
-description: "Scanner보다는 BufferedReader가 빠르기 때문에 BufferedReader를 사용해서 입력을 받아보자. 간단하게 백준 문제 1000번의 풀이를 예제로 보자."
 pubDate: 2025-02-19T15:52:06+09:00
 category: "자바"
 tags: ["입출력"]

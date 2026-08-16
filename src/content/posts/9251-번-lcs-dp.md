@@ -1,6 +1,5 @@
 ---
 title: "9251번 LCS - DP"
-description: "LCS(Longest Common Subsequence, 최장 공통 부분 수열)문제는 두 수열이 주어졌을 때, 모두의 부분 수열이 되는 수열 중 가장 긴 것을 찾는 문제이다."
 pubDate: 2025-03-21T17:01:39+09:00
 category: "알고리즘/백준"
 tags: []

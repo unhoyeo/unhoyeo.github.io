@@ -1,6 +1,5 @@
 ---
 title: "애노테이션 기반 컨트롤러의 주요 파라미터 바인딩, required 옵션 주의점, value (=name) 생략 시 주의점"
-description: "Spring MVC의 @RequestMapping 애노테이션 기반 컨트롤러는 다양한 방식으로 요청 데이터를 핸들러 메서드의 파라미터로 받을 수 있도록 하는 파라미터 바인딩 기능을 제공한다."
 pubDate: 2025-07-24T23:59:05+09:00
 category: "스프링/MVC"
 tags: ["검증", "서블릿", "세션·쿠키", "MVC"]

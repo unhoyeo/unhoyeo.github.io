@@ -1,6 +1,5 @@
 ---
 title: "UNION"
-description: "먼저, JOIN과 UNION의 근본적인 차이를 이해하는 것이 중요하다. JOIN: 여러 테이블을 옆으로(수평으로) 이어 붙여, 더 많은 열(Column)을 가진 하나의 결과 집합을 만든다."
 pubDate: 2025-09-19T17:32:04+09:00
 category: "데이터베이스"
 tags: ["SQL"]

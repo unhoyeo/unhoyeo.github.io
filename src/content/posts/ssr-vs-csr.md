@@ -1,6 +1,5 @@
 ---
 title: "SSR vs CSR"
-description: "SSR과 CSR은 웹 애플리케이션에서 HTML 콘텐츠를 언제, 어디서 생성할 것인가에 대한 렌더링 전략이다. 서버에서 HTML을 완성하여 클라이언트로 전달하는 방식이다. 브라우저는 서버로부터 완성된 HTML을 받아 바로 렌더링한다."
 pubDate: 2025-04-14T21:43:15+09:00
 category: "스프링/MVC"
 tags: ["SSR·CSR"]

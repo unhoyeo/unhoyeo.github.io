@@ -1,6 +1,5 @@
 ---
 title: "스프링 데이터 JPA (Spring Data JPA)"
-description: "이전의 순수 JPA 리포지토리는 JdbcTemplate이나 MyBatis에 비해 많은 발전을 이루었지만, 여전히 개발자는 각 엔티티마다 em.persist(), em.find() 등 기본적인 CRUD 코드를 반복적으로 작성해야…"
 pubDate: 2025-10-04T11:31:39+09:00
 category: "스프링/DB"
 tags: ["JPA"]

@@ -1,6 +1,5 @@
 ---
 title: "스프링 트랜잭션 @Transactional 사용 시 주의점"
-description: "1. 트랜잭션 추상화 (PlatformTransactionManager) 각각의 데이터 접근 기술(JDBC, JPA 등)은 트랜잭션을 다루는 코드가 다르다."
 pubDate: 2025-10-05T14:47:30+09:00
 category: "스프링/DB"
 tags: ["트랜잭션", "예외 처리"]

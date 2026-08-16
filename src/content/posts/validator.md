@@ -1,6 +1,5 @@
 ---
 title: "Validator"
-description: "다음 검증 코드를 보면 검증 로직이 늘어날수록 컨트롤러 코드가 복잡해진다는 문제점이 존재한다. 스프링은 검증 로직을 별도의 클래스로 분리할 수 있도록 Validator 인터페이스를 제공한다. supports(Class<?"
 pubDate: 2025-08-27T15:25:29+09:00
 category: "스프링/MVC"
 tags: ["검증"]

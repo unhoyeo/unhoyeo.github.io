@@ -1,6 +1,5 @@
 ---
 title: "타임리프(Thymeleaf)"
-description: "타임리프는 서버 측에서 데이터를 받아 HTML을 동적으로 만들어 클라이언트로 전송하는 템플릿 엔진이다. 주로 Spring MVC에서 뷰(View)를 생성할 때 사용되며, 기존의 JSP를 대체하거나 보완하는 용도로 많이 활용된다."
 pubDate: 2025-08-07T21:45:33+09:00
 category: "스프링/MVC"
 tags: ["타임리프", "빈"]

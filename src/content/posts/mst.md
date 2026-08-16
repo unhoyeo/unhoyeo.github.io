@@ -1,6 +1,5 @@
 ---
 title: "MST"
-description: "MST (Minimum Spanning Tree) Spanning Tree: 모든 노드가 연결된 트리 MST: 최소 비용으로 모든 노드가 연결된 트리 → 모든 노드를 잇는데 최소 비용이 뭐야?!"
 pubDate: 2025-03-06T19:14:05+09:00
 category: "알고리즘/개념"
 tags: []

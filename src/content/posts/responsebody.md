@@ -1,6 +1,5 @@
 ---
 title: "@ResponseBody"
-description: "스프링 MVC에서 핸들러 메서드의 반환 값을 HTTP 응답 본문으로 직접 변환하도록 지시하는 애노테이션이다. 즉, 반환 값을 ViewResolver를 통해 뷰로 변환하지 않고, HttpMessageConverter를 사용해 반환…"
 pubDate: 2025-07-31T22:08:26+09:00
 category: "스프링/MVC"
 tags: ["REST"]

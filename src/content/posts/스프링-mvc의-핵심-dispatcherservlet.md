@@ -1,6 +1,5 @@
 ---
 title: "스프링 MVC의 핵심 – DispatcherServlet"
-description: "스프링 MVC는 전통적인 웹 애플리케이션 아키텍처의 핵심 패턴인 프론트 컨트롤러(Front Controller) 패턴을 기반으로 동작한다."
 pubDate: 2025-04-26T20:54:49+09:00
 category: "스프링/MVC"
 tags: ["서블릿", "MVC"]

@@ -1,6 +1,5 @@
 ---
 title: "@RequestBody"
-description: "? @RequestBody란? 스프링 MVC에서 HTTP 요청 본문(body)을 자바 객체로 변환하여 핸들러 메서드 파라미터에 바인딩할 때 사용하는 애노테이션이다."
 pubDate: 2025-07-30T18:22:07+09:00
 category: "스프링/MVC"
 tags: ["REST", "타입 변환"]

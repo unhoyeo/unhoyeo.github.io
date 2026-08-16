@@ -1,6 +1,5 @@
 ---
 title: "동시성 제어 – synchronized, 비관적 락, 원자적 UPDATE 패턴"
-description: "선착순 쿠폰을 여러 사용자가 동시에 다운로드하는 시나리오를 가정해 보자. 사용자는 /api/coupons/{couponId}/download API를 호출하여 쿠폰을 다운로드한다."
 pubDate: 2025-10-10T06:20:38+09:00
 category: "자바"
 tags: ["동시성", "캐시"]

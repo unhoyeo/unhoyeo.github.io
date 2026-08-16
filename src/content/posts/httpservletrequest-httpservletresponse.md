@@ -1,6 +1,5 @@
 ---
 title: "HttpServletRequest, HttpServletResponse"
-description: "HTTP 요청과 응답은 웹의 기본이다. 개발자가 클라이언트와 서버 간 통신을 구현할 때 가장 많이 다루는 것이지만, 이 메시지를 직접 파싱하거나 조작하는 것은 매우 번거롭고 오류의 여지가 많다."
 pubDate: 2025-04-16T20:21:55+09:00
 category: "스프링/MVC"
 tags: ["서블릿"]

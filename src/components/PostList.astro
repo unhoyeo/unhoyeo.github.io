@@ -16,7 +16,6 @@ const { posts } = Astro.props;
         <a href={`/posts/${post.id}/`} class="card">
           <time datetime={isoDate(post.data.pubDate)}>{formatDate(post.data.pubDate)}</time>
           <h2>{post.data.title}</h2>
-          {post.data.description && <p>{post.data.description}</p>}
           {post.data.tags.length > 0 && (
             <p class="tags">{post.data.tags.map((tag) => `#${tag}`).join('  ')}</p>
           )}

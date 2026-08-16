@@ -1,6 +1,5 @@
 ---
 title: "1005번 ACM Craft - 위상 정렬 + DP"
-description: "서기 2012년! 드디어 2년간 수많은 국민들을 기다리게 한 게임 ACM Craft (Association of Construction Manager Craft)가 발매되었다."
 pubDate: 2025-04-21T21:06:10+09:00
 category: "알고리즘/백준"
 tags: []

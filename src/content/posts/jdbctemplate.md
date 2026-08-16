@@ -1,6 +1,5 @@
 ---
 title: "JdbcTemplate"
-description: "순수 JDBC는 커넥션을 열고 닫는 과정, 예외 처리 등 개발자가 직접 처리해야 할 반복적인 코드가 너무 많다는 단점이 있다."
 pubDate: 2025-10-02T16:35:59+09:00
 category: "스프링/DB"
 tags: ["JDBC", "SQL"]

@@ -1,6 +1,5 @@
 ---
 title: "자바의 예외 – 체크 예외 vs 언체크 예외"
-description: "자바의 예외(Exception)는 프로그램 실행 중 발생할 수 있는 오류를 나타내는 객체다. 자바의 모든 예외는 Throwable 클래스를 상속받으며, 이는 다시 Error와 Exception으로 나뉜다."
 pubDate: 2025-09-23T18:09:40+09:00
 category: "자바"
 tags: ["예외 처리"]
