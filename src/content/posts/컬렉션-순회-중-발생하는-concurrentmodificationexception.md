@@ -3,7 +3,7 @@ title: "컬렉션 순회 중 발생하는 ConcurrentModificationException"
 description: "발생 시점: 컬렉션(Collection)을 Iterator 또는 foreach(내부적으로 Iterator 사용)로 순회하는 도중, 해당 컬렉션의 구조적 변경(Structural Modification)이 감지되면 발생함 구조적…"
 pubDate: 2025-09-03T20:05:14+09:00
 category: "자바"
-tags: []
+tags: ["예외 처리", "컬렉션"]
 ---
 
 ## 개념

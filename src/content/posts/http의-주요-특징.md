@@ -3,7 +3,7 @@ title: "HTTP의 주요 특징"
 description: "HTTP(HyperText Transfer Protocol)는 웹에서 데이터를 주고받기 위한 애플리케이션 계층의 요청/응답 기반 프로토콜이다."
 pubDate: 2025-04-01T21:39:39+09:00
 category: "HTTP"
-tags: []
+tags: ["HTTP"]
 ---
 
 HTTP(HyperText Transfer Protocol)는 웹에서 데이터를 주고받기 위한 애플리케이션 계층의 요청/응답 기반 프로토콜이다.

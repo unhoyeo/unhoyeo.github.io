@@ -3,7 +3,7 @@ title: "ViewResolver"
 description: "Spring MVC에서 컨트롤러(핸들러)는 뷰 자체가 아니라 단순히 논리 뷰 이름을 반환한다. 하지만 뷰가 렌더링되려면 실제 물리 경로가 필요하다."
 pubDate: 2025-04-27T12:38:59+09:00
 category: "스프링/MVC"
-tags: []
+tags: ["타임리프", "MVC"]
 ---
 
 ## ViewResolver란?

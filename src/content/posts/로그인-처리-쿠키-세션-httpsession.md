@@ -3,7 +3,7 @@ title: "로그인 처리 – 쿠키, 세션(HttpSession)"
 description: "HTTP 프로토콜은 근본적으로 상태가 없는(Stateless) 특성을 가진다. 즉, 서버는 클라이언트의 각 요청을 완전히 독립적인 것으로 취급하며, 이전 요청의 내용을 기억하지 못한다."
 pubDate: 2025-08-28T22:55:15+09:00
 category: "스프링/MVC"
-tags: []
+tags: ["서블릿", "세션·쿠키", "MVC"]
 ---
 
 HTTP 프로토콜은 근본적으로 **상태가 없는(Stateless)** 특성을 가진다.

@@ -3,7 +3,7 @@ title: "@RequestParam"
 description: "? @RequestParam이란? 스프링 MVC에서 HTTP 요청 파라미터를 핸들러 메서드의 파라미터에 바인딩할 때 사용하는 애노테이션이다. 요청 파라미터는 아래 두 가지 방식으로 전달된다."
 pubDate: 2025-07-29T19:54:20+09:00
 category: "스프링/MVC"
-tags: []
+tags: ["타입 변환"]
 ---
 
 **@RequestParam이란?**

@@ -3,7 +3,7 @@ title: "HTTP 메시지"
 description: "HTTP 메시지는 클라이언트와 서버 간의 데이터 교환 형식으로, 크게 요청(Request) 메시지와 응답(Response) 메시지로 구분된다."
 pubDate: 2025-04-06T22:42:51+09:00
 category: "HTTP"
-tags: []
+tags: ["HTTP"]
 ---
 
 HTTP 메시지는 클라이언트와 서버 간의 데이터 교환 형식으로, 크게 **요청(Request) 메시지**와 **응답(Response) 메시지**로 구분된다.

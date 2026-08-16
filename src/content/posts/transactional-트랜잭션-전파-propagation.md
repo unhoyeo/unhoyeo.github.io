@@ -3,7 +3,7 @@ title: "@Transactional – 트랜잭션 전파 (Propagation)"
 description: "스프링 트랜잭션의 핵심은 @Transactional을 통한 AOP 기반의 선언적 트랜잭션 관리다. 하지만 여러 트랜잭션이 복잡하게 얽힌 상황, 예를 들어 트랜잭션이 진행 중인 메서드 안에서 새로운 트랜잭션이 필요한 다른 메서드를…"
 pubDate: 2025-10-19T13:17:01+09:00
 category: "스프링/DB"
-tags: []
+tags: ["트랜잭션"]
 ---
 
 스프링 트랜잭션의 핵심은 @Transactional을 통한 AOP 기반의 선언적 트랜잭션 관리다.

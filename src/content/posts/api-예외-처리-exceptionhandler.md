@@ -3,7 +3,7 @@ title: "API 예외 처리 – @ExceptionHandler"
 description: "서블릿 오류 페이지 매핑이나 스프링 부트의 BasicErrorController를 사용하는 방식은 HTML 오류 화면을 제공하는 데는 훌륭하다."
 pubDate: 2025-09-06T01:02:57+09:00
 category: "스프링/MVC"
-tags: []
+tags: ["예외 처리", "서블릿"]
 ---
 
 ## HTML 오류 페이지의 한계

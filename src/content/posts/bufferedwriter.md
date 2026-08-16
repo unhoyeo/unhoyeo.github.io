@@ -3,7 +3,7 @@ title: "BufferedWriter"
 description: "기본적으로 자바에서 출력할 때는 System.out.println()으로도 충분하다. 하지만 출력할 일이 많을 때는 시간이 오래 걸린다. 그럴 때 사용하기 좋은 것이 바로 BufferedWriter이다."
 pubDate: 2025-02-20T12:53:52+09:00
 category: "자바"
-tags: []
+tags: ["입출력"]
 ---
 
 기본적으로 자바에서 출력할 때는 System.out.println()으로도 충분하다. 하지만 출력할 일이 많을 때는 시간이 오래 걸린다.

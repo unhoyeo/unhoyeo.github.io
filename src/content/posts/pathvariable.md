@@ -3,7 +3,7 @@ title: "@PathVariable"
 description: "? @PathVariable이란? 스프링 MVC에서 URI 템플릿 변수(경로 변수)를 핸들러 메서드 파라미터에 바인딩하기 위해 사용하는 애노테이션이다."
 pubDate: 2025-07-30T15:16:20+09:00
 category: "스프링/MVC"
-tags: []
+tags: ["타입 변환"]
 ---
 
 **@PathVariable이란?**

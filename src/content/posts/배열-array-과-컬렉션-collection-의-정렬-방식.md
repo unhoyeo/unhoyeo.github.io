@@ -3,7 +3,7 @@ title: "배열(Array)과 컬렉션(Collection)의 정렬 방식"
 description: "배열은 java.util.Arrays 클래스의 정적 메서드 sort()를 이용해 정렬한다. 기본적으로 오름차순 정렬이며, 내림차순 정렬 시에는 Comparator를 함께 사용해야 한다."
 pubDate: 2025-10-10T17:48:09+09:00
 category: "자바"
-tags: []
+tags: ["컬렉션", "정렬"]
 ---
 
 ## 배열(Array) 정렬

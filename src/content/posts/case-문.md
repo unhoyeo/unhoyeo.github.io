@@ -3,7 +3,7 @@ title: "CASE 문"
 description: "JOIN이나 UNION이 데이터의 구조를 바꾸는 기술이었다면, CASE 문은 데이터의 '값 자체'를 특정 조건에 따라 동적으로 가공하고 새로운 의미를 부여하는 조건부 로직 도구다."
 pubDate: 2025-09-19T17:58:32+09:00
 category: "데이터베이스"
-tags: []
+tags: ["SQL"]
 ---
 
 ## CASE 문: 데이터에 옷을 입히는 기술

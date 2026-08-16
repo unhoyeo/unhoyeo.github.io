@@ -3,7 +3,7 @@ title: "순수 JSP 기반 웹 애플리케이션"
 description: "기존의 순수 서블릿 기반 웹 애플리케이션을 JSP(JavaServer Pages) 기반으로 전환해보자. contentType: JSP가 생성하는 응답의 MIME 타입을 설정한다."
 pubDate: 2025-04-16T22:40:03+09:00
 category: "스프링/MVC"
-tags: []
+tags: ["서블릿", "MVC"]
 ---
 
 기존의 순수 서블릿 기반 웹 애플리케이션을 **JSP(JavaServer Pages)** 기반으로 전환해보자.

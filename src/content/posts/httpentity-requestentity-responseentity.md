@@ -3,7 +3,7 @@ title: "HttpEntity – RequestEntity, ResponseEntity"
 description: "Spring MVC는 HTTP 요청/응답 메시지를 직접 다루는 대신, 이를 추상화된 객체로 표현하여 제공한다. 이는 서블릿 API에 종속적이지 않고, 보다 객체 지향적인 HTTP 메시지 처리를 가능하게 한다."
 pubDate: 2025-08-04T16:47:49+09:00
 category: "스프링/MVC"
-tags: []
+tags: ["REST", "상태 코드", "HTTP"]
 ---
 
 Spring MVC는 HTTP 요청/응답 메시지를 직접 다루는 대신, 이를 **추상화된 객체**로 표현하여 제공한다.

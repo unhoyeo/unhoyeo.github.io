@@ -3,7 +3,7 @@ title: "BindingResult, MessageCodesResolver"
 description: "? BindingResult란? 폼 바인딩/검증 과정에서 발생한 모든 오류를 담는 객체 요청 파라미터 → 객체 변환 중 발생한 바인딩 오류(타입 불일치, 값 범위 초과 등) Bean Validation(@Valid,…"
 pubDate: 2025-08-27T14:32:38+09:00
 category: "스프링/MVC"
-tags: []
+tags: ["검증"]
 ---
 
 **BindingResult란?**

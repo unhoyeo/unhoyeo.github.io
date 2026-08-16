@@ -3,7 +3,7 @@ title: "@Configuration이 싱글톤을 보장하는 방법 - 바이트코드 조
 description: "다음 AppConfig 코드를 보자. memberService 빈과 orderService 빈을 만드는 코드를 보면 둘 다 memberRepository() 메서드를 호출한다."
 pubDate: 2025-01-14T16:11:15+09:00
 category: "스프링/기본"
-tags: []
+tags: ["빈", "싱글톤"]
 ---
 
 다음 AppConfig 코드를 보자.

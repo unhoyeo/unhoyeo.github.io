@@ -3,7 +3,7 @@ title: "애노테이션 기반 컨트롤러의 핵심 – @RequestMapping"
 description: "Spring MVC에서 HTTP 요청을 특정 컨트롤러 메서드에 매핑하기 위해 사용하는 애노테이션이다. 요청 URL, HTTP 메서드, 파라미터 조건, 헤더 조건, 미디어 타입 조건 등을 조합하여 요청을 정교하게 매핑할 수 있다."
 pubDate: 2025-07-23T22:00:30+09:00
 category: "스프링/MVC"
-tags: []
+tags: ["MVC"]
 ---
 
 ## @RequestMapping이란?

@@ -3,7 +3,7 @@ title: "StringBuilder 메서드 정리"
 description: "StringBuilder는 문자열을 수정할 수 있는 객체로, String보다 문자열 변경 작업에서 훨씬 효율적이다. 문자열을 뒤에 추가한다. + 연산자를 여러 번 사용할 경우보다 성능이 좋다. ✅ 시간 복잡도: O(1) ?"
 pubDate: 2025-03-22T22:28:00+09:00
 category: "자바"
-tags: []
+tags: ["문자열"]
 ---
 
 ## StringBuilder에서 주로 사용하는 메서드 정리
