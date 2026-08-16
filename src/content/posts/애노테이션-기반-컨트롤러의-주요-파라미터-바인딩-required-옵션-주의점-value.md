@@ -74,7 +74,7 @@ public String saveUser(@RequestBody UserDto userDto) { ... }
 
 ---
 
-## ⚠️ required 옵션 사용 시 주의점
+## required 옵션 사용 시 주의점
 
 위 애노테이션들은 모두 required 옵션을 가지고 있다. 해당 옵션과 파라미터 타입에 따라 다음 두 상황에서 문제가 발생할 수 있다.
 
@@ -103,7 +103,7 @@ public String saveUser(@RequestBody UserDto userDto) { ... }
    - required = false → ❌ MethodArgumentTypeMismatchException 발생, **400** 에러
    - → Failed to convert value of type 'java.lang.String' to required type 'int'; For input string: ""
 
-## ☑️ 결론
+## 결론
 
 - 파라미터는 <strong>항상 객체형(Integer, Long, String 등)</strong>으로 선언
 - 예외 처리를 위해 **defaultValue** 속성 사용도 고려 (required = true일 때 ""가 들어와도 defaultValue가 저장됨)
@@ -210,7 +210,7 @@ public String form(@Valid @ModelAttribute MemberForm form, BindingResult result)
 
 ---
 
-## ⚠️ value (=name) 속성 생략 시 주의점
+## value (=name) 속성 생략 시 주의점
 
 스프링 부트 3.2부터는 자바 컴파일러에 **-parameters** 옵션을 넣어주어야 다음 주요 애노테이션들의 name 속성을 생략할 수 있다.
 

@@ -104,7 +104,7 @@ Content-Type: image/jpeg
 
 ---
 
-## ✅ 서블릿의 파일 업로드 – Part
+## 서블릿의 파일 업로드 – Part
 
 HttpServletRequest의 **getParts()** 메서드를 통해 multipart/form-data 요청의 각 Part를 **Part 객체의 컬렉션**으로 받을 수 있다.
 
@@ -216,7 +216,7 @@ fullPath = /Users/yeounho/Documents/test.jpg
 
 ---
 
-## ✅ 스프링의 파일 업로드 – MultipartFile
+## 스프링의 파일 업로드 – MultipartFile
 
 스프링은 **MultipartFile 인터페이스**를 통해 파일 업로드를 매우 간단하게 처리할 수 있도록 추상화했다.
 

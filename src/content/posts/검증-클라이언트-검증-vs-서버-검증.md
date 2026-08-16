@@ -137,7 +137,7 @@ public String saveItem(@ModelAttribute Item item,
 
 ---
 
-## ❌ 위 코드의 문제점
+## 위 코드의 문제점
 
 - **뷰 템플릿 중복**
   - 오류 메시지를 출력하는 로직이 각 필드마다 반복됨

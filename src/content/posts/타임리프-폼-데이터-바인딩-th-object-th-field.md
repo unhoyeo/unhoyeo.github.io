@@ -164,7 +164,7 @@ HTML 기본 체크박스와 th:field를 사용한 체크박스의 차이를 알�
 
 ---
 
-## ✔️ HTML 기본 체크박스
+## HTML 기본 체크박스
 
 ```html
 <input type="checkbox" name="agree">
@@ -178,7 +178,7 @@ HTML 기본 체크박스와 th:field를 사용한 체크박스의 차이를 알�
 
 ---
 
-## ✔️ 타임리프 + 스프링 체크박스 (th:field 사용)
+## 타임리프 + 스프링 체크박스 (th:field 사용)
 
 ```html
 <input type="checkbox" th:field="*{agree}">
@@ -224,7 +224,7 @@ HTML 명세상 모든 요소의 **id** 속성은 문서 내에서 **유일**해�
 
 ---
 
-## ✅ 해결책: #ids 유틸리티 객체
+## 해결책: #ids 유틸리티 객체
 
 타임리프는 이러한 동적 id 문제를 해결하기 위해 **ID 유틸리티 객체 #ids**를 제공한다.
 

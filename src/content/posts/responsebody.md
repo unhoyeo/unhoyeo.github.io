@@ -79,7 +79,7 @@ public class UserController {
 
 ---
 
-## ⚠️ 주의사항
+## 주의사항
 
 - HTTP 응답의 Content-Type은 기본적으로 **application/json**이며, 필요시 produces 속성 또는 HttpHeaders로 명시 가능
 - String 반환 시 템플릿 뷰가 아니라 **문자열 자체가 본문**이 된다. (text/plain)

@@ -32,7 +32,7 @@ DispatcherServlet은 등록된 ViewResolver들을 **순차적으로 탐색**하�
 
 ---
 
-## ⚠️ InternalResourceViewResolver 주의 사항
+## InternalResourceViewResolver 주의 사항
 
 InternalResourceViewResolver는 application.properties 파일의 다음 설정을 통해 JSP 경로를 생성한다.
 

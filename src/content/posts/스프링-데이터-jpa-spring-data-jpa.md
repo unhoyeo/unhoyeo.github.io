@@ -81,6 +81,6 @@ List<Item> findItems(@Param("itemName") String itemName, @Param("price") Integer
 
 ---
 
-## ❌ 한계: 동적 쿼리
+## 한계: 동적 쿼리
 
 검색 조건이 여러 개이고, 이 조건들이 조합에 따라 동적으로 WHERE 절을 구성해야 할 때, 스프링 데이터 JPA만으로는 깔끔하게 처리하기 어렵다. 실무에서는 이러한 동적 쿼리 문제를 해결하기 위해 **Querydsl**이라는 기술을 함께 사용하는 것이 일반적이다.

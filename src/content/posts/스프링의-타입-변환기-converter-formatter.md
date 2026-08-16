@@ -76,7 +76,7 @@ public class IpPortToStringConverter implements Converter<IpPort, String> {
 
 ---
 
-## ️ ConversionService – 컨버터들의 중앙 관리소
+## ConversionService – 컨버터들의 중앙 관리소
 
 ConversionService는 애플리케이션에 등록된 **여러 Converter들을 한데 모아 관리**하는 중앙 허브 역할을 한다.
 
@@ -220,7 +220,7 @@ public class WebConfig implements WebMvcConfigurer {
 
 ---
 
-## ⚠️ 주의: ConversionService는 HttpMessageConverter와 관계없음!
+## 주의: ConversionService는 HttpMessageConverter와 관계없음!
 
 한 가지 매우 중요한 점은, **HttpMessageConverter는 ConversionService를 사용하지 않는다**는 것이다.
 

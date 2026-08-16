@@ -23,7 +23,7 @@ HTTP 메시지는 클라이언트와 서버 간의 데이터 교환 형식으로
 <본문 (필요한 경우)>
 ```
 
-## ✅ 1.1. 요청 라인 (Request Line)
+## 1.1. 요청 라인 (Request Line)
 
 요청의 첫 번째 줄로, 다음과 같은 형식으로 구성된다.
 
@@ -35,7 +35,7 @@ HTTP 메시지는 클라이언트와 서버 간의 데이터 교환 형식으로
 - **URI**: 요청하는 리소스의 경로 → 보통은 **절대 경로**("/" 로 시작하는 경로)로 지정
 - **HTTP 버전**: 사용되는 HTTP 프로토콜 버전 (예: HTTP/1.1, HTTP/2, HTTP/3)
 
-## ✔️ 요청 라인 예시
+## 요청 라인 예시
 
 ```http
 GET /products?category=shoes HTTP/1.1
@@ -43,11 +43,11 @@ GET /products?category=shoes HTTP/1.1
 
 ---
 
-## ✅ 1.2. 요청 헤더 (Request Headers)
+## 1.2. 요청 헤더 (Request Headers)
 
 요청에 대한 추가 정보를 제공하는 **Key: Value** 형태의 데이터로, 여러 줄로 구성된다.
 
-## ✔️ 요청 헤더 예시
+## 요청 헤더 예시
 
 ```java
 Host: www.example.com
@@ -59,11 +59,11 @@ Authorization: Bearer <토큰>
 
 ---
 
-## ✅ 1.3. 요청 본문 (Request Body)
+## 1.3. 요청 본문 (Request Body)
 
 GET 요청에는 보통 본문이 포함되지 않으며, POST, PUT, PATCH 요청에서는 **본문을 통해 데이터를 전달**한다.
 
-## ✔️ 요청 본문 예시 (application/json)
+## 요청 본문 예시 (application/json)
 
 ```http
 POST /users HTTP/1.1
@@ -76,7 +76,7 @@ Content-Type: application/json
 }
 ```
 
-## ✔️ 요청 본문 예시 (x-www-form-urlencoded)
+## 요청 본문 예시 (x-www-form-urlencoded)
 
 ```http
 POST /users HTTP/1.1
@@ -97,7 +97,7 @@ username=kim&password=securepassword123
 <본문>
 ```
 
-## ✅ 2.1. 상태 라인 (Status Line)
+## 2.1. 상태 라인 (Status Line)
 
 응답의 첫 번째 줄로, 다음과 같은 형식으로 구성된다.
 
@@ -109,7 +109,7 @@ username=kim&password=securepassword123
 - **상태 코드(Status Code)**: 요청의 처리 결과를 나타내는 3자리 숫자 (200, 404, 500 등)
 - **상태 메시지**: 상태 코드를 설명하는 짧은 메시지 (OK, Not Found 등)
 
-## ✔️ 상태 라인 예시
+## 상태 라인 예시
 
 ```http
 HTTP/1.1 200 OK
@@ -117,11 +117,11 @@ HTTP/1.1 200 OK
 
 ---
 
-## ✅ 2.2. 응답 헤더 (Response Headers)
+## 2.2. 응답 헤더 (Response Headers)
 
 응답에 대한 추가 정보를 제공하는 **Key: Value** 형태의 데이터로, 여러 줄로 구성된다.
 
-## ✔️ 응답 헤더 예시
+## 응답 헤더 예시
 
 ```pgsql
 Content-Type: application/json
@@ -132,11 +132,11 @@ Set-Cookie: sessionId=abc123; HttpOnly
 
 ---
 
-## ✅ 2.3. 응답 본문(Response Body)
+## 2.3. 응답 본문(Response Body)
 
 서버가 클라이언트에게 전달하는 실제 데이터다.
 
-## ✔️ 응답 본문 예시 (application/json)
+## 응답 본문 예시 (application/json)
 
 ```json
 {

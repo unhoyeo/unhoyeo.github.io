@@ -125,7 +125,7 @@ ConversionService (GenericConversionService)
 
 ---
 
-## ✅ 결론
+## 결론
 
 - @PathVariable은 자주 변경되지 않는 **리소스 식별자**에 적합
 - 반대로 검색 조건, 페이징 등 **동적인 필터링 값**은 @RequestParam 사용

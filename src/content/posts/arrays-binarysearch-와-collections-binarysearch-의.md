@@ -19,7 +19,7 @@ Java의 Arrays.binarySearch()와 Collections.binarySearch()는 **이진 탐색(b
 
 ---
 
-## ⚖️ 차이점
+## 차이점
 
 |  |  |  |
 | --- | --- | --- |
@@ -32,7 +32,7 @@ Java의 Arrays.binarySearch()와 Collections.binarySearch()는 **이진 탐색(b
 
 ---
 
-## ✔️ 예시 코드 비교
+## 예시 코드 비교
 
 ```java
 // Arrays.binarySearch

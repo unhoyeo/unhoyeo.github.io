@@ -152,7 +152,7 @@ SELECT DISTINCT customer_id FROM orders;
 
 ---
 
-## ⚠️ NULL의 특별한 취급: '알 수 없는 값'
+## NULL의 특별한 취급: '알 수 없는 값'
 
 데이터베이스에서 NULL은 숫자 0이나 빈 문자열('')과는 완전히 다른, <strong>'알 수 없는 값' 또는 '존재하지 않는 값'</strong>을 의미하는 특별한 상태다.
 

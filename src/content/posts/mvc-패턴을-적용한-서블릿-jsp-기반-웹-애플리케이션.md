@@ -23,7 +23,7 @@ tags: []
 
 ---
 
-## ⚠️ Model – HttpServletRequest 단점
+## Model – HttpServletRequest 단점
 
 - request 객체는 **단순히 값만 전달**할 뿐, **도메인 모델을 직접 표현하지 못한다.**
 - 실무에서 DTO, Form, ViewModel 등을 별도로 사용하는 이유가 여기에 있다.
@@ -169,7 +169,7 @@ public class MemberSaveServlet extends HttpServlet {
 
 ## JSP 데이터 출력 방식 비교
 
-## 1️⃣ 스크립틀릿
+## 스크립틀릿
 
 ```gcode
 <%= request.getAttribute("member") %>
@@ -177,7 +177,7 @@ public class MemberSaveServlet extends HttpServlet {
 
 - ❌ HTML과 Java가 뒤섞여 유지보수에 부적합
 
-## 2️⃣ EL (Expression Language)
+## EL (Expression Language)
 
 ```
 ${member}
@@ -281,7 +281,7 @@ public void service(HttpServletRequest request, HttpServletResponse response)
 
 모든 요청을 **하나의 진입점**(서블릿)에서 받아 **공통 로직을 처리**하고, 이후 **개별 컨트롤러에 위임**하는 구조
 
-## ✅ 장점
+## 장점
 
 - 중복 제거
 - 코드 일관성 확보

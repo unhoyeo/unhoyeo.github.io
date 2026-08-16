@@ -245,7 +245,7 @@ class CouponServiceConcurrencyTest {
 
 ---
 
-## 1️⃣ 애플리케이션 레벨 동시성 제어 (Single JVM)
+## 애플리케이션 레벨 동시성 제어 (Single JVM)
 
 **synchronized** 키워드를 이용하여 단일 서버(애플리케이션) 인스턴스, 즉 **같은 JVM 내에서 스레드 간 동시성 제어**를 해보자.
 
@@ -346,7 +346,7 @@ couponService.downloadCoupon()에 synchronized를 적용할 경우에는 조금 
 
 ---
 
-## 2️⃣ 데이터베이스 레벨 동시성 제어
+## 데이터베이스 레벨 동시성 제어
 
 synchronized를 이용한 락은 "자바 객체 인스턴스 단위"이므로 "DB 레코드 단위"의 충돌을 막을 수 없었다.
 
@@ -419,12 +419,12 @@ public class CouponService {
 - 다른 트랜잭션이 동일 행을 SELECT ... FOR UPDATE 하거나 UPDATE하려고 하면, **락이 해제될 때까지 대기**한다.
 - 락 타임아웃이 초과되면 예외가 발생한다.
 
-## ✅ 장점
+## 장점
 
 - **Lost update, race condition 방지**: 다른 트랜잭션이 동일 행을 동시에 갱신하지 못하므로 덮어쓰기 문제가 사라진다.
 - **멀티 인스턴스 환경에서도 동작**: 하나의 DB에서 락을 제어하므로, 서버 인스턴스가 여러 개인 분산 환경에서도 일관성이 보장된다.
 
-## ❌ 단점
+## 단점
 
 - **성능 저하**
   - 동시에 수많은 요청이 들어오면, 많은 트랜잭션이 락을 기다리게 되어 처리량이 감소한다.
@@ -445,7 +445,7 @@ public class CouponService {
 
 그런데 잘 생각해보면, 쿠폰 다운로드처럼 단순한 경우는 굳이 SELECT 하고 UPDATE 할 필요 없이, **하나의 UPDATE** 만으로 처리할 수 있다.
 
-## ✅ 원자적 UPDATE 패턴
+## 원자적 UPDATE 패턴
 
 ```java
 package com.example.coupon.repository;
@@ -498,7 +498,7 @@ public class CouponService {
 
 하지만 다음과 같은 한계가 존재한다.
 
-## ❌ 영속성 컨텍스트(1차 캐시)와의 불일치
+## 영속성 컨텍스트(1차 캐시)와의 불일치
 
 - Spring Data JPA의 @Modifying JPQL/SQL은 엔티티 매니저의 **영속성 컨텍스트를 거치지 않고, DB에 직접 쿼리를 실행**한다.
 - 따라서 같은 트랜잭션 내에서 이미 조회한 Coupon 엔티티는 여전히 **이전 상태를 유지**한다.

@@ -23,7 +23,7 @@ tags: []
 
 ---
 
-## ⚠️ @Transactional 사용 시 핵심 주의점
+## @Transactional 사용 시 핵심 주의점
 
 ## 1. 클래스 레벨에 선언 시
 

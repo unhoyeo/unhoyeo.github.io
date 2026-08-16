@@ -331,7 +331,7 @@ public class JdbcTemplateItemRepositoryV3 implements ItemRepository {
 
 ---
 
-## ❌ JdbcTemplate의 한계: 동적 쿼리
+## JdbcTemplate의 한계: 동적 쿼리
 
 JdbcTemplate의 가장 큰 단점은 **동적 쿼리 작성이 어렵다**는 점이다. 검색 조건에 따라 WHERE 절이나 AND 조건이 동적으로 변경되어야 할 때, 자바 코드에서 if 문을 사용하여 SQL 문자열을 조립해야 하므로, 코드가 지저분해지고 복잡해진다.
 

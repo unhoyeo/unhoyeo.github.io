@@ -135,7 +135,7 @@ public class UserServlet extends HttpServlet {
 
 하지만 서블릿은 **싱글톤**으로 관리되기 때문에 모든 쓰레드는 **같은 인스턴스를 공유**한다.
 
-## ⚠️ 이로 인해 발생하는 문제
+## 이로 인해 발생하는 문제
 
 ```scala
 public class UnsafeServlet extends HttpServlet {

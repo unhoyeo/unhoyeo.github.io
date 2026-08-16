@@ -49,7 +49,7 @@ draft: true
 
 ---
 
-## ⏱️ 시간 복잡도
+## 시간 복잡도
 
 - A의 부 배열 합 구하기: **O(n²)**
 - B의 부 배열 합 구하기: **O(m²)**
@@ -204,7 +204,7 @@ int lowerBound(int[] A, int target) {
 
 ---
 
-## ⏱️ 시간 복잡도
+## 시간 복잡도
 
 - 부배열 합 구하기: **O(n²), O(m²)**
 - sumB 정렬: **O(m² log m²) = O(m² log m)**
@@ -356,11 +356,11 @@ A = [1, 2, 4, 4, 4, 5, 7]
 - left = 5, right = 5
 - while (left < right) 탈출 → **return left (5)**
 
-## → 4의 개수 = upperBound(A, 4) - lowerBound(A, 4) = 5 - 2 = 3개
+## 4의 개수 = upperBound(A, 4) - lowerBound(A, 4) = 5 - 2 = 3개
 
 ---
 
-## ✅ 결론
+## 결론
 
 - Collections.binarySearch()는 **단일 존재 여부 확인**에는 적합하지만, **중복 원소의 개수**를 정확히 세는 용도에는 적합하지 않다.
 - 그래서 이 문제에서는 **lowerBound, upperBound**를 직접 구현하여, **upper - lower**로 개수를 구해야 한다.

@@ -114,7 +114,7 @@ Spring MVC에서 <strong>HTTP 요청/응답의 본문(body)</strong>을 자바 �
 
 ---
 
-## ⚠️ 주의사항
+## 주의사항
 
 - @RequestBody는 반드시 **Content-Type 헤더**가 지정되어야 한다. (application/json 등)
 - 파라미터의 타입으로 int, Long, Enum 등은 불가능하다.

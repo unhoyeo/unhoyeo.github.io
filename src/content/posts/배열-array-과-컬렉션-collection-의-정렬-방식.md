@@ -6,7 +6,7 @@ category: "자바"
 tags: []
 ---
 
-## 1️⃣ 배열(Array) 정렬
+## 배열(Array) 정렬
 
 - 배열은 java.util.<strong>Arrays</strong> 클래스의 정적 메서드 <strong>sort()</strong>를 이용해 정렬한다.
 - 기본적으로 **오름차순** 정렬이며, **내림차순** 정렬 시에는 **Comparator**를 함께 사용해야 한다.
@@ -67,7 +67,7 @@ public class ObjectArraySort {
 
 ---
 
-## 2️⃣ 컬렉션(Collection) 정렬
+## 컬렉션(Collection) 정렬
 
 - 컬렉션(List, Set 등)은 <strong>Collections.sort()</strong>나 <strong>List.sort()</strong>를 사용한다.
 - 단, Set은 순서가 없기 때문에 정렬하려면 List로 변환해야 한다.
@@ -118,7 +118,7 @@ public class CustomComparatorExample {
 
 ---
 
-## 3️⃣ 스트림(Stream) 기반 정렬 (Java 8 이상)
+## 스트림(Stream) 기반 정렬 (Java 8 이상)
 
 ```java
 import java.util.*;

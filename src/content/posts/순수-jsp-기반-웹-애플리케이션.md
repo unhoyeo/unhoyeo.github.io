@@ -142,7 +142,7 @@ UI 수정과 비즈니스 로직 수정은 **서로 다른 시점, 다른 목적
 
 ---
 
-## ✅ MVC 패턴의 도입
+## MVC 패턴의 도입
 
 MVC(Model-View-Controller) 패턴은 웹 애플리케이션 구조를 **역할에 따라 분리**하는 아키텍처 패턴이다.
 
@@ -176,7 +176,7 @@ MVC(Model-View-Controller) 패턴은 웹 애플리케이션 구조를 **역할�
 
 ---
 
-## ✅ 결론
+## 결론
 
 - MVC 패턴은 <strong>관심사의 분리(SoC, Separation of Concerns)</strong>를 실현하며,
   - **가독성**

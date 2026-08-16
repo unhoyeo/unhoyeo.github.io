@@ -204,7 +204,7 @@ public String saveItem(@ModelAttribute Item item,
 
 ---
 
-## ✅ 위 코드의 장점
+## 위 코드의 장점
 
 - **뷰 템플릿 처리 단순화**
   - th:errors="\*{필드명}"로 간단하게 오류 출력 가능

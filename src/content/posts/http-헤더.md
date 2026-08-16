@@ -20,7 +20,7 @@ header-field = field-name ":" OWS field-value OWS
 
 > OWS: 띄어쓰기 허용 (띄어쓰기해도 되고 안 해도 된다.)
 
-## ✔️ OWS 예시
+## OWS 예시
 
 ```java
 Content-Type: text/html;charset=UTF-8 // : 뒤에 띄어쓰기 해도 됨
@@ -54,7 +54,7 @@ Host :www.google.com // : 전에 띄어쓰기 하면 안 됨!
 
 ---
 
-## ✅ 1. 일반 헤더 (General Headers)
+## 1. 일반 헤더 (General Headers)
 
 특정 메서드나 요청/응답 구분 없이 공통적으로 사용되며, 메시지 자체의 메타데이터를 정의
 
@@ -75,7 +75,7 @@ Host :www.google.com // : 전에 띄어쓰기 하면 안 됨!
 
 HTTP/1.1부터 기본적으로 **연결을 유지하는 Keep-Alive가 활성화**되어 있으며, 여러 개의 요청을 **하나의 TCP 연결에서 처리**할 수 있다.
 
-## ✔️ 예시
+## 예시
 
 ```http
 GET /index.html HTTP/1.1
@@ -99,7 +99,7 @@ Connection: keep-alive
 
 ---
 
-## ✅ 2. 요청 헤더 (Request Headers)
+## 2. 요청 헤더 (Request Headers)
 
 클라이언트가 서버에 요청할 때 보내는 메타정보
 
@@ -137,7 +137,7 @@ Connection: keep-alive
 - **기본값 = 1**
 - 전부 생략 시 **구체적인 것이 우선**
 
-## ✔️ 예시
+## 예시
 
 ```applescript
 Accept: text/*, text/plain, text/plain;format=flowed, */*
@@ -175,7 +175,7 @@ Accept: text/html, application/json;q=0.8, text/plain;q=0.5
 
 ---
 
-## ✅ 3. 응답 헤더 (Response Headers)
+## 3. 응답 헤더 (Response Headers)
 
 서버가 응답할 때 클라이언트에게 전송하는 메타정보
 
@@ -207,7 +207,7 @@ Accept: text/html, application/json;q=0.8, text/plain;q=0.5
 
 ---
 
-## ✅ 4. 표현 헤더 (Representation Headers)
+## 4. 표현 헤더 (Representation Headers)
 
 - 전송되는 콘텐츠 자체(표현)에 대한 메타데이터
 - 요청/응답 구분 없이 공통적으로 사용

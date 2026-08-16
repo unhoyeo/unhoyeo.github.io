@@ -72,7 +72,7 @@ find()는 GET /api/users 요청에 매핑되고, join()은 POST /api/users/join 
 
 ---
 
-## ✔ name
+## name
 
 - **매핑에 이름을 부여**하여 다른 곳(예: MvcUriComponentsBuilder)에서 참조할 수 있도록 한다.
 - 클래스 레벨과 메서드 레벨에 모두 설정하면 **클래스명#메서드명** 형태로 조합된다.
@@ -84,7 +84,7 @@ find()는 GET /api/users 요청에 매핑되고, join()은 POST /api/users/join 
 
 ---
 
-## ✔ value (=path)
+## value (=path)
 
 - **매핑할 요청 URL 경로**를 지정한다.
 - <strong>Ant 스타일 경로 패턴</strong>(예: /profile/\*\*)이나 <strong>경로 변수</strong>(예: /{profile\_path})를 사용할 수 있다.
@@ -99,7 +99,7 @@ find()는 GET /api/users 요청에 매핑되고, join()은 POST /api/users/join 
 
 ---
 
-## ✔ method
+## method
 
 - **매핑할 HTTP 메서드**(GET, POST, HEAD, OPTIONS, PUT, PATCH, DELETE, TRACE)를 지정한다.
 - 지정하지 않으면 모든 HTTP 메서드를 허용한다.
@@ -111,7 +111,7 @@ find()는 GET /api/users 요청에 매핑되고, join()은 POST /api/users/join 
 
 ---
 
-## ✔ params
+## params
 
 - 요청에 **특정 파라미터가 존재하거나, 특정 값을 가질 때만** 매핑하도록 제한한다.
 - **"myParam=myValue"** → 해당 파라미터가 지정된 값을 가져야 함 (**!=** 연산자도 가능)
@@ -127,7 +127,7 @@ params = "mode!=debug"  // mode 파라미터가 debug가 아니어야 함
 
 ---
 
-## ✔ headers
+## headers
 
 - 요청에 **특정 헤더가 존재하거나, 특정 값을 가질 때만** 매핑하도록 제한한다.
 - Accept, Content-Type 같은 헤더에 <strong>미디어 타입 와일드카드(\*)</strong>도 지원
@@ -141,7 +141,7 @@ headers = "X-API-VERSION=1" // API 버전 관리를 위해 커스텀 헤더 조�
 
 ---
 
-## ✔ consumes
+## consumes
 
 - 핸들러가 **소비할 수 있는 요청의 미디어 타입**을 지정한다.
 - 즉, 클라이언트가 보내는 요청의 **Content-Type**을 매핑한다.
@@ -153,7 +153,7 @@ consumes = MediaType.APPLICATION_JSON_VALUE // 위와 동일
 
 ---
 
-## ✔ produces
+## produces
 
 - 핸들러가 **생산할 수 있는 응답의 미디어 타입**을 지정한다.
 - 즉, 클라이언트의 **Accept 헤더**와 비교하여 **콘텐츠 협상**(Content Negotiation)을 통해 매핑된다.

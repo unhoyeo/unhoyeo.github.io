@@ -38,7 +38,7 @@ public @interface Transactional {
 
 ---
 
-## ✅ 주요 옵션 정리
+## 주요 옵션 정리
 
 1. **propagation (전파 수준)**
 2. **isolation (격리 수준)**
@@ -48,7 +48,7 @@ public @interface Transactional {
 
 ---
 
-## 1️⃣ propagation (전파 수준)
+## propagation (전파 수준)
 
 - 트랜잭션이 **이미 존재할 때,** 새 메서드가 어떻게 동작할지를 결정한다.
 - 기본값은 Propagation.**REQUIRED**
@@ -68,7 +68,7 @@ public @interface Transactional {
 
 ---
 
-## 2️⃣ isolation (격리 수준)
+## isolation (격리 수준)
 
 - 동시성 문제를 제어하기 위한 **데이터베이스 격리 레벨**이다.
 - 기본값은 **DEFAULT** (DB 기본값 따름, 보통 READ\_COMMITTED)
@@ -87,7 +87,7 @@ public @interface Transactional {
 
 ---
 
-## 3️⃣ rollbackFor / noRollbackFor
+## rollbackFor / noRollbackFor
 
 - 스프링은 기본적으로 **언체크 예외(런타임 예외)만 롤백하고, 체크 예외는 롤백되지 않는다.**
 - 따라서 해당 옵션을 통해 **롤백할 예외**와 **롤백하지 않을 예외**를 지정할 수 있다.
@@ -106,7 +106,7 @@ public void processOrder() throws IOException {
 
 ---
 
-## 4️⃣ timeout
+## timeout
 
 - 트랜잭션 수행 제한 시간이다. (초 단위)
 - 제한 시간을 초과하면 **트랜잭션이 롤백**된다.
@@ -120,7 +120,7 @@ public void longRunningTask() { ... }
 
 ---
 
-## 5️⃣ readOnly
+## readOnly
 
 - 트랜잭션은 기본적으로 읽기와 쓰기가 모두 가능하도록 생성된다.
 - 이 옵션을 설정하면, 트랜잭션을 **읽기 전용**으로 설정한다.

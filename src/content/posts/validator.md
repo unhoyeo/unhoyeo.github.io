@@ -158,7 +158,7 @@ public String saveItem(@ModelAttribute Item item,
 
 ---
 
-## ✅ Validator 검증 자동화
+## Validator 검증 자동화
 
 우선 컨트롤러에 **@InitBinder 메서드**를 만들어 **WebDataBinder**에 사용할 Validator를 등록한다.
 

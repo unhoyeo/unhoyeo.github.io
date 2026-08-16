@@ -173,7 +173,7 @@ public String save(@ModelAttribute User user) { ... }
 
 ---
 
-## ⚠️ @ModelAttribute 주의 사항
+## @ModelAttribute 주의 사항
 
 - **@ModelAttribute 생략 시**: Spring MVC의 HandlerMethodArgumentResolver 전략에 기반하여 다음과 같이 처리됨
   - **단순 타입 ? @RequestParam**

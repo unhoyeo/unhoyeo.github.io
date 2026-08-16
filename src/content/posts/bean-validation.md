@@ -176,7 +176,7 @@ public class Item {
 
 ---
 
-## ✅ Bean Validation의 groups 기능
+## Bean Validation의 groups 기능
 
 - 특정 상황에만 검증 규칙을 활성화하는 방법
 - SaveCheck와 UpdateCheck 같은 **마커 인터페이스**를 만들고, 검증 애노테이션에 **groups 속성**을 부여하여 언제 적용될지를 지정
@@ -221,7 +221,7 @@ public String updateItem(@Validated(UpdateCheck.class) @ModelAttribute Item item
 
 ---
 
-## ✅ 폼 전송 객체(DTO) 분리 (권장)
+## 폼 전송 객체(DTO) 분리 (권장)
 
 - groups 기능은 유용하지만, 적용된 객체와 컨트롤러 코드가 복잡해지는 단점이 존재
 - 실무에서는 폼 데이터 전송을 위한 **별도의 객체(DTO)로 분리**하여 사용하는 것을 선호
@@ -297,7 +297,7 @@ public Object saveItem(@Valid @RequestBody ItemSaveForm form,
 
 ---
 
-## ⚠️ @ModelAttribute vs @RequestBody
+## @ModelAttribute vs @RequestBody
 
 - @ModelAttribute는 **필드 단위로 바인딩**함
   - 따라서 특정 필드에 타입 오류가 발생해도, 다른 필드는 정상적으로 처리됨

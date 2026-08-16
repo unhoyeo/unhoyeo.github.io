@@ -6,7 +6,7 @@ category: "자바"
 tags: []
 ---
 
-## 1️⃣ List → int[] 변환
+## List → int[] 변환
 
 ✅ **Java 8 이상 – Stream API 사용 (권장)**
 
@@ -42,7 +42,7 @@ for (int i = 0; i < list.size(); i++) {
 
 ---
 
-## 2️⃣ int[] → List 변환
+## int[] → List 변환
 
 ✅ **Java 8 이상 – Stream API 사용 (권장)**
 

@@ -713,7 +713,7 @@ TCP(Transmission Control Protocol)는 **신뢰성 있는 데이터 전송**을 �
 
 TCP는 <strong>3-Way Handshake(3단계 핸드셰이크)</strong>를 통해 <strong>신뢰성 있는 연결을 설정</strong>합니다.
 
-## ① 과정 개요
+## 과정 개요
 
 TCP 연결이 설정되는 과정:
 
@@ -729,7 +729,7 @@ TCP 연결이 설정되는 과정:
 
 ---
 
-## ② 3-Way Handshake 과정 상세
+## 3-Way Handshake 과정 상세
 
 ## 1단계: SYN (클라이언트 → 서버)
 
@@ -791,7 +791,7 @@ TCP 연결이 설정되는 과정:
 
 TCP는 **순서 번호(Sequence Number)와 확인 응답(ACK)을 활용**하여 데이터가 순서대로 도착하도록 보장합니다.
 
-## ① 송신 측 (클라이언트)
+## 송신 측 (클라이언트)
 
 - 데이터를 일정 크기의 패킷으로 분할하여 전송.
 
@@ -805,7 +805,7 @@ TCP는 **순서 번호(Sequence Number)와 확인 응답(ACK)을 활용**하여 
 
 ---
 
-## ② 수신 측 (서버)
+## 수신 측 (서버)
 
 - 패킷을 수신하면 데이터가 정상적으로 도착했는지 확인.
 
@@ -827,7 +827,7 @@ TCP는 **순서 번호(Sequence Number)와 확인 응답(ACK)을 활용**하여 
 
 TCP는 <strong>4-Way Handshake(4단계 핸드셰이크)</strong>를 통해 연결을 종료합니다.
 
-## ① 과정 개요
+## 과정 개요
 
 1. **클라이언트 → 서버**: FIN (연결 종료 요청)
 
@@ -841,7 +841,7 @@ TCP는 <strong>4-Way Handshake(4단계 핸드셰이크)</strong>를 통해 연�
 
 ---
 
-## ② 4-Way Handshake 과정 상세
+## 4-Way Handshake 과정 상세
 
 ## 1단계: 클라이언트가 FIN 전송
 

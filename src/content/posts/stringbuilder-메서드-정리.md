@@ -12,7 +12,7 @@ tags: []
 
 ---
 
-## 1️⃣ append(String s)
+## append(String s)
 
 - 문자열을 **뒤에 추가**한다.
 - **+ 연산자를 여러 번 사용할 경우보다 성능이 좋다.**
@@ -28,7 +28,7 @@ System.out.println(sb); // "Hello World!"
 
 ---
 
-## 2️⃣ insert(int index, String s)
+## insert(int index, String s)
 
 - **특정 위치에 문자열을 삽입**한다.
 - 기존 문자는 뒤로 밀린다.
@@ -44,7 +44,7 @@ System.out.println(sb); // "Hello World!"
 
 ---
 
-## 3️⃣ delete(int start, int end)
+## delete(int start, int end)
 
 - **start 부터 end - 1 까지의 문자열을 삭제**한다.
 - ✅ **시간 복잡도**: O(N)
@@ -59,7 +59,7 @@ System.out.println(sb); // "Hello!"
 
 ---
 
-## 4️⃣ deleteCharAt(int index)
+## deleteCharAt(int index)
 
 - **index에 해당하는 문자 하나만 삭제**한다.
 - ✅ **시간 복잡도**: O(N)
@@ -74,7 +74,7 @@ System.out.println(sb); // "Hello"
 
 ---
 
-## 5️⃣ replace(int start, int end, String s)
+## replace(int start, int end, String s)
 
 - **start 부터 end - 1 까지의 문자열을 s로 변경**한다.
 - ✅ **시간 복잡도**: O(N)
@@ -89,7 +89,7 @@ System.out.println(sb); // "Hello Java!"
 
 ---
 
-## 6️⃣ reverse()
+## reverse()
 
 - **문자열을 뒤집는다.**
 - ✅ **시간 복잡도**: O(N)
@@ -104,7 +104,7 @@ System.out.println(sb); // "cba"
 
 ---
 
-## 7️⃣ setCharAt(int index, char c)
+## setCharAt(int index, char c)
 
 - **index 위치의 문자를 c로 변경**한다.
 - ✅ **시간 복잡도**: O(1)
@@ -119,7 +119,7 @@ System.out.println(sb); // "Kava"
 
 ---
 
-## 8️⃣ setLength(int newLength)
+## setLength(int newLength)
 
 - **문자열의 길이를 해당 길이로 조절**한다.
   - 길이를 **줄이면, 그 이후 문자는 삭제된다.**
@@ -136,7 +136,7 @@ System.out.println(sb); // "Hello"
 
 ---
 
-## 9️⃣ toString()
+## toString()
 
 - StringBuilder 객체를 일반적인 **String으로 변환**한다.
 - ✅ **시간 복잡도**: O(N)
@@ -151,7 +151,7 @@ System.out.println(str); // "Hello"
 
 ---
 
-## ✅ 정리
+## 정리
 
 |  |  |  |
 | --- | --- | --- |

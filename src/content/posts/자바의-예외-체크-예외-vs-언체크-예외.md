@@ -54,7 +54,7 @@ tags: []
 
 ---
 
-## ✅ 체크 예외 (Checked Exception)
+## 체크 예외 (Checked Exception)
 
 체크 예외는 **컴파일러가 예외 처리 여부를 강제로 확인**하는 예외다. 즉, **반드시 처리**해야 하는 예외다.
 
@@ -96,7 +96,7 @@ public void readFile() throws FileNotFoundException {
 
 ---
 
-## ❌ 언체크 예외 (Unchecked Exception)
+## 언체크 예외 (Unchecked Exception)
 
 언체크 예외는 **컴파일러가 예외 처리 여부를 확인하지 않는 예외**다. 즉, 반드시 처리할 필요는 없는 예외다.
 

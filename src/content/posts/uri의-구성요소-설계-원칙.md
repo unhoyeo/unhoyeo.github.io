@@ -34,7 +34,7 @@ scheme://[userinfo@]host[:port][/path][?query][#fragment]
 
 ---
 
-## 1️⃣ scheme (스킴)
+## scheme (스킴)
 
 - <strong>자원의 접근 방식(프로토콜)</strong>을 정의한다.
 - 예시: http, https, ftp, mailto, file
@@ -43,7 +43,7 @@ scheme://[userinfo@]host[:port][/path][?query][#fragment]
 
 ---
 
-## 2️⃣ authority (권한 정보)
+## authority (권한 정보)
 
 ```html
 authority = [userinfo@]host[:port]
@@ -62,7 +62,7 @@ authority = [userinfo@]host[:port]
 
 ---
 
-## 3️⃣ path (경로)
+## path (경로)
 
 - **서버 내 특정 리소스의 위치**를 지정한다.
 - 파일 디렉토리 경로처럼 **계층 구조**를 가진다.
@@ -74,7 +74,7 @@ authority = [userinfo@]host[:port]
 
 ---
 
-## 4️⃣ query (쿼리 문자열)
+## query (쿼리 문자열)
 
 - <strong>추가적인 데이터(매개변수)</strong>를 포함한다.
 - **key=value** 형태로 구성된다.
@@ -86,7 +86,7 @@ authority = [userinfo@]host[:port]
 
 ---
 
-## 5️⃣ fragment (프래그먼트, 앵커)
+## fragment (프래그먼트, 앵커)
 
 - **문서 내부 특정 위치**를 지정한다.
 - 서버로 전달되지 않고, **클라이언트(브라우저)에서만 사용**한다.

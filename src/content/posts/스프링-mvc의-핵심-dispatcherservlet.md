@@ -77,13 +77,13 @@ DispatcherServlet → FrameworkServlet → HttpServletBean → HttpServlet
 
 ## DispatcherServlet 동작 원리
 
-## 1️⃣ DispatcherServlet 호출
+## DispatcherServlet 호출
 
 예를 들어 사용자가 /members로 요청을 보냈는데, /members에 매핑된 서블릿이 없을 경우,
 
 모든 경로 /에 매핑되어 있는 DispatcherServlet이 호출된다.
 
-## 2️⃣ FrameworkServlet.service() 호출
+## FrameworkServlet.service() 호출
 
 원래 서블릿은 호출될 경우 기본적으로 HttpServlet.service() 메서드가 실행된다.
 
@@ -91,7 +91,7 @@ DispatcherServlet → FrameworkServlet → HttpServletBean → HttpServlet
 
 즉, DispatcherServlet이 호출되면 FrameworkServlet.service() 메서드가 실행된다.
 
-## 3️⃣ DispatcherServlet.doDispatch() 호출
+## DispatcherServlet.doDispatch() 호출
 
 FrameworkServlet.service() 메서드는 내부적으로 DispatcherServlet.doDispatch()를 호출한다.
 
@@ -124,7 +124,7 @@ protected void doDispatch(HttpServletRequest request, HttpServletResponse respon
 
 ---
 
-## ✅ 스프링 MVC의 강력한 확장성
+## 스프링 MVC의 강력한 확장성
 
 스프링 MVC는 <strong>"인터페이스 기반 설계"</strong>를 통해 DispatcherServlet 코드 수정 없이 기능을 변경하거나 확장할 수 있다.
 

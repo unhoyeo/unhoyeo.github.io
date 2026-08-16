@@ -46,7 +46,7 @@ public void save(Member member) throws JPAException {
 
 ---
 
-## ✅ 해결책: 런타임 예외로 전환
+## 해결책: 런타임 예외로 전환
 
 이 문제를 해결하는 가장 좋은 방법은, 리포지토리 계층의 경계에서 **체크 예외를 런타임 예외로 전환(wrapping)하여 던지는 것**이다.
 
@@ -73,14 +73,14 @@ public void save(Member member) { // ✅ throws SQLException 제거!
 - 예외를 전환할 때 가장 중요한 것은 **기존 예외(e)를 새로운 예외의 원인(cause)으로 포함**하는 것이다.
 - 이렇게 해야 **스택 트레이스**를 통해 **최초의 근본 원인**이 무엇이었는지를 놓치지 않고 파악할 수 있다.
 
-## ❌ 한계: 예외 구분 불가
+## 한계: 예외 구분 불가
 
 - 위 방식의 리포지토리 메서드에서는 **MyDBException**만 발생한다.
 - 따라서 서비스 계층에서 예외를 잡아서 복구하고 싶을 때 **예외가 발생한 상황**을 구분할 수 없다는 문제점이 있다.
 
 ---
 
-## ✅ 해결책: 데이터 접근 예외 만들기
+## 해결책: 데이터 접근 예외 만들기
 
 **데이터베이스**는 오류가 발생하면 **특정 오류 코드**를 **JDBC 드라이버**로 반환한다.
 
@@ -193,7 +193,7 @@ class ExceptionTranslatorTest {
   - **MyDuplicateKeyException**이 발생하면 → 해당 예외를 잡아서 **복구한다.**
   - 그 외에 복구할 수 없는 **MyDBException**이 발생하면 → 해당 예외를 잡아서 다시 **밖으로 던진다.**
 
-## ❌ 한계: 데이터베이스마다 다른 에러 코드
+## 한계: 데이터베이스마다 다른 에러 코드
 
 - SQLException의 errorCode는 데이터베이스의 종류마다 다르기 때문에, **데이터베이스가 변경되면 에러 코드도 다 변경해야 한다.**
 
@@ -279,7 +279,7 @@ class SpringSQLExceptionTranslatorTest {
 
 ---
 
-## ✅ 스프링의 해결책2: 반복 코드 제거 (JdbcTemplate)
+## 스프링의 해결책2: 반복 코드 제거 (JdbcTemplate)
 
 리포지토리에서 <strong>JDBC</strong>를 사용함으로써 <strong>반복적으로 나타나는 부분(리소스 연결 및 정리, 예외 처리 등)</strong>을 해결하기 위해 스프링은 <strong>JdbcTemplate</strong>이라는 클래스를 제공한다.
 

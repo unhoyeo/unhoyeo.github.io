@@ -6,7 +6,7 @@ category: "스프링/MVC"
 tags: []
 ---
 
-## ❌ HTML 오류 페이지의 한계
+## HTML 오류 페이지의 한계
 
 서블릿 오류 페이지 매핑이나 스프링 부트의 BasicErrorController를 사용하는 방식은 **HTML 오류 화면**을 제공하는 데는 훌륭하다.
 
@@ -159,7 +159,7 @@ Accept 헤더가 text/html이 아니면 다음과 같은 **JSON 응답**을 받�
 
 ---
 
-## ❌ 위 방식들의 한계
+## 위 방식들의 한계
 
 위 방식들은 실무적인 API 예외 처리에서는 다음과 같은 한계에 부딪힌다.
 
@@ -170,7 +170,7 @@ Accept 헤더가 text/html이 아니면 다음과 같은 **JSON 응답**을 받�
 
 ---
 
-## ✅ 스프링의 예외 처리 전략: HandlerExceptionResolver
+## 스프링의 예외 처리 전략: HandlerExceptionResolver
 
 컨트롤러(핸들러)에서 예외가 발생하여 서블릿 컨테이너까지 전파되면 기본적으로 **500 오류**로 처리된다.
 
@@ -340,7 +340,7 @@ public class MyHandlerExceptionResolver implements HandlerExceptionResolver {
 
 ---
 
-## 1️⃣ ExceptionHandlerExceptionResolver (가장 중요)
+## ExceptionHandlerExceptionResolver (가장 중요)
 
 스프링은 복잡한 ExceptionResolver를 직접 구현하는 대신,
 
@@ -387,7 +387,7 @@ public class ApiExceptionController {
 
 ---
 
-## 2️⃣ ResponseStatusExceptionResolver
+## ResponseStatusExceptionResolver
 
 **예외에 따라 HTTP 상태 코드를 지정해 주는** 단순하고 직관적인 리졸버다.
 
@@ -414,7 +414,7 @@ throw new ResponseStatusException(
 
 ---
 
-## 3️⃣ DefaultHandlerExceptionResolver
+## DefaultHandlerExceptionResolver
 
 **스프링 내부에서 발생하는 예외**들을 처리한다.
 
@@ -426,7 +426,7 @@ throw new ResponseStatusException(
 
 ---
 
-## ✅ 최상의 해결책: @ExceptionHandler + @ControllerAdvice
+## 최상의 해결책: @ExceptionHandler + @ControllerAdvice
 
 @ExceptionHandler를 각 컨트롤러마다 작성하면 **중복 코드**가 발생한다.
 

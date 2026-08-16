@@ -31,13 +31,13 @@ HTTP 캐시는 서버의 응답을 <strong>클라이언트(브라우저)</strong
 | **중간 캐시 (Shared Cache)** | 프록시 서버, CDN | 중간 서버 | Cloudflare, Akamai, ISP 프록시 등 |
 | **게이트웨이 캐시** | 리버스 프록시, API 게이트웨이 등 | 내부 서버 앞단 | NGINX, Varnish, Spring Gateway 등 |
 
-## ✅ 1. 브라우저 캐시 (Private Cache)
+## 1. 브라우저 캐시 (Private Cache)
 
 - **사용자 본인만** 사용하는 캐시
 - **브라우저 안**에 저장됨 (디스크 또는 메모리)
 - 예: 내가 로그인하고 새로고침했을 때, 다시 서버에 요청 안 하고 캐시로 빠르게 뜨는 화면
 
-## ✔️ 제어 예시
+## 제어 예시
 
 ```java
 Cache-Control: private, max-age=3600
@@ -45,14 +45,14 @@ Cache-Control: private, max-age=3600
 
 ---
 
-## ✅ 2. 중간 캐시 (Shared Cache, Proxy Cache)
+## 2. 중간 캐시 (Shared Cache, Proxy Cache)
 
 - <strong>기업 네트워크, ISP(인터넷 서비스 제공업체), CDN(Content Delivery Network)</strong>이 여러 사람을 위해 저장하는 캐시
 - **중간 서버**(프록시, ISP 프록시, CDN 등)에 저장됨
 - 여러 사용자에게 같은 응답을 재사용함
 - 예: Cloudflare, Akamai, AWS CloudFront, Fastly
 
-## ✔️ 제어 예시
+## 제어 예시
 
 ```
 Cache-Control: public, s-maxage=600
@@ -62,7 +62,7 @@ Cache-Control: public, s-maxage=600
 
 ---
 
-## ✅ 3. 게이트웨이 캐시 (Gateway Cache, Reverse Proxy Cache)
+## 3. 게이트웨이 캐시 (Gateway Cache, Reverse Proxy Cache)
 
 - 서버 앞단에서 요청을 받아 처리하는 **리버스 프록시**나 **API 게이트웨이**에 저장
 - 서버 부하 줄이기 위해 캐시 사용
@@ -77,7 +77,7 @@ Cache-Control: public, s-maxage=600
 
 HTTP 캐시 제어를 위한 주요 헤더에는 크게 **캐시 제어 헤더**와 **검증 헤더**, **조건부 요청 헤더**가 있다.
 
-## ✅ 캐시 제어 헤더
+## 캐시 제어 헤더
 
 ## 1. Cache-Control (HTTP/1.1 이후 핵심)
 
@@ -123,7 +123,7 @@ Pragma: no-cache
 
 ---
 
-## ✅ 검증 헤더 (Validator)
+## 검증 헤더 (Validator)
 
 클라이언트가 서버에 **리소스의 변경 여부**만 확인하여 캐시된 응답이 **여전히 유효한지 확인**하는 역할을 한다.
 
@@ -159,7 +159,7 @@ Last-Modified: Wed, 08 Jun 2025 10:18:14 GMT
 Cache-Control: max-age=3600
 ```
 
-## ❌ 단점
+## 단점
 
 - **초 단위까지만 비교 가능**하여, ETag보다 덜 정밀함
 - **동일한 데이터로 수정**한 경우에도 Last-Modified 값은 변경됨
@@ -167,7 +167,7 @@ Cache-Control: max-age=3600
 
 ---
 
-## ✅ 조건부 요청 헤더
+## 조건부 요청 헤더
 
 조건부 요청은 **클라이언트가 특정 조건을 만족**할 경우에만 **서버로부터 데이터를 가져오도록 요청하는 방식**이다.
 
