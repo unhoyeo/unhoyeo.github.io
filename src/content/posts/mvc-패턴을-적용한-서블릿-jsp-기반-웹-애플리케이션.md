@@ -32,7 +32,7 @@ tags: []
 
 ## 회원 등록 폼 컨트롤러 – MemberFormServlet
 
-```scala
+```java
 @WebServlet(name = "memberFormServlet", urlPatterns = "/members/new-form")
 public class MemberFormServlet extends HttpServlet {
 
@@ -191,7 +191,7 @@ ${member}
 
 ## 회원 목록 컨트롤러 – MemberListServlet
 
-```scala
+```java
 @WebServlet(name = "memberListServlet", urlPatterns = "/members")
 public class MemberListServlet extends HttpServlet {
 

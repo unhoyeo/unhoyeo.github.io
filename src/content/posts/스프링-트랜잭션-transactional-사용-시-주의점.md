@@ -121,7 +121,7 @@ public class InternalCallV1Test {
 
 실행 결과는 다음과 같다.
 
-```r
+```java
 // 프록시_체크
 service class = class ...$Service$$SpringCGLIB$$0
 ```

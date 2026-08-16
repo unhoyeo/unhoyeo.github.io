@@ -520,7 +520,7 @@ MessageCodesResolver 덕분에 우리는 다음과 같이 메시지 관리를 �
 
 required.item.name=상품 이름은 필수 값입니다. 라고 지정한 것처럼 위 메시지 코드들도 errors.properties 파일에 설정하면 된다.
 
-```
+```properties
 # errors.properties
 required.item.name=상품 이름은 필수 값입니다.
 range.item.price=상품 가격은 {0}원 이상 {1}원 이하이여야 합니다.

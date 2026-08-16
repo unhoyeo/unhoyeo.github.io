@@ -16,7 +16,7 @@ HTTP 헤더에 따른 전송 방식은 크게 단순, 압축, 분할, 범위 전
 
 ## 헤더 예시
 
-```
+```http
 Content-Length: 348
 ```
 
@@ -44,7 +44,7 @@ Content-Length: 348
 
 ## 헤더 예시
 
-```
+```http
 Content-Encoding: gzip
 ```
 
@@ -74,7 +74,7 @@ Content-Encoding: gzip
 
 ## 헤더 예시
 
-```
+```http
 Transfer-Encoding: chunked
 ```
 
@@ -115,7 +115,7 @@ Network\r\n
 
 ## 요청 헤더 예시
 
-```
+```http
 Range: bytes=1001-2000
 ```
 

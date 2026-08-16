@@ -44,7 +44,7 @@ tags: []
 
 서블릿은 일반적으로 **HttpServlet** 클래스를 상속하여 구현하며, 서블릿 컨테이너가 이 객체의 생명주기 전반을 관리한다.
 
-```scala
+```java
 @WebServlet(name = "userServlet", urlPatterns = "/users")
 public class UserServlet extends HttpServlet {
     @Override
@@ -137,7 +137,7 @@ public class UserServlet extends HttpServlet {
 
 ## 이로 인해 발생하는 문제
 
-```scala
+```java
 public class UnsafeServlet extends HttpServlet {
     private String username; // 모든 쓰레드가 공유
 

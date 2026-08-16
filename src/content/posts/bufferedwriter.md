@@ -47,7 +47,7 @@ import java.util.*;
 
 ## 2. 메인 메서드 정의
 
-```arduino
+```java
 public static void main(String[] args) throws IOException {
 ```
 
@@ -55,7 +55,7 @@ public static void main(String[] args) throws IOException {
 
 ## 3. 입출력 처리
 
-```haxe
+```java
 BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 ```
@@ -68,7 +68,7 @@ BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
 ## 4. 테스트 케이스 개수 입력받기
 
-```
+```java
 int T = Integer.parseInt(br.readLine());
 ```
 
@@ -94,7 +94,7 @@ StringTokenizer st = new StringTokenizer(br.readLine());
 
 ## 7. 정수 변환
 
-```
+```java
 int A = Integer.parseInt(st.nextToken());
 int B = Integer.parseInt(st.nextToken());
 ```

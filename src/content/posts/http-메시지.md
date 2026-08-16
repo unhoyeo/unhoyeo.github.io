@@ -123,7 +123,7 @@ HTTP/1.1 200 OK
 
 ## 응답 헤더 예시
 
-```pgsql
+```http
 Content-Type: application/json
 Content-Length: 1234
 Cache-Control: max-age=3600

@@ -127,7 +127,7 @@ public interface Parser<T> {
 
 이를 통해 개발자는 별도의 Formatter 클래스를 만들지 않고도, 원하는 형식을 필드에 직접 지정할 수 있다. ([참고](https://docs.spring.io/spring-framework/reference/core/validation/format.html#format-CustomFormatAnnotations))
 
-```
+```java
 static class Form {
 
     @NumberFormat(pattern = "###,###")

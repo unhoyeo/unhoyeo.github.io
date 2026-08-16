@@ -148,7 +148,7 @@ Accept: text/*, text/plain, text/plain;format=flowed, */*
 3. text/\*
 4. \*/\*
 
-```
+```http
 Accept: text/html, application/json;q=0.8, text/plain;q=0.5
 ```
 

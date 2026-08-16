@@ -96,7 +96,7 @@ System.out.println(sb); // "Hello Java!"
 
 **예제**
 
-```pgsql
+```java
 StringBuilder sb = new StringBuilder("abc");
 sb.reverse();
 System.out.println(sb); // "cba"

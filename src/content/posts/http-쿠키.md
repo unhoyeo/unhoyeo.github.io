@@ -104,7 +104,7 @@ HTTP 쿠키는 속성에 따라 다양한 분류로 나눌 수 있다. 여기서
 
 ## 예시
 
-```
+```http
 Set-Cookie: sessionId=abc123
 ```
 
@@ -119,7 +119,7 @@ Set-Cookie: sessionId=abc123
 
 ## 예시
 
-```
+```http
 Set-Cookie: sessionId=abc123; Expires=Wed, 10 Apr 2025 23:59:59 GMT
 ```
 
@@ -133,7 +133,7 @@ Set-Cookie: sessionId=abc123; Expires=Wed, 10 Apr 2025 23:59:59 GMT
 
 ## 예시
 
-```
+```http
 Set-Cookie: token=xyz; Max-Age=3600
 ```
 
@@ -149,7 +149,7 @@ Set-Cookie: token=xyz; Max-Age=3600
 
 ## 예시
 
-```
+```http
 Set-Cookie: uid=123; Domain=example.com
 ```
 
@@ -168,7 +168,7 @@ Set-Cookie: uid=123; Domain=example.com
 
 ## 예시
 
-```
+```http
 Set-Cookie: token=abc; Path=/api
 ```
 

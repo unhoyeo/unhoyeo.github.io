@@ -54,7 +54,7 @@ Cache-Control: private, max-age=3600
 
 ## 제어 예시
 
-```
+```http
 Cache-Control: public, s-maxage=600
 ```
 
@@ -105,7 +105,7 @@ Cache-Control: public, max-age=600
 - 여전히 지원되지만 Cache-Control: max-age와 함께 사용할 경우 무시됨
 - 클라이언트와 서버 간 시간 동기화 문제 발생 가능
 
-```
+```http
 Expires: Wed, 09 Jun 2025 10:18:14 GMT
 ```
 
