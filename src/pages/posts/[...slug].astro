@@ -5,7 +5,7 @@ import Base from '../../layouts/Base.astro';
 import CodeBlocks from '../../components/CodeBlocks.astro';
 import TableOfContents from '../../components/TableOfContents.astro';
 import { getPublishedPosts, formatDate, isoDate, hasToc, postCrumbs } from '../../utils';
-import { REPO_URL, REPO_BRANCH, POSTS_DIR } from '../../consts';
+import { POSTS_DIR } from '../../consts';
 
 export const getStaticPaths = (async () => {
   const posts = await getPublishedPosts();
@@ -24,12 +24,13 @@ const { post, newer, older } = Astro.props;
 const { Content, headings } = await render(post);
 
 /*
- * 이 글의 원본 마크다운을 GitHub 웹 편집기에서 연다.
+ * 이 글의 원본 마크다운을 /admin 편집기에서 연다 — 왼쪽에서 고치면 오른쪽에
+ * 바로 렌더되고, 저장하면 커밋까지 간다.
  * filePath는 glob 로더가 채워 주는 저장소 기준 경로다. 혹시 없을 때를 대비해
  * id(= 확장자 뺀 파일명)로도 만들 수 있게 해 둔다.
  */
 const filePath = post.filePath ?? `${POSTS_DIR}/${post.id}.md`;
-const editUrl = `${REPO_URL}/edit/${REPO_BRANCH}/${filePath}`;
+const editUrl = `/admin?edit=${encodeURIComponent(filePath)}`;
 ---
 
 <Base
