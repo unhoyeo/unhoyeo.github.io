@@ -1,0 +1,528 @@
+---
+/*
+ * 브라우저에서 바로 글을 쓰고 올리는 화면.
+ *
+ * Base 레이아웃을 쓰지 않는다 — 사이드바·목차 레일이 있는 읽기용 격자와
+ * 편집기가 원하는 두 칸 화면은 구조가 다르다. 대신 global.css를 그대로 불러와
+ * 오른쪽 프리뷰가 실제 글과 같은 토큰·같은 규칙으로 그려지게 한다.
+ */
+import { getCollection } from 'astro:content';
+import { LOCALE, REPO_URL, SITE_TITLE } from '../consts';
+import '../styles/global.css';
+
+// 이미 쓰고 있는 카테고리를 자동완성 후보로 넘긴다. 새로 만드는 건 그냥 타이핑하면 된다
+const posts = await getCollection('posts');
+const categories = [...new Set(posts.map((p) => p.data.category).filter(Boolean))].sort((a, b) =>
+  String(a).localeCompare(String(b), 'ko')
+);
+---
+
+<!doctype html>
+<html lang={LOCALE}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- 나만 쓰는 화면이다. 검색결과에 나올 이유가 없다 -->
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <title>글쓰기 — {SITE_TITLE}</title>
+
+    <!-- 테마는 첫 페인트 전에 맞춘다. 프리뷰 색이 실제 글과 같아야 하므로 -->
+    <script is:inline>
+      const stored = localStorage.getItem('theme');
+      if (stored === 'light' || stored === 'dark') {
+        document.documentElement.dataset.theme = stored;
+      }
+    </script>
+  </head>
+
+  <body class="admin">
+    <header class="bar">
+      <a class="bar__home" href="/">← 블로그</a>
+
+      <div class="bar__actions">
+        <button type="button" id="new-btn">새 글</button>
+        <button type="button" id="open-btn">글 열기</button>
+      </div>
+
+      <p class="bar__file" id="file-name"></p>
+
+      <p class="bar__status" id="status" data-kind="idle" aria-live="polite"></p>
+
+      <div class="bar__actions">
+        <button type="button" id="token-btn">토큰</button>
+        <button type="button" id="save-btn" class="primary">저장</button>
+      </div>
+    </header>
+
+    <main class="panes">
+      <section class="pane pane--edit" aria-label="편집">
+        <div class="meta">
+          <label class="meta__field meta__field--wide">
+            <span>제목</span>
+            <input id="f-title" type="text" autocomplete="off" placeholder="글 제목" />
+          </label>
+
+          <label class="meta__field">
+            <span>카테고리</span>
+            <input
+              id="f-category"
+              type="text"
+              autocomplete="off"
+              list="categories"
+              placeholder="스프링/로깅"
+            />
+          </label>
+          <datalist id="categories">
+            {categories.map((category) => <option value={category} />)}
+          </datalist>
+
+          <label class="meta__field">
+            <span>태그</span>
+            <input id="f-tags" type="text" autocomplete="off" placeholder="쉼표로 구분" />
+          </label>
+
+          <label class="meta__field">
+            <span>발행일</span>
+            <input id="f-pubdate" type="text" autocomplete="off" spellcheck="false" />
+          </label>
+
+          <label class="meta__check">
+            <input id="f-draft" type="checkbox" />
+            <span>초안 (사이트에 안 나감)</span>
+          </label>
+
+          <label class="meta__field meta__field--wide">
+            <span>커밋 메시지</span>
+            <input id="f-message" type="text" autocomplete="off" />
+          </label>
+        </div>
+
+        <textarea
+          id="editor"
+          spellcheck="false"
+          placeholder="여기에 마크다운으로 씁니다. 이미지는 붙여넣거나 끌어다 놓으세요."></textarea>
+      </section>
+
+      <section class="pane pane--preview" aria-label="미리보기">
+        <div class="preview-wrap" id="preview-wrap">
+          {/*
+            헤더 뼈대는 여기 마크업에 둔다. Astro의 스코프 CSS는 선택자의 모든 요소에
+            스코프 속성을 붙이므로, 스크립트가 만든 노드에는 규칙이 걸리지 않는다.
+            스크립트는 글자와 표시 여부만 바꾼다.
+          */}
+          <header class="preview-header" id="preview-header">
+            <h1 id="preview-title">제목 없음</h1>
+            <p class="preview-meta">
+              <span id="preview-date"></span>
+              <span class="badge" id="preview-draft" hidden>초안</span>
+            </p>
+            <ul class="preview-tags" id="preview-tags"></ul>
+          </header>
+          <article class="prose" id="preview"></article>
+        </div>
+      </section>
+    </main>
+
+    <dialog id="picker" class="sheet">
+      <form method="dialog" class="sheet__close"><button aria-label="닫기">✕</button></form>
+      <h2>글 열기</h2>
+      <input id="picker-filter" type="search" placeholder="파일명으로 찾기" autocomplete="off" />
+      <ul id="picker-list" class="picker"></ul>
+    </dialog>
+
+    <dialog id="token-dialog" class="sheet">
+      <form method="dialog" class="sheet__close"><button aria-label="닫기">✕</button></form>
+      <h2>GitHub 토큰</h2>
+      <p class="sheet__note">
+        이 브라우저에만 저장되고, GitHub 말고 어디로도 보내지 않습니다.
+        <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">
+          fine-grained 토큰
+        </a>
+        을 이 저장소에만, <strong>Contents: Read and write</strong> 권한으로 만드세요.
+      </p>
+      <input id="token-input" type="password" autocomplete="off" placeholder="github_pat_..." />
+      <p class="sheet__note" id="token-status" aria-live="polite"></p>
+      <div class="sheet__actions">
+        <button type="button" id="token-clear">지우기</button>
+        <button type="button" id="token-save" class="primary">확인하고 저장</button>
+      </div>
+      <p class="sheet__note">
+        저장소: <a href={REPO_URL} target="_blank" rel="noopener">{REPO_URL}</a>
+      </p>
+    </dialog>
+
+    <script>
+      import '../scripts/admin';
+    </script>
+
+    <style>
+      /* 편집 화면은 문서가 아니라 도구다. 페이지 전체가 한 화면에 들어차고 안에서만 스크롤한다 */
+      :global(html),
+      :global(body.admin) {
+        height: 100%;
+        overflow: hidden;
+      }
+
+      :global(body.admin) {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .bar {
+        display: flex;
+        align-items: center;
+        gap: var(--space-4);
+        flex: none;
+        height: var(--topbar-h);
+        padding: 0 var(--space-4);
+        border-bottom: 1px solid var(--border);
+        background: var(--bg-sidebar);
+        font-size: var(--text-sm);
+      }
+
+      .bar__home {
+        color: var(--fg-muted);
+        text-decoration: none;
+        white-space: nowrap;
+      }
+
+      .bar__home:hover {
+        color: var(--fg);
+      }
+
+      .bar__actions {
+        display: flex;
+        gap: var(--space-2);
+      }
+
+      /* 파일명과 상태는 남는 폭을 나눠 쓰고, 넘치면 각자 줄인다 */
+      .bar__file,
+      .bar__status {
+        margin: 0;
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-size: var(--text-xs);
+      }
+
+      .bar__file {
+        flex: 1 1 auto;
+        color: var(--fg-faint);
+        font-family: var(--font-mono);
+      }
+
+      .bar__status {
+        flex: 0 1 auto;
+        color: var(--fg-muted);
+      }
+
+      .bar__status[data-kind='ok'] {
+        color: #1a7f37;
+      }
+
+      .bar__status[data-kind='error'] {
+        color: #cf222e;
+      }
+
+      :global(html[data-theme='dark']) .bar__status[data-kind='ok'] {
+        color: #3fb950;
+      }
+
+      :global(html[data-theme='dark']) .bar__status[data-kind='error'] {
+        color: #f85149;
+      }
+
+      /* 링크는 스크립트가 만든다 — 스코프가 안 붙으므로 전역으로 */
+      .bar__status :global(a) {
+        color: inherit;
+      }
+
+      button {
+        border: 1px solid var(--border-strong);
+        border-radius: var(--radius);
+        padding: var(--space-1) var(--space-3);
+        background: var(--bg);
+        color: var(--fg);
+        font: inherit;
+        font-size: var(--text-sm);
+        cursor: pointer;
+        white-space: nowrap;
+      }
+
+      button:hover {
+        background: var(--bg-hover);
+      }
+
+      button.primary {
+        background: var(--accent);
+        border-color: var(--accent);
+        color: var(--bg);
+      }
+
+      button.primary:hover {
+        background: var(--accent-hover);
+        border-color: var(--accent-hover);
+      }
+
+      button:disabled {
+        opacity: 0.5;
+        cursor: default;
+      }
+
+      .panes {
+        flex: 1;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        min-height: 0;
+      }
+
+      .pane {
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        min-height: 0;
+      }
+
+      .pane--edit {
+        border-right: 1px solid var(--border);
+      }
+
+      .meta {
+        flex: none;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: var(--space-2) var(--space-3);
+        padding: var(--space-3) var(--space-4);
+        border-bottom: 1px solid var(--border);
+        background: var(--bg-sidebar);
+      }
+
+      .meta__field--wide {
+        grid-column: 1 / -1;
+      }
+
+      .meta__field {
+        display: flex;
+        align-items: center;
+        gap: var(--space-2);
+        min-width: 0;
+        font-size: var(--text-xs);
+        color: var(--fg-faint);
+      }
+
+      .meta__field > span {
+        flex: none;
+        width: 4.5rem;
+      }
+
+      .meta__field input {
+        flex: 1;
+        min-width: 0;
+      }
+
+      input[type='text'],
+      input[type='password'],
+      input[type='search'] {
+        border: 1px solid var(--border-strong);
+        border-radius: var(--radius);
+        padding: var(--space-1) var(--space-2);
+        background: var(--bg);
+        color: var(--fg);
+        font: inherit;
+        font-size: var(--text-sm);
+      }
+
+      .meta__check {
+        display: flex;
+        align-items: center;
+        gap: var(--space-2);
+        font-size: var(--text-xs);
+        color: var(--fg-muted);
+      }
+
+      #editor {
+        flex: 1;
+        min-height: 0;
+        resize: none;
+        border: 0;
+        padding: var(--space-4);
+        background: var(--bg);
+        color: var(--fg);
+        font-family: var(--font-mono);
+        font-size: var(--text-sm);
+        line-height: 1.7;
+        tab-size: 2;
+      }
+
+      #editor:focus {
+        outline: none;
+      }
+
+      .preview-wrap {
+        flex: 1;
+        min-height: 0;
+        overflow-y: auto;
+        padding: var(--space-6) var(--space-6) var(--space-16);
+      }
+
+      /* 읽기 화면과 같은 글줄 길이로 — 줄바꿈 위치까지 같아야 미리 본 값을 한다 */
+      .preview-header,
+      #preview {
+        max-width: var(--measure);
+        margin: 0 auto;
+      }
+
+      /* pages/posts/[...slug].astro 의 글 헤더와 같은 모양 */
+      .preview-header h1 {
+        font-size: var(--text-2xl);
+        margin: 0 0 var(--space-3);
+      }
+
+      .preview-header h1.placeholder {
+        color: var(--fg-faint);
+      }
+
+      .preview-meta {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: var(--space-2);
+        margin: 0;
+        color: var(--fg-faint);
+        font-size: var(--text-sm);
+      }
+
+      .badge {
+        border: 1px solid var(--border-strong);
+        border-radius: 0.25rem;
+        padding: 0 var(--space-2);
+        font-size: var(--text-xs);
+      }
+
+      .preview-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-3);
+        list-style: none;
+        margin: var(--space-3) 0 0;
+        padding: 0;
+        color: var(--fg-faint);
+        font-size: var(--text-xs);
+      }
+
+      #preview {
+        margin-top: var(--space-8);
+      }
+
+      /* 넓은 표는 자기 자리에서만 스크롤한다 (글 페이지와 같은 규칙) */
+      #preview :global(table) {
+        display: block;
+        overflow-x: auto;
+      }
+
+      .sheet {
+        width: min(32rem, calc(100vw - 2rem));
+        border: 1px solid var(--border-strong);
+        border-radius: var(--radius-lg);
+        padding: var(--space-6);
+        background: var(--bg);
+        color: var(--fg);
+      }
+
+      .sheet::backdrop {
+        background: rgb(0 0 0 / 0.4);
+      }
+
+      .sheet h2 {
+        margin: 0 0 var(--space-4);
+        font-size: var(--text-lg);
+      }
+
+      .sheet input {
+        width: 100%;
+      }
+
+      .sheet__close {
+        float: right;
+      }
+
+      .sheet__close button {
+        border: 0;
+        background: none;
+        color: var(--fg-faint);
+        padding: 0;
+      }
+
+      .sheet__note {
+        margin: var(--space-3) 0 0;
+        color: var(--fg-muted);
+        font-size: var(--text-xs);
+        line-height: 1.6;
+      }
+
+      .sheet__actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: var(--space-2);
+        margin-top: var(--space-4);
+      }
+
+      .picker {
+        list-style: none;
+        margin: var(--space-3) 0 0;
+        padding: 0;
+        max-height: 50vh;
+        overflow-y: auto;
+      }
+
+      /* 목록 항목도 스크립트가 만든다. 위의 button 규칙이 안 걸리므로 여기서 다 준다 */
+      .picker :global(button) {
+        display: block;
+        width: 100%;
+        border: 0;
+        border-radius: var(--radius);
+        padding: var(--space-2) var(--space-3);
+        background: none;
+        color: var(--fg);
+        font: inherit;
+        font-size: var(--text-sm);
+        text-align: left;
+        white-space: normal;
+        cursor: pointer;
+      }
+
+      .picker :global(button:hover) {
+        background: var(--bg-hover);
+      }
+
+      .picker :global(.picker__empty) {
+        padding: var(--space-3);
+        color: var(--fg-faint);
+        font-size: var(--text-sm);
+      }
+
+      /* 좁은 화면에서는 위아래로 나눈다 */
+      @media (max-width: 60rem) {
+        .panes {
+          grid-template-columns: 1fr;
+          grid-template-rows: 1fr 1fr;
+        }
+
+        .pane--edit {
+          border-right: 0;
+          border-bottom: 1px solid var(--border);
+        }
+
+        .meta {
+          grid-template-columns: 1fr;
+        }
+
+        .bar__file {
+          display: none;
+        }
+      }
+    </style>
+  </body>
+</html>

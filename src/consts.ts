@@ -16,11 +16,18 @@ export const NAV_LINKS = [
 export const SOCIAL_LINKS = [{ href: 'https://github.com/unhoyeo', label: 'GitHub' }];
 
 /*
- * 글 페이지의 "수정" 링크가 가리킬 저장소. GitHub 웹 편집기로 바로 넘어간다.
- * 따로 인증 장치를 만들 필요가 없다 — 쓰기 권한이 있는 사람에게만 저장 버튼이
- * 열리고, 나머지에게는 GitHub이 알아서 읽기 전용으로 보여준다.
+ * 글 페이지의 "수정" 링크와 /admin 편집기가 쓰는 저장소 정보.
+ * 따로 인증 장치를 만들 필요가 없다 — 쓰기 권한이 있는 사람만 토큰을 가질 수 있고,
+ * 나머지에게는 GitHub이 알아서 거절한다.
  */
-export const REPO_URL = 'https://github.com/unhoyeo/unhoyeo.github.io';
+export const REPO_OWNER = 'unhoyeo';
+export const REPO_NAME = 'unhoyeo.github.io';
+export const REPO_URL = `https://github.com/${REPO_OWNER}/${REPO_NAME}`;
 export const REPO_BRANCH = 'main';
 /** 글 파일이 사는 곳. content.config.ts의 glob base와 같아야 한다 */
 export const POSTS_DIR = 'src/content/posts';
+/*
+ * 편집기에서 붙여넣은 이미지가 올라가는 곳.
+ * public/ 아래라 Astro가 손대지 않고 그대로 /images/... 로 서빙된다.
+ */
+export const UPLOADS_DIR = 'public/images/uploads';
